@@ -1,0 +1,38 @@
+{{>header}}
+{{>part_of}}
+
+class ApiException implements Exception {
+  final int code;
+  final String message;
+  final dynamic innerException;
+  final StackTrace? stackTrace;
+  final Response? response;
+
+  ApiException(this.code, this.message)
+      : this.response = null,
+        this.innerException = null,
+        this.stackTrace = null;
+
+  ApiException.fromResponse(Response response)
+      : this.response = response,
+        this.code = response.statusCode,
+        this.message = 'fromResponse(url: ${response.request?.url.toString()})',
+        this.innerException = null,
+        this.stackTrace = null;
+
+  ApiException.withInner(
+    this.code,
+    this.message,
+    this.innerException,
+    this.stackTrace,
+  ) : this.response = null;
+
+  String toString() {
+    if (innerException == null) {
+      return "ApiException $code: $message";
+    }
+
+    return "ApiException $code: $message (Inner exception: ${innerException})\n\n" +
+        stackTrace.toString();
+  }
+}

@@ -1,0 +1,99 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "dart > pub get",
+            "command": "dart",
+            "args": [
+                "pub",
+                "get",
+            ],
+            "options": {
+                "env": {
+                    "PATH": "${workspaceFolder}/.fvm/flutter_sdk/bin:${env:PATH}"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "dart > analyze",
+            "command": "dart",
+            "args": [
+                "analyze"
+            ],
+            "options": {
+                "env": {
+                    "PATH": "${workspaceFolder}/.fvm/flutter_sdk/bin:${env:PATH}"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "grinder > all tests",
+            "command": "dart",
+            "args": [
+                "run",
+                "grinder",
+                "test"
+            ],
+            "options": {
+                "env": {
+                    "PATH": "${workspaceFolder}/.fvm/flutter_sdk/bin:${env:PATH}"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "grinder > format",
+            "command": "dart",
+            "args": [
+                "run",
+                "grinder",
+                "format"
+            ],
+            "options": {
+                "env": {
+                    "PATH": "${workspaceFolder}/.fvm/flutter_sdk/bin:${env:PATH}"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "grinder > run build_runner",
+            "command": "dart",
+            "args": [
+                "run",
+                "grinder",
+                "run-build-runner",
+                "--vscode-file=${file}"
+            ],
+            "options": {
+                "env": {
+                    "PATH": "${workspaceFolder}/.fvm/flutter_sdk/bin:${env:PATH}"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "grinder > run build_runner (all)",
+            "command": "dart",
+            "args": [
+                "run",
+                "grinder",
+                "run-build-runner",
+            ],
+            "options": {
+                "env": {
+                    "PATH": "${workspaceFolder}/.fvm/flutter_sdk/bin:${env:PATH}"
+                }
+            },
+            "problemMatcher": []
+        },
+    ]
+}

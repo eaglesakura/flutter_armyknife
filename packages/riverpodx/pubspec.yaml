@@ -1,0 +1,22 @@
+name: riverpodx
+description: "A new Flutter package project."
+version: 2025.1.0
+resolution: workspace
+repository: https://github.com/eaglesakura/flutter_armyknife/riverpodx
+
+environment:
+  sdk: ^3.6.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.6.1
+  hooks_riverpod: ^2.6.1
+  flutter_hooks: ^0.20.5
+  flutterx: ^2025.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0

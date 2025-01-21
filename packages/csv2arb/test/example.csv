@@ -1,0 +1,4 @@
+id,en,ja,description
+hello,Hello,こんにちは,This is a description
+ok,OK,OK,This is another description
+with_argument,Hello {name},こんにちは {name},This is a description with argument

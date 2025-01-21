@@ -1,0 +1,31 @@
+name: future_contextx
+description: A starting point for Dart libraries or applications.
+version: 2025.1.0
+resolution: workspace
+repository: https://github.com/eaglesakura/flutter_armyknife/future_context
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.27.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  rxdart: ^0.28.0
+  async_notify: ^0.0.2
+  meta: ">=1.15.0"
+  freezed_annotation: ^2.4.4
+  runtime_assert: ^0.0.1+2
+  future_context: ^0.0.2+13
+  streamx: ^2025.1.0
+  dartxx: ^2025.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  freezed: ^2.5.7
+  build_runner: ^2.4.13
+
+dependency_overrides:
+  rxdart: ^0.28.0

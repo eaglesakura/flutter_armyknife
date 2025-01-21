@@ -1,0 +1,19 @@
+// ignore_for_file: invalid_use_of_internal_member, implementation_imports
+
+import 'package:intlx/src/localize_string_delegate.dart';
+
+/// e.g.
+/// class _Strings with {{className}} {}
+/// @internal
+/// final strings = _Strings();
+mixin class {{className}} {
+  const {{className}}();
+{{#localizeStrings}}
+    {{#hasPlaceholders}}
+    String {{id}}({{#placeholders}}{{.}},{{/placeholders}}) => LocalizeStringDelegate.get('{{id}}', args: [{{#placeholders}}{{.}},{{/placeholders}}]);
+    {{/hasPlaceholders}}
+    {{^hasPlaceholders}}
+    String get {{id}} => LocalizeStringDelegate.get('{{id}}');
+    {{/hasPlaceholders}}
+{{/localizeStrings}}
+}

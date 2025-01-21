@@ -1,0 +1,21 @@
+name: path_provider_riverpod
+description: "A new Flutter package project."
+version: 2025.1.0
+resolution: workspace
+repository: https://github.com/eaglesakura/flutter_armyknife/path_provider_riverpod
+
+environment:
+  sdk: ^3.6.0
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutterx: ^2025.1.0
+  riverpodx: ^2025.1.0
+  path_provider: ^2.1.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
