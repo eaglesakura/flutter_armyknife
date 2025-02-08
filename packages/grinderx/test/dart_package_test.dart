@@ -5,7 +5,7 @@ import 'package:grinderx/grinderx.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final skipWorkspaceTest = true;
+  const skipWorkspaceTest = true;
 
   test('pubspecを読み込める', () async {
     final pubspec = DartPackage(
