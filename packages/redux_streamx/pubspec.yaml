@@ -16,6 +16,7 @@ dependencies:
   redux_stream2: ^1.0.0+2
   riverpodx: ^2025.1.0
   runtime_assert: ^0.0.1+2
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:
