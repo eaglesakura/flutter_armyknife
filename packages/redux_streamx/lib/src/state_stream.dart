@@ -41,7 +41,7 @@ class _MapStatefulStream<T, S> implements StateStream<T> {
   _MapStatefulStream(this._source, this._mapper);
 
   @override
-  Stream<T> get stream => _source.stream.map(_mapper);
+  Stream<T> get stream => _source.stream.map(_mapper).distinct();
 
   @override
   T get state => _mapper(_source.state);
