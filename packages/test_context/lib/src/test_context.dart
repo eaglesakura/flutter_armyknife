@@ -20,6 +20,15 @@ class TestContext {
 
   TestContext._();
 
+  /// 指定のキーに対応するデータを取得する.
+  /// 存在しない場合は例外を発生する.
+  T valueOf<T>(dynamic key) {
+    if (!_testData.containsKey(key)) {
+      throw StateError('Not found key: $key');
+    }
+    return _testData[key] as T;
+  }
+
   /// テスト中に有効なデータを取得する.
   T value<T>(
     dynamic key,
