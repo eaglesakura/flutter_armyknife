@@ -118,10 +118,17 @@ class {{{classname}}} {
       // Note 1: the values aren't checked for validity beyond being non-null.
       // Note 2: this code is stripped in release mode!
       assert(() {
-        requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "{{{classname}}}[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "{{{classname}}}[$key]" has a null value in JSON.');
-        });
+        {{#vars}}
+          {{#required}}
+            {
+              final key = "{{{baseName}}}";
+              assert(json.containsKey(key), 'Required key "{{{classname}}}[$key]" is missing from JSON.');
+              {{^isNullable}}
+                  assert(json[key] != null, 'Required key "{{{classname}}}[$key]" has a null value in JSON.');
+              {{/isNullable}}
+            }
+          {{/required}}
+        {{/vars}}
         return true;
       }());
 
@@ -273,15 +280,6 @@ class {{{classname}}} {
     }
     return map;
   }
-
-  /// The list of required keys that must be present in a JSON.
-  static const requiredKeys = <String>{
-{{#vars}}
-  {{#required}}
-    '{{{baseName}}}',
-  {{/required}}
-{{/vars}}
-  };
 }
 {{#vars}}
     {{^isModel}}
