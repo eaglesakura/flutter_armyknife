@@ -2,8 +2,101 @@
 {{>part_of}}
 {{#operations}}
 
-class {{{classname}}} {
-  {{{classname}}}([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+abstract class {{{classname}}} {
+  factory {{{classname}}}([ApiClient? apiClient]) => _{{{classname}}}(apiClient);
+
+  {{#operation}}
+  {{#summary}}
+  /// {{{.}}}
+  {{/summary}}
+  {{#notes}}
+    {{#summary}}
+  ///
+    {{/summary}}
+  /// {{{notes}}}
+  ///
+  /// Note: This method returns the HTTP [Response].
+  {{/notes}}
+  {{^notes}}
+    {{#summary}}
+  ///
+  /// Note: This method returns the HTTP [Response].
+    {{/summary}}
+    {{^summary}}
+  /// Performs an HTTP '{{{httpMethod}}} {{{path}}}' operation and returns the [Response].
+    {{/summary}}
+  {{/notes}}
+  {{#hasParams}}
+    {{#summary}}
+  ///
+    {{/summary}}
+    {{^summary}}
+      {{#notes}}
+  ///
+      {{/notes}}
+    {{/summary}}
+  /// Parameters:
+  ///
+  {{/hasParams}}
+  {{#allParams}}
+  /// * [{{{dataType}}}] {{{paramName}}}{{#required}} (required){{/required}}{{#optional}} (optional){{/optional}}:
+    {{#description}}
+  ///   {{{.}}}
+    {{/description}}
+    {{^-last}}
+  ///
+    {{/-last}}
+  {{/allParams}}
+  // ignore: body_might_complete_normally
+  Future<Response> {{{nickname}}}Unsafe({
+    {{#allParams}}
+      {{#required}}required {{/required}}{{{dataType}}}{{^required}}?{{/required}} {{paramName}},
+    {{/allParams}}
+      ApiOptions options = const ApiOptions(),
+    });
+
+  {{#summary}}
+  /// {{{.}}}
+  {{/summary}}
+  {{#notes}}
+  {{#summary}}
+  ///
+  {{/summary}}
+  /// {{{notes}}}
+  {{/notes}}
+  {{#hasParams}}
+    {{#summary}}
+  ///
+    {{/summary}}
+    {{^summary}}
+      {{#notes}}
+  ///
+      {{/notes}}
+    {{/summary}}
+  /// Parameters:
+  ///
+  {{/hasParams}}
+  {{#allParams}}
+  /// * [{{{dataType}}}] {{{paramName}}}{{#required}} (required){{/required}}{{#optional}} (optional){{/optional}}:
+    {{#description}}
+  ///   {{{.}}}
+    {{/description}}
+    {{^-last}}
+  ///
+    {{/-last}}
+  {{/allParams}}
+  // ignore: body_might_complete_normally
+  Future<{{#returnType}}ApiResponse<{{{.}}}>{{/returnType}}{{^returnType}}ApiResponse<Uint8List>{{/returnType}}> {{{nickname}}}({
+    {{#allParams}}
+      {{#required}}required {{/required}}{{{dataType}}}{{^required}}?{{/required}} {{paramName}},
+    {{/allParams}}
+      ApiOptions options = const ApiOptions(),
+    });
+  {{/operation}}
+}
+
+class _{{{classname}}} implements {{{classname}}} {
+  _{{{classname}}}([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
   {{#operation}}
@@ -50,7 +143,8 @@ class {{{classname}}} {
     {{/-last}}
   {{/allParams}}
   // ignore: body_might_complete_normally
-  Future<Response> {{{nickname}}}WithHttpInfo({
+  @override
+  Future<Response> {{{nickname}}}Unsafe({
     {{#allParams}}
       {{#required}}required {{/required}}{{{dataType}}}{{^required}}?{{/required}} {{paramName}},
     {{/allParams}}
@@ -168,13 +262,14 @@ class {{{classname}}} {
     {{/-last}}
   {{/allParams}}
   // ignore: body_might_complete_normally
+  @override
   Future<{{#returnType}}ApiResponse<{{{.}}}>{{/returnType}}{{^returnType}}ApiResponse<Uint8List>{{/returnType}}> {{{nickname}}}({
     {{#allParams}}
       {{#required}}required {{/required}}{{{dataType}}}{{^required}}?{{/required}} {{paramName}},
     {{/allParams}}
       ApiOptions options = const ApiOptions(),
     }) async {
-    final response = await {{{nickname}}}WithHttpInfo(
+    final response = await {{{nickname}}}Unsafe(
       {{#allParams}} {{{paramName}}}: {{{paramName}}}, {{/allParams}}
       options: options,
     );
