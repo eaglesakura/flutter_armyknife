@@ -21,7 +21,7 @@ class MutableStateStreamState<T> with _$MutableStateStreamState<T> {
     required T state,
 
     /// 開放関数.
-    required Future Function(T state) dispose,
+    required Future Function(T state) onClose,
   }) = _MutableStateStreamState;
 
   const MutableStateStreamState._();

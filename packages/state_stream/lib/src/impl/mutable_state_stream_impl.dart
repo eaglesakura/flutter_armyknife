@@ -20,19 +20,20 @@ class MutableStateStreamImpl<T> implements MutableStateStream<T> {
 
   MutableStateStreamImpl({
     required T initial,
-    required Future<void> Function(T state) dispose,
+    required Future<void> Function(T state) onClose,
     required Dispatcher<T>? dispatcher,
   })  : _subject = BehaviorSubject.seeded(
           MutableStateStreamState(
             state: initial,
             lifecycle: MutableStateStreamLifecycle.alive,
-            dispose: dispose,
+            onClose: onClose,
           ),
         ),
         _dispatcher = dispatcher ?? Dispatcher<T>();
 
   @override
-  bool get isClosed => _subject.isClosed;
+  bool get isClosed =>
+      _subject.value.lifecycle != MutableStateStreamLifecycle.alive;
 
   @override
   bool get isNotClosed => !isClosed;
@@ -49,10 +50,13 @@ class MutableStateStreamImpl<T> implements MutableStateStream<T> {
 
   @override
   Future close() async {
+    check(_subject.value.lifecycle == MutableStateStreamLifecycle.alive,
+        'StateStream<$T> is already closed.');
+
     await _taskQueue.queue(() async {
       final value = _subject.value;
       check(value.lifecycle == MutableStateStreamLifecycle.alive,
-          'StateStream is already closed.');
+          'StateStream<$T> is already closed.');
 
       /// closingに変更
       _subject.value = value.copyWith(
@@ -61,7 +65,7 @@ class MutableStateStreamImpl<T> implements MutableStateStream<T> {
       await nop();
 
       /// ステートを閉じる
-      await value.dispose(value.state);
+      await value.onClose(value.state);
 
       // close状態に変更
       _subject.value = value.copyWith(
@@ -75,10 +79,12 @@ class MutableStateStreamImpl<T> implements MutableStateStream<T> {
 
   @override
   Future<R> updateWithLock<R>(
-      Future<R> Function(
-        T currentState,
-        MutableStateStreamEmitter<T> emitter,
-      ) block) {
+    Future<R> Function(
+      T currentState,
+      MutableStateStreamEmitter<T> emitter,
+    ) block, {
+    UpdateWithLockOptions options = const UpdateWithLockOptions(),
+  }) {
     return _taskQueue.queue(() async {
       // 実行権を得た
       if (isClosed) {

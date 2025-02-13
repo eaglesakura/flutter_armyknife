@@ -24,7 +24,7 @@ mixin _$MutableStateStreamState<T> {
   T get state => throw _privateConstructorUsedError;
 
   /// 開放関数.
-  Future<dynamic> Function(T) get dispose => throw _privateConstructorUsedError;
+  Future<dynamic> Function(T) get onClose => throw _privateConstructorUsedError;
 
   /// Create a copy of MutableStateStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -43,7 +43,7 @@ abstract class $MutableStateStreamStateCopyWith<T, $Res> {
   $Res call(
       {MutableStateStreamLifecycle lifecycle,
       T state,
-      Future<dynamic> Function(T) dispose});
+      Future<dynamic> Function(T) onClose});
 }
 
 /// @nodoc
@@ -64,7 +64,7 @@ class _$MutableStateStreamStateCopyWithImpl<T, $Res,
   $Res call({
     Object? lifecycle = null,
     Object? state = freezed,
-    Object? dispose = null,
+    Object? onClose = null,
   }) {
     return _then(_value.copyWith(
       lifecycle: null == lifecycle
@@ -75,9 +75,9 @@ class _$MutableStateStreamStateCopyWithImpl<T, $Res,
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as T,
-      dispose: null == dispose
-          ? _value.dispose
-          : dispose // ignore: cast_nullable_to_non_nullable
+      onClose: null == onClose
+          ? _value.onClose
+          : onClose // ignore: cast_nullable_to_non_nullable
               as Future<dynamic> Function(T),
     ) as $Val);
   }
@@ -95,7 +95,7 @@ abstract class _$$MutableStateStreamStateImplCopyWith<T, $Res>
   $Res call(
       {MutableStateStreamLifecycle lifecycle,
       T state,
-      Future<dynamic> Function(T) dispose});
+      Future<dynamic> Function(T) onClose});
 }
 
 /// @nodoc
@@ -115,7 +115,7 @@ class __$$MutableStateStreamStateImplCopyWithImpl<T, $Res>
   $Res call({
     Object? lifecycle = null,
     Object? state = freezed,
-    Object? dispose = null,
+    Object? onClose = null,
   }) {
     return _then(_$MutableStateStreamStateImpl<T>(
       lifecycle: null == lifecycle
@@ -126,9 +126,9 @@ class __$$MutableStateStreamStateImplCopyWithImpl<T, $Res>
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as T,
-      dispose: null == dispose
-          ? _value.dispose
-          : dispose // ignore: cast_nullable_to_non_nullable
+      onClose: null == onClose
+          ? _value.onClose
+          : onClose // ignore: cast_nullable_to_non_nullable
               as Future<dynamic> Function(T),
     ));
   }
@@ -140,7 +140,7 @@ class _$MutableStateStreamStateImpl<T> extends _MutableStateStreamState<T> {
   const _$MutableStateStreamStateImpl(
       {this.lifecycle = MutableStateStreamLifecycle.alive,
       required this.state,
-      required this.dispose})
+      required this.onClose})
       : super._();
 
   /// ライフサイクル.
@@ -154,11 +154,11 @@ class _$MutableStateStreamStateImpl<T> extends _MutableStateStreamState<T> {
 
   /// 開放関数.
   @override
-  final Future<dynamic> Function(T) dispose;
+  final Future<dynamic> Function(T) onClose;
 
   @override
   String toString() {
-    return 'MutableStateStreamState<$T>(lifecycle: $lifecycle, state: $state, dispose: $dispose)';
+    return 'MutableStateStreamState<$T>(lifecycle: $lifecycle, state: $state, onClose: $onClose)';
   }
 
   @override
@@ -169,12 +169,12 @@ class _$MutableStateStreamStateImpl<T> extends _MutableStateStreamState<T> {
             (identical(other.lifecycle, lifecycle) ||
                 other.lifecycle == lifecycle) &&
             const DeepCollectionEquality().equals(other.state, state) &&
-            (identical(other.dispose, dispose) || other.dispose == dispose));
+            (identical(other.onClose, onClose) || other.onClose == onClose));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, lifecycle,
-      const DeepCollectionEquality().hash(state), dispose);
+      const DeepCollectionEquality().hash(state), onClose);
 
   /// Create a copy of MutableStateStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -190,7 +190,7 @@ abstract class _MutableStateStreamState<T> extends MutableStateStreamState<T> {
   const factory _MutableStateStreamState(
           {final MutableStateStreamLifecycle lifecycle,
           required final T state,
-          required final Future<dynamic> Function(T) dispose}) =
+          required final Future<dynamic> Function(T) onClose}) =
       _$MutableStateStreamStateImpl<T>;
   const _MutableStateStreamState._() : super._();
 
@@ -204,7 +204,7 @@ abstract class _MutableStateStreamState<T> extends MutableStateStreamState<T> {
 
   /// 開放関数.
   @override
-  Future<dynamic> Function(T) get dispose;
+  Future<dynamic> Function(T) get onClose;
 
   /// Create a copy of MutableStateStreamState
   /// with the given fields replaced by the non-null parameter values.

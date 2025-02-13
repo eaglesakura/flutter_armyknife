@@ -6,14 +6,14 @@ import 'package:state_stream/src/state_stream.dart';
 /// 更新可能な状態と通知を受け取るためのStreamを提供するインターフェース.
 abstract class MutableStateStream<T> implements StateStream<T> {
   /// [MutableStateStream] を生成する.
-  factory MutableStateStream({
-    required T initial,
-    Future Function(T state)? dispose,
+  factory MutableStateStream(
+    T initial, {
+    Future Function(T state)? onClose,
     Dispatcher<T>? dispatcher,
   }) {
     return MutableStateStreamImpl(
       initial: initial,
-      dispose: dispose ?? (_) async {},
+      onClose: onClose ?? (_) async {},
       dispatcher: dispatcher,
     );
   }
@@ -35,6 +35,12 @@ abstract class MutableStateStream<T> implements StateStream<T> {
     Future<R> Function(
       T currentState,
       MutableStateStreamEmitter<T> emitter,
-    ) block,
-  );
+    ) block, {
+    UpdateWithLockOptions options = const UpdateWithLockOptions(),
+  });
+}
+
+/// [MutableStateStream.updateWithLock] に渡すオプション.
+class UpdateWithLockOptions {
+  const UpdateWithLockOptions();
 }

@@ -4,11 +4,15 @@ import 'package:state_stream/src/mutable_state_stream.dart';
 import 'test_state.dart';
 
 void main() {
-  test('初期化が行える', () async {
+  test('初期化と終了', () async {
+    var onCloseCall = false;
     final stream = MutableStateStream(
-      initial: TestState(
+      TestState(
         integer: 1,
       ),
+      onClose: (state) async {
+        onCloseCall = true;
+      },
     );
     expect(stream.isClosed, isFalse);
     expect(stream.isNotClosed, isTrue);
@@ -17,11 +21,12 @@ void main() {
     await stream.close();
     expect(stream.isClosed, isTrue);
     expect(stream.isNotClosed, isFalse);
+    expect(onCloseCall, isTrue);
   });
 
   test('状態が更新される', () async {
     final stream = MutableStateStream(
-      initial: TestState(
+      TestState(
         integer: 1,
       ),
     );
@@ -42,7 +47,7 @@ void main() {
 
   test('通知が行われる', () async {
     final stream = MutableStateStream(
-      initial: TestState(
+      TestState(
         integer: 1,
       ),
     );
