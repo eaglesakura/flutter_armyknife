@@ -5,7 +5,7 @@ Future delayed(Duration duration) => Future.delayed(duration);
 
 /// Dartの実行ループ1イテレーションをスキップする.
 /// 明示的に他の処理を行いたい場合に利用する.
-Future nop() => delayed(Duration.zero);
+Future nop() => Future.microtask(() async {});
 
 /// 指定の型が一致するかどうかを判定する.
 /// Generics等で型の一致を確認する際に利用する.
