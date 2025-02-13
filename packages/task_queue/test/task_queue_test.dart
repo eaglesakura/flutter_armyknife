@@ -1,3 +1,7 @@
+// ignore_for_file: avoid_print
+
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:task_queue/task_queue.dart';
 
@@ -26,5 +30,26 @@ void main() {
     expect(1, await task1);
     expect(2, await task2);
     expect(3, await task3);
+  });
+
+  test('順番を守って実行できる', () async {
+    final rand = Random();
+    final queue = TaskQueue();
+    const loop = 100;
+
+    final tasks = <Future<int>>[];
+    for (var i = 0; i < loop; ++i) {
+      tasks.add(queue.queue(() async {
+        await Future.delayed(Duration(milliseconds: rand.nextInt(100)));
+        print('task $i');
+        return i;
+      }));
+    }
+
+    await Future.wait(tasks).then((values) {
+      for (var i = 0; i < loop; ++i) {
+        expect(i, values[i]);
+      }
+    });
   });
 }

@@ -58,7 +58,7 @@ class _TaskQueue implements TaskQueue {
 
   /// 次のタスクを実行する.
   int _nextId() {
-    final id = _taskId;
-    return _taskId++;
+    final id = _taskId++;
+    return id;
   }
 }

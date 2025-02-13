@@ -108,12 +108,6 @@ class _MutableStateStreamEmitterImpl<T>
 
   _MutableStateStreamEmitterImpl(this._subject);
 
-  @override
-  T get state {
-    _assertAlive();
-    return _subject.value.state;
-  }
-
   void close() {
     _closed = true;
   }
