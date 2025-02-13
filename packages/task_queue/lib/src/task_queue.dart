@@ -11,6 +11,9 @@ abstract class TaskQueue {
   /// タスクが存在するかどうかを返す.
   bool get isNotEmpty;
 
+  /// すべてのタスクが完了するのを待つ.
+  Future join();
+
   /// タスクを末尾に追加する.
   ///
   /// 追加されたタスクが完了するまで次のタスクが実行されない.
@@ -32,6 +35,14 @@ class _TaskQueue implements TaskQueue {
 
   @override
   bool get isNotEmpty => !isEmpty;
+
+  @override
+  Future join() async {
+    // タスクリストが空になるまで、タスクキューを空実行する.
+    while (isNotEmpty) {
+      await queue(() async {});
+    }
+  }
 
   @override
   Future<T> queue<T>(Future<T> Function() block) async {

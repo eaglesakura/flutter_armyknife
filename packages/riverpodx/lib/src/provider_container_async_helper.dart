@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:riverpodx/riverpodx.dart';
+import 'package:task_queue/task_queue.dart';
 
 /// [Provider] のシャットダウン処理を行う関数.
 typedef ProviderAsyncDisposeFunction = dynamic Function();
@@ -15,37 +18,17 @@ class ProviderContainerAsyncHelper {
   static final _provider = Provider<ProviderContainerAsyncHelper>(
       (ref) => throw UnimplementedError());
 
-  /// 非同期実行中の解放関数.
-  final _disposeTasks = <Future>[];
-
-  /// 非同期実行中の初期化関数.
-  var _initializeTasks = <Future>[];
-
-  ProviderContainerAsyncHelper._();
-
-  void _registerInitializeTasks(Future task) {
-    _initializeTasks.add(task);
-  }
-
-  /// 初期化関数の完了を待つ.
-  Future _waitInitializeTasks() async {
-    while (true) {
-      if (_initializeTasks.isEmpty) {
-        return;
-      }
-
-      final tasks = _initializeTasks;
-      _initializeTasks = <Future>[];
-      await Future.wait(tasks);
-    }
-  }
-
   static final _inject = [
     _provider.overrideWith((ref) {
       final helper = ProviderContainerAsyncHelper._();
       return helper;
     }),
   ];
+
+  /// 非同期実行中のタスク.
+  final _tasks = TaskQueue();
+
+  ProviderContainerAsyncHelper._();
 
   /// [ProviderContainer] に追加する [Override] を取得する.
   static List<Override> inject() {
@@ -58,13 +41,15 @@ extension ProviderContainerAsyncExtensions on ProviderContainer {
   Future disposeAsync() async {
     final helper = read(ProviderContainerAsyncHelper._provider);
     dispose();
-    await Future.wait(helper._disposeTasks);
+
+    // すべての開放関数が完了するのを待つ.
+    await helper._tasks.join();
   }
 
   /// すべての初期化関数が完了するまで待つ.
   Future waitInitializeTasks() async {
     final helper = read(ProviderContainerAsyncHelper._provider);
-    await helper._waitInitializeTasks();
+    await helper._tasks.join();
   }
 }
 
@@ -73,10 +58,9 @@ extension RefAsyncExtensions on Ref {
   void onDisposeAsync(ProviderAsyncDisposeFunction function) {
     final helper = read(ProviderContainerAsyncHelper._provider);
     onDispose(() {
-      final result = function();
-      if (result is Future) {
-        helper._disposeTasks.add(result);
-      }
+      helper._tasks.queue(() async {
+        await function();
+      });
     });
   }
 
@@ -84,12 +68,14 @@ extension RefAsyncExtensions on Ref {
   /// 初期化待ちを行うことができる.
   void registerInitializeTasks(Future task) {
     final helper = read(ProviderContainerAsyncHelper._provider);
-    helper._registerInitializeTasks(task);
+    unawaited(helper._tasks.queue(() async {
+      await task;
+    }));
   }
 
   /// すべての初期化関数が完了するまで待つ.
   Future waitInitializeTasks() async {
     final helper = read(ProviderContainerAsyncHelper._provider);
-    await helper._waitInitializeTasks();
+    await helper._tasks.join();
   }
 }
