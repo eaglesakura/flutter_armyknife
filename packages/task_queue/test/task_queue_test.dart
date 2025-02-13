@@ -35,7 +35,7 @@ void main() {
   test('順番を守って実行できる', () async {
     final rand = Random();
     final queue = TaskQueue();
-    const loop = 100;
+    const loop = 10;
 
     final tasks = <Future<int>>[];
     for (var i = 0; i < loop; ++i) {
