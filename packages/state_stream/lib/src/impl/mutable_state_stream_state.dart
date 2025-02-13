@@ -10,6 +10,7 @@ enum MutableStateStreamLifecycle {
   closed,
 }
 
+@internal
 @freezed
 class MutableStateStreamState<T> with _$MutableStateStreamState<T> {
   const factory MutableStateStreamState({
