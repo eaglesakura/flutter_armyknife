@@ -1,0 +1,19 @@
+name: task_queue
+description: "A new Flutter package project."
+version: 2025.1.0
+resolution: workspace
+repository: https://github.com/eaglesakura/flutter_armyknife/task_queue
+
+environment:
+  sdk: ^3.6.0
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  synchronized: ^3.3.0+3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
