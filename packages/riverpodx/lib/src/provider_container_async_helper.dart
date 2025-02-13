@@ -21,6 +21,7 @@ class ProviderContainerAsyncHelper {
   static final _inject = [
     _provider.overrideWith((ref) {
       final helper = ProviderContainerAsyncHelper._();
+      ref.keepAlive();
       return helper;
     }),
   ];
