@@ -2,6 +2,7 @@ import 'package:rxdart/rxdart.dart';
 
 /// 現在の状態と通知を受け取るためのStreamを提供するインターフェース.
 /// 状態から冪等な別状態（StateからUI情報等）を生成するためのmapメソッドを提供する.
+@Deprecated('Use state_stream package')
 abstract class StateStream<T> {
   /// [BehaviorSubject]から[StateStream]を生成する.
   factory StateStream.fromBehaviorSubject(BehaviorSubject<T> stream) {
@@ -15,6 +16,7 @@ abstract class StateStream<T> {
   T get state;
 }
 
+@Deprecated('Use state_stream package')
 extension StatefulStreamExtension<T> on StateStream<T> {
   /// 状態を別の型に変換する.
   StateStream<S> map<S>(S Function(T) mapper) {
@@ -22,6 +24,7 @@ extension StatefulStreamExtension<T> on StateStream<T> {
   }
 }
 
+@Deprecated('Use state_stream package')
 class _BehaviorSubjectStatefulStream<T> implements StateStream<T> {
   final BehaviorSubject<T> _subject;
 
@@ -34,6 +37,7 @@ class _BehaviorSubjectStatefulStream<T> implements StateStream<T> {
   T get state => _subject.value;
 }
 
+@Deprecated('Use state_stream package')
 class _MapStatefulStream<T, S> implements StateStream<T> {
   final StateStream<S> _source;
   final T Function(S) _mapper;

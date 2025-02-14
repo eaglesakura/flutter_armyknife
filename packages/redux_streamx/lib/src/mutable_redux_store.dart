@@ -7,11 +7,13 @@ import 'package:redux_streamx/src/redux_store_lock.dart';
 import 'package:runtime_assert/runtime_assert.dart';
 
 /// Redux Storeの最後の状態を破棄するための関数.
+@Deprecated('Use state_stream package')
 typedef StateDisposer<T extends ReduxState> = rs2.ReduxStateDispose<T>;
 
 /// 変更可能なReduxにおけるStoreオブジェクト.
 ///
 /// [rs2.ReduxStore]をラップして、プロジェクトに最適化している.
+@Deprecated('Use state_stream package')
 class MutableReduxStore<T extends ReduxState> implements ReduxStore<T> {
   /// 内部実装
   final rs2.ReduxStore<T> _impl;

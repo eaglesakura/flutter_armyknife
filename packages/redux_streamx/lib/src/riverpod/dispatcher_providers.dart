@@ -2,6 +2,7 @@ import 'package:redux_streamx/src/redux_dispatcher.dart';
 import 'package:redux_streamx/src/redux_store.dart';
 import 'package:riverpodx/riverpodx.dart';
 
+@Deprecated('Use state_stream package')
 final class DispatcherProviders {
   const DispatcherProviders._();
 
@@ -9,6 +10,7 @@ final class DispatcherProviders {
   static const autoDispose = _AutoDisposeProviders._();
 }
 
+@Deprecated('Use state_stream package')
 final class _AutoDisposeProviders {
   const _AutoDisposeProviders._();
 

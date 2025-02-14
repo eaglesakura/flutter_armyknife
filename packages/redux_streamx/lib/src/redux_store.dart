@@ -2,9 +2,11 @@ import 'package:redux_stream2/redux_stream2.dart' as rs2;
 import 'package:redux_streamx/src/state_stream.dart';
 
 /// Reduxの状態を表す型.
+@Deprecated('Use state_stream package')
 typedef ReduxState = rs2.ReduxState;
 
 /// Reduxのアクションを表す型.
+@Deprecated('Use state_stream package')
 abstract class ReduxStore<T extends ReduxState> implements StateStream<T> {
   /// このStoreが破棄済みであるかどうかを取得する.
   /// trueを返却するとき、もうActionを行うことはできない.

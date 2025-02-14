@@ -5,6 +5,7 @@ import 'package:redux_streamx/src/redux_store.dart';
 import 'package:runtime_assert/runtime_assert.dart';
 
 /// [ReduxStore] がロックされ、ステートが普遍になったことを示す.
+@Deprecated('Use state_stream package')
 abstract class ReduxStoreLock<T extends ReduxState> {
   /// LockされたタイミングのState.
   T get state;
@@ -13,6 +14,7 @@ abstract class ReduxStoreLock<T extends ReduxState> {
   Future unlock([T? newState]);
 }
 
+@Deprecated('Use state_stream package')
 @internal
 class ReduxStoreLockImpl<T extends ReduxState> implements ReduxStoreLock<T> {
   @override
