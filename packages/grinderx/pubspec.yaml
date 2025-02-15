@@ -14,7 +14,7 @@ dependencies:
   yaml_writer: ^2.0.1
   properties: ^2.1.1
   yamlx: ^2025.1.0
-  path: ^1.9.0
+  path: ^1.9.1
   dartxx: ^2025.1.0
   loggerx: ^2025.1.0
 

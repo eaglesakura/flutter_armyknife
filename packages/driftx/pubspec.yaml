@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  meta: 1.15.0
+  meta: 1.16.0
   drift: 2.22.1
   drift_flutter: 0.2.3
   rxdart: ^0.28.0
