@@ -3,12 +3,17 @@ import 'package:riverpodx/riverpodx.dart';
 /// [ProviderContainer] の生成をサポートするBuilderオブジェクト.
 /// 依存ツリーを構築してから、[ProviderContainer] を生成する.
 class ProviderContainerBuilder {
-  final Map<Provider, Override> _overrides = {};
+  final Map<Provider, Override> _providerOverrides = {};
+
+  final List<Override> _overrides = [];
 
   ProviderContainerBuilder();
 
   /// 登録済みの [Provider] と [Override] のリストを取得する.
-  List<Override> get overrides => _overrides.values.toList();
+  List<Override> get overrides => [
+        ..._overrides,
+        ..._providerOverrides.values,
+      ];
 
   /// [ProviderContainer] に追加する [Override] を登録する.
   /// 同じProviderに対して操作が行われた場合、上書きされる.
@@ -16,7 +21,15 @@ class ProviderContainerBuilder {
     Provider<T> provider,
     Override Function(Provider<T> provider) override,
   ) {
-    _overrides[provider] = override(provider);
+    _providerOverrides[provider] = override(provider);
+    // ignore: avoid_returning_this
+    return this;
+  }
+
+  /// [ProviderContainer] に追加する [Override] を登録する.
+  /// [Provider] をキャッシュしないため、優先順はriverpodの標準となる.
+  ProviderContainerBuilder addOverride(Override override) {
+    _overrides.add(override);
     // ignore: avoid_returning_this
     return this;
   }

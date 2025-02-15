@@ -16,7 +16,7 @@ typedef ProviderAsyncDisposeFunction = dynamic Function();
 /// );
 class ProviderContainerAsyncHelper {
   static final _provider = Provider<ProviderContainerAsyncHelper>(
-      (ref) => throw UnimplementedError());
+      (ref) => throw UnimplementedError('$ProviderContainerAsyncHelper'));
 
   static final _inject = [
     _provider.overrideWith((ref) {
