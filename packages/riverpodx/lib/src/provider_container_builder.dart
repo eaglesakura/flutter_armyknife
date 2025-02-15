@@ -7,6 +7,9 @@ class ProviderContainerBuilder {
 
   ProviderContainerBuilder();
 
+  /// 登録済みの [Provider] と [Override] のリストを取得する.
+  List<Override> get overrides => _overrides.values.toList();
+
   /// [ProviderContainer] に追加する [Override] を登録する.
   /// 同じProviderに対して操作が行われた場合、上書きされる.
   ProviderContainerBuilder add<T>(
@@ -16,6 +19,20 @@ class ProviderContainerBuilder {
     _overrides[provider] = override(provider);
     // ignore: avoid_returning_this
     return this;
+  }
+
+  /// [ProviderContainer] を生成する.
+  ///
+  /// [overrides] には、更に別な [Override] を追加することができる.
+  ProviderContainer build({
+    List<Override> overrides = const [],
+  }) {
+    return ProviderContainer(
+      overrides: [
+        ...this.overrides,
+        ...overrides,
+      ],
+    );
   }
 
   /// [stub] 内容を [override] で上書きする.
@@ -29,23 +46,6 @@ class ProviderContainerBuilder {
       (provider) => provider.overrideWith(
         (ref) => ref.watch(override),
       ),
-    );
-  }
-
-  /// 登録済みの [Provider] と [Override] のリストを取得する.
-  List<Override> get overrides => _overrides.values.toList();
-
-  /// [ProviderContainer] を生成する.
-  ///
-  /// [overrides] には、更に別な [Override] を追加することができる.
-  ProviderContainer build({
-    List<Override> overrides = const [],
-  }) {
-    return ProviderContainer(
-      overrides: [
-        ...this.overrides,
-        ...overrides,
-      ],
     );
   }
 }
