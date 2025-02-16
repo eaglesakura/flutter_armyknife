@@ -14,6 +14,10 @@ sealed class LocalizedText with _$LocalizedText {
     required String id,
 
     /// 出力されるメッセージ.
+    ///
+    /// key: 言語コード
+    /// value: メッセージ
+    /// e.g.) {'ja': 'こんにちは', 'en': 'Hello'}
     required Map<String, String> text,
 
     /// メッセージ引数.
