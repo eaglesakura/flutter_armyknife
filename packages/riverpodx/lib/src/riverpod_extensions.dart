@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutterx/flutterx.dart';
 
@@ -7,7 +9,7 @@ import 'package:flutterx/flutterx.dart';
 /// これはbuild()イベント中にUI操作が行われるとクラッシュするFlutter固有問題を回避するためである.
 void useEventStream<T>(
   Stream<T> Function() newStream,
-  void Function(T) onData, [
+  FutureOr Function(T) onData, [
   List<Object?>? keys,
 ]) {
   useEffect(() {
