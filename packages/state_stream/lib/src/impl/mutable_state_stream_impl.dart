@@ -104,6 +104,18 @@ class MutableStateStreamImpl<T> implements MutableStateStream<T> {
       }
     });
   }
+
+  @override
+  Future waitForClosing() {
+    if (isClosed) {
+      return Future.value();
+    }
+
+    return _subject
+        .map((e) => e.lifecycle)
+        .where((e) => e != MutableStateStreamLifecycle.alive)
+        .first;
+  }
 }
 
 class _MutableStateStreamEmitterImpl<T>

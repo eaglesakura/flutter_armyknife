@@ -1,3 +1,4 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:state_stream/src/dispatcher.dart';
 import 'package:state_stream/src/impl/mutable_state_stream_impl.dart';
 import 'package:state_stream/src/mutable_state_stream_emitter.dart';
@@ -38,6 +39,10 @@ abstract class MutableStateStream<T> implements StateStream<T> {
     ) block, {
     UpdateWithLockOptions options = const UpdateWithLockOptions(),
   });
+
+  /// ライフサイクルが終了するまで待機する.
+  @internal
+  Future waitForClosing();
 }
 
 /// [MutableStateStream.updateWithLock] に渡すオプション.

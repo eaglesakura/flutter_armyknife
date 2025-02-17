@@ -14,6 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   freezed_annotation: ^2.4.4
+  future_contextx: ^2025.1.0
   meta: ^1.15.0
   riverpodx: ^2025.1.0
   runtime_assert: ^0.0.1+2
