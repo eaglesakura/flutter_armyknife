@@ -18,4 +18,14 @@ final class StreamEmitter<T> {
       _subject.add(value);
     }
   }
+
+  /// Streamに値を投げる.
+  /// [isClosed] がtrueの場合は何もしない.
+  Future<T> emit(T value) async {
+    if (!isClosed) {
+      _subject.add(value);
+      await nop();
+    }
+    return value;
+  }
 }
