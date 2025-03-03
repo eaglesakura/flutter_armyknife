@@ -27,7 +27,7 @@ class MultiDatabaseTransactions {
     state.requests.add(() async {
       try {
         completer.complete(await action(db));
-      } on Exception catch (e, stackTrace) {
+      } catch (e, stackTrace) {
         completer.completeError(e, stackTrace);
       }
     });
