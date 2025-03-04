@@ -1,7 +1,41 @@
 {{>header}}
 {{>part_of}}
-class ApiClient {
-  ApiClient({this.basePath = '{{{basePath}}}', this.authentication,});
+
+abstract class ApiClient {
+  factory ApiClient({
+    required String basePath,
+    Authentication? authentication = null,
+    Map<String, String> defaultHeaders = const {},
+  }) {
+    final result =
+        _ApiClient(basePath: basePath, authentication: authentication);
+    defaultHeaders.forEach(result.addDefaultHeader);
+    return result;
+  }
+
+  // We don't use a Map<String, String> for queryParams.
+  // If collectionFormat is 'multi', a key might appear multiple times.
+  Future<Response> invokeAPI(
+    String path,
+    String method,
+    List<QueryParam> queryParams,
+    Object? body,
+    Map<String, String> headerParams,
+    Map<String, String> formParams,
+    String? contentType,
+  );
+
+  Future<dynamic> deserializeAsync(
+    String value,
+    String targetType, {
+    bool growable = false,
+  });
+
+  Future<String> serializeAsync(Object? value);
+}
+
+class _ApiClient implements ApiClient {
+  _ApiClient({this.basePath = '{{{basePath}}}', this.authentication,});
 
   final String basePath;
   final Authentication? authentication;
@@ -27,6 +61,7 @@ class ApiClient {
 
   // We don't use a Map<String, String> for queryParams.
   // If collectionFormat is 'multi', a key might appear multiple times.
+  @override
   Future<Response> invokeAPI(
     String path,
     String method,
@@ -134,6 +169,7 @@ class ApiClient {
   }
 {{#native_serialization}}
 
+  @override
   Future<dynamic> deserializeAsync(String value, String targetType, {bool growable = false,}) async =>
     // ignore: deprecated_member_use_from_same_package
     deserialize(value, targetType, growable: growable);
@@ -150,6 +186,7 @@ class ApiClient {
   }
 {{/native_serialization}}
 
+  @override
   // ignore: deprecated_member_use_from_same_package
   Future<String> serializeAsync(Object? value) async => serialize(value);
 
@@ -251,7 +288,7 @@ Future<dynamic> deserializeAsync(DeserializationMessage message) async {
   // If the expected target type is String, nothing to do...
   return targetType == 'String'
     ? message.json
-    : ApiClient.fromJson(
+    : _ApiClient.fromJson(
         json.decode(message.json),
         targetType,
         growable: message.growable,

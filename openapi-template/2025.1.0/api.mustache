@@ -3,7 +3,7 @@
 {{#operations}}
 
 abstract class {{{classname}}} {
-  factory {{{classname}}}([ApiClient? apiClient]) => _{{{classname}}}(apiClient);
+  factory {{{classname}}}(ApiClient apiClient) => _{{{classname}}}(apiClient);
 
   {{#operation}}
   {{#summary}}
@@ -96,7 +96,7 @@ abstract class {{{classname}}} {
 }
 
 class _{{{classname}}} implements {{{classname}}} {
-  _{{{classname}}}([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+  _{{{classname}}}(this.apiClient);
 
   final ApiClient apiClient;
   {{#operation}}

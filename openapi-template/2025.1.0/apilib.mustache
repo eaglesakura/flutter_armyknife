@@ -25,10 +25,6 @@ part 'auth/http_bearer_auth.dart';
 {{#models}}{{#model}}part 'model/{{{classFilename}}}.dart';
 {{/model}}{{/models}}
 
-/// An [ApiClient] instance that uses the default values obtained from
-/// the OpenAPI specification file.
-var defaultApiClient = ApiClient();
-
 const _delimiters = {'csv': ',', 'ssv': ' ', 'tsv': '\t', 'pipes': '|'};
 const _dateEpochMarker = 'epoch';
 const _deepEquality = DeepCollectionEquality();
