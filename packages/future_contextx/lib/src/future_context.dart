@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:future_context/future_context.dart' as fc;
+import 'package:future_contextx/src/future_context_request.dart';
+import 'package:future_contextx/src/impl/future_context_proxy.dart';
 import 'package:meta/meta.dart';
 import 'package:runtime_assert/runtime_assert.dart';
-
-import 'future_context_request.dart';
-import 'impl/future_context_proxy.dart';
 
 /// 非同期処理のキャンセル不可能な1ブロック処理
 /// このブロック完了後、FutureContextは復帰チェックを行い、必要であればキャンセル等を行う.
