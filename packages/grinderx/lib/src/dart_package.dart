@@ -109,9 +109,9 @@ class DartPackage {
   /// flutter clean
   Future clean() async {
     _log('flutter clean $name');
-    await runDartOrFlutter(
-      'clean',
-    );
+    if (isFlutter) {
+      await runFlutter('clean');
+    }
   }
 
   /// 指定ファイルが含まれるpackageを取得する.
