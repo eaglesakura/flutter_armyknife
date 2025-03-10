@@ -152,6 +152,18 @@ class DartPackage {
     }
   }
 
+  Future genL10n() async {
+    if (!isFlutter) {
+      _log('skip gen-l10n');
+      return;
+    }
+
+    _log('flutter pub run intl_utils:generate');
+    await runFlutter(
+      'gen-l10n',
+    );
+  }
+
   /// build_runnerを実行する
   Future runBuildRunner() async {
     if (!hasBuildRunner) {
