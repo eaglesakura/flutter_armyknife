@@ -10,7 +10,9 @@ mixin class {{className}} {
   const {{className}}();
 {{#localizeStrings}}
     {{#hasPlaceholders}}
-    String {{id}}({{#placeholders}}{{.}},{{/placeholders}}) => LocalizeStringDelegate.get('{{id}}', args: [{{#placeholders}}{{.}},{{/placeholders}}]);
+    String {{id}}({
+    {{#placeholders}}required String {{.}},{{/placeholders}}
+    }) => LocalizeStringDelegate.get('{{id}}', args: [{{#placeholders}}{{.}},{{/placeholders}}]);
     {{/hasPlaceholders}}
     {{^hasPlaceholders}}
     String get {{id}} => LocalizeStringDelegate.get('{{id}}');

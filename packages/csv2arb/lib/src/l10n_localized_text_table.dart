@@ -78,7 +78,16 @@ class L10nLocalizedTextTable {
 
     for (final text in localizedTexts) {
       final metadata = <String, dynamic>{
-        if (text.placeHolders.isNotEmpty) 'placeholders': text.placeHolders,
+        if (text.placeHolders.isNotEmpty)
+          'placeholders': () {
+            final placeHolders = <String, dynamic>{};
+            for (final key in text.placeHolders) {
+              placeHolders[key] = <String, String>{
+                'type': 'String',
+              };
+            }
+            return placeHolders;
+          }(),
         if (text.description != null) 'description': text.description,
       };
       for (final lang in languages) {

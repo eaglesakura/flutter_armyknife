@@ -25,7 +25,7 @@ final class {{className}} {
         {{#hasPlaceholders}}
         // Has Placeholders
         var index = 0;
-        {{#placeholders}}String {{.}} = args[index]; index++;{{/placeholders}}
+        {{#placeholders}}String {{.}} = source.arguments[index]; index++;{{/placeholders}}
         return l10n.{{id}}({{#placeholders}}{{.}},{{/placeholders}});
         {{/hasPlaceholders}}
         {{^hasPlaceholders}}
