@@ -12,7 +12,7 @@ mixin class {{className}} {
     {{#hasPlaceholders}}
     String {{id}}({
     {{#placeholders}}required String {{.}},{{/placeholders}}
-    }) => LocalizeStringDelegate.get('{{id}}', args: [{{#placeholders}}{{.}},{{/placeholders}}]);
+    }) => LocalizeStringDelegate.get('{{id}}', arguments: [{{#placeholders}}{{.}},{{/placeholders}}]);
     {{/hasPlaceholders}}
     {{^hasPlaceholders}}
     String get {{id}} => LocalizeStringDelegate.get('{{id}}');
