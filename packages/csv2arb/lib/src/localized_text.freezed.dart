@@ -23,6 +23,10 @@ mixin _$LocalizedText {
   String get id => throw _privateConstructorUsedError;
 
   /// 出力されるメッセージ.
+  ///
+  /// key: 言語コード
+  /// value: メッセージ
+  /// e.g.) {'ja': 'こんにちは', 'en': 'Hello'}
   Map<String, String> get text => throw _privateConstructorUsedError;
 
   /// メッセージ引数.
@@ -180,9 +184,17 @@ class _$LocalizedTextImpl extends _LocalizedText {
   final String id;
 
   /// 出力されるメッセージ.
+  ///
+  /// key: 言語コード
+  /// value: メッセージ
+  /// e.g.) {'ja': 'こんにちは', 'en': 'Hello'}
   final Map<String, String> _text;
 
   /// 出力されるメッセージ.
+  ///
+  /// key: 言語コード
+  /// value: メッセージ
+  /// e.g.) {'ja': 'こんにちは', 'en': 'Hello'}
   @override
   Map<String, String> get text {
     if (_text is EqualUnmodifiableMapView) return _text;
@@ -261,6 +273,10 @@ abstract class _LocalizedText extends LocalizedText {
   String get id;
 
   /// 出力されるメッセージ.
+  ///
+  /// key: 言語コード
+  /// value: メッセージ
+  /// e.g.) {'ja': 'こんにちは', 'en': 'Hello'}
   @override
   Map<String, String> get text;
 
