@@ -81,4 +81,15 @@ final class Streams {
     });
     return subject.stream;
   }
+
+  /// [Future] をNull通知可能なStreamに変換する.
+  ///
+  /// 最初にnullを通知し、その後に[Future]の結果を通知する.
+  /// 内部では [Stream.distinct] を使用して、同一の通知を抑制する.
+  static Stream<T?> nullableStream<T>(Future<T> future) {
+    return ConcatStream([
+      Stream.value(null),
+      Stream.fromFuture(future),
+    ]).distinct();
+  }
 }
