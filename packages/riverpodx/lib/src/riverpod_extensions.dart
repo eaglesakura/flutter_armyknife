@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutterx/flutterx.dart';
+import 'package:future_contextx/future_contextx.dart';
 
 /// Hooksを使用してStreamを監視する.
 ///
@@ -19,4 +20,24 @@ void useEventStream<T>(
     });
     return subscribe.cancel;
   }, keys);
+}
+
+/// WidgetのライフサイクルとFutureContextを紐づける.
+///
+/// ライフサイクル終了時にFutureContextを閉じる.
+FutureContext useFutureContext({
+  String? tag,
+  List<Object?>? keys,
+}) {
+  final context = useMemoized(
+    () => FutureContext(tag: tag),
+    keys ?? [],
+  );
+  useEffect(
+    () => () {
+      context.close();
+    },
+    [context],
+  );
+  return context;
 }
