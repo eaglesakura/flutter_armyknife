@@ -17,6 +17,7 @@ dependencies:
   flutterx: ^2025.1.0
   task_queue: ^2025.1.0
   future_contextx: ^2025.1.0
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:
