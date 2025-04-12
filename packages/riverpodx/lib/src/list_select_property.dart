@@ -11,9 +11,7 @@ class ListSelectProperty<T> {
   @override
   late final int hashCode = _listEquals.hash(list);
 
-  ListSelectProperty({
-    required this.list,
-  });
+  ListSelectProperty(this.list);
 
   @override
   bool operator ==(Object other) {
