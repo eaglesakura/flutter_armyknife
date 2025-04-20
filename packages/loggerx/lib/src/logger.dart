@@ -1,6 +1,5 @@
 import 'package:dartxx/dartxx.dart';
-import 'package:logger/logger.dart' as impl;
-import 'package:platformx/platformx.dart';
+import 'package:loggerx/src/logger_proxy.dart';
 
 part 'logger.impl.dart';
 

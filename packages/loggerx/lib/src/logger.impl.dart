@@ -28,61 +28,6 @@ class _CallbackImpl implements Logger {
   void w(String message) => warning(message);
 }
 
-class _LoggerImpl implements Logger {
-  static final _withColorOutput = !PlatformX.isAndroid && !PlatformX.isIOS;
-  static final _withEmoji = !PlatformX.isIOS;
-
-  final String _tag;
-
-  static final impl.Logger _infoImpl = impl.Logger(
-    printer: impl.PrettyPrinter(
-      lineLength: 120,
-      stackTraceBeginIndex: 2,
-      printEmojis: _withEmoji,
-      noBoxingByDefault: true,
-      colors: _withColorOutput,
-    ),
-  );
-
-  static final impl.Logger _warningImpl = impl.Logger(
-    printer: impl.PrettyPrinter(
-      lineLength: 120,
-      stackTraceBeginIndex: 2,
-      printEmojis: _withEmoji,
-      dateTimeFormat: impl.DateTimeFormat.onlyTime,
-      colors: _withColorOutput,
-    ),
-  );
-
-  _LoggerImpl(this._tag);
-
-  @override
-  void d(String message) {
-    _warningImpl.d(_format(message));
-  }
-
-  @override
-  void e(String message, [dynamic error, StackTrace? stackTrace]) {
-    _warningImpl.e(
-      _format(message),
-      error: error,
-      stackTrace: stackTrace,
-    );
-  }
-
-  @override
-  void i(String message) {
-    _infoImpl.i(_format(message));
-  }
-
-  @override
-  void w(String message) {
-    _warningImpl.w(_format(message));
-  }
-
-  String _format(String msg) => '[$_tag] $msg';
-}
-
 class _DropLogger implements Logger {
   @override
   void d(String message) {}
@@ -95,4 +40,23 @@ class _DropLogger implements Logger {
 
   @override
   void w(String message) {}
+}
+
+class _LoggerImpl implements Logger {
+  final String _tag;
+
+  _LoggerImpl(this._tag);
+
+  @override
+  void d(String message) => LoggerProxy.d(_tag, message);
+
+  @override
+  void e(String message, [dynamic error, StackTrace? stackTrace]) =>
+      LoggerProxy.e(_tag, message, error, stackTrace);
+
+  @override
+  void i(String message) => LoggerProxy.i(_tag, message);
+
+  @override
+  void w(String message) => LoggerProxy.w(_tag, message);
 }
