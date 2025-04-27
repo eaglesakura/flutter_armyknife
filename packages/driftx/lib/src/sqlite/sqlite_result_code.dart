@@ -333,4 +333,8 @@ enum SqliteResultCode {
   final int code;
 
   const SqliteResultCode(this.code);
+
+  factory SqliteResultCode.fromCode(int code) {
+    return values.firstWhere((element) => element.code == code);
+  }
 }
