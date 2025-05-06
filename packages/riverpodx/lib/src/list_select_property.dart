@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 /// RiverpodとListを組み合わせた場合、論理一致を判定することができないため、
 /// 一致を判定するためのプロパティを作成する.
 class ListSelectProperty<T> {
-  static final _listEquals = ListEquality();
+  static const _listEquals = ListEquality();
 
   final List<T>? list;
 

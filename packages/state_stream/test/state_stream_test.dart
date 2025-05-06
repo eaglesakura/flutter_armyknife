@@ -7,7 +7,7 @@ void main() {
   test('初期化と終了', () async {
     var onCloseCall = false;
     final stream = MutableStateStream(
-      TestState(
+      const TestState(
         integer: 1,
       ),
       onClose: (state) async {
@@ -26,7 +26,7 @@ void main() {
 
   test('状態が更新される', () async {
     final stream = MutableStateStream(
-      TestState(
+      const TestState(
         integer: 1,
       ),
     );
@@ -47,7 +47,7 @@ void main() {
 
   test('通知が行われる', () async {
     final stream = MutableStateStream(
-      TestState(
+      const TestState(
         integer: 1,
       ),
     );

@@ -109,7 +109,7 @@ class L10nLocalizedTextTable {
       final lang = tmp.key;
       final data = tmp.value;
       final arbFile = File(path.join(output.path, 'intl_$lang.arb'));
-      final encoder = JsonEncoder.withIndent('  ');
+      const encoder = JsonEncoder.withIndent('  ');
       arbFile.writeAsStringSync(encoder.convert(data));
       _log.i('Generated: ${arbFile.path}');
     }
