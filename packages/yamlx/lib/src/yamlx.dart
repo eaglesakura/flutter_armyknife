@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dartxx/dartxx.dart';
 import 'package:yaml/yaml.dart' as yml;
 
 /// YamlのUtil関数群.
@@ -31,13 +32,11 @@ final class YamlX {
   static Map<String, dynamic> parseWithMerge(Iterable<File> yamlFiles) {
     final Map<String, dynamic> result = {};
     for (final file in yamlFiles) {
-      final tmp = {
-        ...result,
-      };
-      _yamlMerge(
-        result,
-        tmp,
-        parse(file),
+      result.addAll(
+        MapX.merge(
+          {...result},
+          parse(file),
+        ),
       );
     }
     return result;
@@ -60,34 +59,6 @@ final class YamlX {
         result[entry.key.toString()] = child;
       } else {
         result[entry.key.toString()] = entry.value;
-      }
-    }
-  }
-
-  static void _yamlMerge(
-    Map<String, dynamic> result,
-    Map<String, dynamic> a,
-    Map<String, dynamic> b,
-  ) {
-    final keys = {
-      ...a.keys,
-      ...b.keys,
-    };
-    for (final key in keys) {
-      if (b.containsKey(key)) {
-        if (a[key] is Map && b[key] is Map) {
-          final child = <String, dynamic>{};
-          _yamlMerge(
-            child,
-            a[key] as Map<String, dynamic>,
-            b[key] as Map<String, dynamic>,
-          );
-          result[key] = child;
-        } else {
-          result[key] = b[key];
-        }
-      } else {
-        result[key] = a[key];
       }
     }
   }

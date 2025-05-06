@@ -31,6 +31,7 @@
         "IOERR",
         "ISDIR",
         "loggerx",
+        "mapx",
         "NOENT",
         "NOLFS",
         "NOMEM",
