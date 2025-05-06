@@ -4,6 +4,8 @@ import 'package:platformx/platformx.dart';
 /// ログ出力を行うためのProxy.
 /// 必要に応じて出力関数を切り替える.
 final class LoggerProxy {
+  const LoggerProxy._();
+
   /// infoレベル出力関数
   static Function(String tag, String message) i = _DefaultLogImpl.i;
 
