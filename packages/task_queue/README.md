@@ -11,29 +11,86 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+# Task Queue
 
-## Features
+順番を保ったタスク実行を可能にする軽量なキューイングシステムを提供するFlutterパッケージです。
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+## 機能
 
-## Getting started
+- 追加した順番にタスクを実行
+- 同期処理のシンプルな実装
+- 非同期タスクの順序付き実行
+- タスクの完了を待機する機能
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+## 導入方法
 
-## Usage
+`pubspec.yaml`に依存関係を追加します：
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  task_queue: ^2025.1.0
 ```
 
-## Additional information
+パッケージをインポートします：
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```dart
+import 'package:task_queue/task_queue.dart';
+```
+
+## 使用方法
+
+### 基本的な使い方
+
+```dart
+// TaskQueueのインスタンスを作成
+final taskQueue = TaskQueue();
+
+// タスクをキューに追加
+await taskQueue.queue(() async {
+  // 最初に実行されるタスク
+  await Future.delayed(Duration(seconds: 1));
+  return '最初のタスク完了';
+});
+
+// 別のタスクを追加（前のタスクが完了するまで実行されない）
+final result = await taskQueue.queue(() async {
+  // 2番目に実行されるタスク
+  await Future.delayed(Duration(seconds: 1));
+  return '2番目のタスク完了';
+});
+
+print(result); // '2番目のタスク完了'と出力
+```
+
+### すべてのタスクの完了を待機
+
+```dart
+// 複数のタスクを追加
+for (int i = 0; i < 5; i++) {
+  taskQueue.queue(() async {
+    await Future.delayed(Duration(seconds: 1));
+    print('タスク $i 完了');
+  });
+}
+
+// すべてのタスクが完了するまで待機
+await taskQueue.join();
+print('すべてのタスク完了');
+```
+
+### キューの状態確認
+
+```dart
+if (taskQueue.isEmpty) {
+  print('実行待ちのタスクはありません');
+}
+
+if (taskQueue.isNotEmpty) {
+  print('まだ実行待ちのタスクがあります');
+}
+```
+
+## その他の情報
+
+- このパッケージは[flutter_armyknife](https://github.com/eaglesakura/flutter_armyknife)の一部です
+- 問題報告やフィードバックは[GitHubリポジトリ](https://github.com/eaglesakura/flutter_armyknife/task_queue)で行えます
