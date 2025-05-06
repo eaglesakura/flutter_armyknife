@@ -53,6 +53,7 @@
         "testx",
         "TOOBIG",
         "VNODE",
+        "Xcodegen",
         "yamlx"
     ]
 }

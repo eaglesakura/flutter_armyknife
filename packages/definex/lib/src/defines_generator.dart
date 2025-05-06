@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dartx/dartx.dart';
 import 'package:grinder/grinder.dart';
 import 'package:grinderx/grinderx.dart';
 import 'package:mustache_template/mustache.dart';
@@ -43,7 +44,7 @@ class DefinesGenerator {
   /// Mustacheテンプレート引数を生成する.
   Map<String, dynamic> _compileMustacheValues() {
     return <String, dynamic>{
-      'keys': _keys.toList(),
+      'keys': _keys.toList().sorted(),
     };
   }
 }
