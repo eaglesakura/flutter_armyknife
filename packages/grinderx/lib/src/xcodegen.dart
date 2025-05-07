@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dartxx/dartxx.dart';
 import 'package:grinder/grinder.dart';
 import 'package:loggerx/loggerx.dart';
 import 'package:yamlx/yamlx.dart';
@@ -28,9 +29,9 @@ class Xcodegen {
 
   /// xcodegenを実行する
   Future run() async {
-    final environment =
-        YamlX.find<Map<String, dynamic>>(configurations, ['xcodegen', 'env']) ??
-            {};
+    final environment = YamlX.find<Map<dynamic, dynamic>>(
+            configurations, ['xcodegen', 'env']) ??
+        {};
 
     _log.i('xcodegen');
     for (final kv in environment.entries) {
@@ -41,7 +42,9 @@ class Xcodegen {
       'xcodegen',
       runOptions: RunOptions(
         includeParentEnvironment: true,
-        environment: environment.cast<String, String>(),
+        environment: environment.entries
+            .map((e) => MapEntry(e.key.toString(), e.value.toString()))
+            .toMap(),
         workingDirectory: iosDirectory.absolute.path,
       ),
     );
