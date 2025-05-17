@@ -5,6 +5,7 @@ import 'package:data_reference/data_reference.dart';
 import 'package:flutter_bundle_loader/flutter_bundle_loader.dart';
 import 'package:flutter_bundle_loader_workspace/src/flutter_project_workspace.dart';
 import 'package:path/path.dart' as p;
+import 'package:yamlx/yamlx.dart';
 
 /// Unit TestでWorkspaceからデータを読み込むためのLoader.
 class FlutterWorkspaceBundleLoader implements FlutterBundleLoader {
@@ -51,7 +52,14 @@ class FlutterWorkspaceBundleLoader implements FlutterBundleLoader {
     /// 読み込み対象のパッケージ名
     String? package,
   }) {
-    final file = File(p.join(packageDirectory.path, 'assets', path));
+    final pubspecYaml =
+        YamlX.parse(File(p.join(packageDirectory.path, 'pubspec.yaml')));
+    final packageName = YamlX.require(pubspecYaml, ['name']);
+    if (package != null && package != packageName) {
+      return null;
+    }
+
+    final file = File(p.join(packageDirectory.path, path));
     if (!file.existsSync()) {
       return null;
     }
