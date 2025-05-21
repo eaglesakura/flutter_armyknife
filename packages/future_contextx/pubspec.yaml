@@ -14,7 +14,7 @@ dependencies:
   rxdart: ^0.28.0
   async_notify: ^0.0.2
   meta: ">=1.15.0"
-  freezed_annotation: ^2.4.4
+  freezed_annotation: ^3.0.0
   runtime_assert: ^0.0.1+2
   future_context: ^0.0.2+13
   streamx: ^2025.1.0
@@ -24,7 +24,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  freezed: ^2.5.7
+  freezed: ^3.0.0
   build_runner: ^2.4.13
 
 dependency_overrides:
