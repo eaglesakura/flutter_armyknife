@@ -21,6 +21,15 @@ class ListSelectProperty<T> {
     return _listEquals.equals(list, other.list);
   }
 
+  /// リストを取得する.
+  /// リストがnullの場合、例外を投げる.
+  List<T> requireList() {
+    if (list == null) {
+      throw Exception('list is null');
+    }
+    return list!;
+  }
+
   @override
   String toString() {
     return list.toString();
