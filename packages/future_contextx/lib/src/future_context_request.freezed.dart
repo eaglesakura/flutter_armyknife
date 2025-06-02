@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,77 +10,56 @@ part of 'future_context_request.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$FutureContextRequest {
   /// デバッグ出力時のStackの戻る量を指定する.
-  int get debugCallStackLevel => throw _privateConstructorUsedError;
+  int get debugCallStackLevel;
 
   /// Create a copy of FutureContextRequest
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $FutureContextRequestCopyWith<FutureContextRequest> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $FutureContextRequestCopyWith<$Res> {
-  factory $FutureContextRequestCopyWith(FutureContextRequest value,
-          $Res Function(FutureContextRequest) then) =
-      _$FutureContextRequestCopyWithImpl<$Res, FutureContextRequest>;
-  @useResult
-  $Res call({int debugCallStackLevel});
-}
-
-/// @nodoc
-class _$FutureContextRequestCopyWithImpl<$Res,
-        $Val extends FutureContextRequest>
-    implements $FutureContextRequestCopyWith<$Res> {
-  _$FutureContextRequestCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of FutureContextRequest
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $FutureContextRequestCopyWith<FutureContextRequest> get copyWith =>
+      _$FutureContextRequestCopyWithImpl<FutureContextRequest>(
+          this as FutureContextRequest, _$identity);
+
   @override
-  $Res call({
-    Object? debugCallStackLevel = null,
-  }) {
-    return _then(_value.copyWith(
-      debugCallStackLevel: null == debugCallStackLevel
-          ? _value.debugCallStackLevel
-          : debugCallStackLevel // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is FutureContextRequest &&
+            (identical(other.debugCallStackLevel, debugCallStackLevel) ||
+                other.debugCallStackLevel == debugCallStackLevel));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, debugCallStackLevel);
+
+  @override
+  String toString() {
+    return 'FutureContextRequest(debugCallStackLevel: $debugCallStackLevel)';
   }
 }
 
 /// @nodoc
-abstract class _$$FutureContextRequestImplCopyWith<$Res>
-    implements $FutureContextRequestCopyWith<$Res> {
-  factory _$$FutureContextRequestImplCopyWith(_$FutureContextRequestImpl value,
-          $Res Function(_$FutureContextRequestImpl) then) =
-      __$$FutureContextRequestImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $FutureContextRequestCopyWith<$Res> {
+  factory $FutureContextRequestCopyWith(FutureContextRequest value,
+          $Res Function(FutureContextRequest) _then) =
+      _$FutureContextRequestCopyWithImpl;
   @useResult
   $Res call({int debugCallStackLevel});
 }
 
 /// @nodoc
-class __$$FutureContextRequestImplCopyWithImpl<$Res>
-    extends _$FutureContextRequestCopyWithImpl<$Res, _$FutureContextRequestImpl>
-    implements _$$FutureContextRequestImplCopyWith<$Res> {
-  __$$FutureContextRequestImplCopyWithImpl(_$FutureContextRequestImpl _value,
-      $Res Function(_$FutureContextRequestImpl) _then)
-      : super(_value, _then);
+class _$FutureContextRequestCopyWithImpl<$Res>
+    implements $FutureContextRequestCopyWith<$Res> {
+  _$FutureContextRequestCopyWithImpl(this._self, this._then);
+
+  final FutureContextRequest _self;
+  final $Res Function(FutureContextRequest) _then;
 
   /// Create a copy of FutureContextRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -88,9 +68,9 @@ class __$$FutureContextRequestImplCopyWithImpl<$Res>
   $Res call({
     Object? debugCallStackLevel = null,
   }) {
-    return _then(_$FutureContextRequestImpl(
+    return _then(_self.copyWith(
       debugCallStackLevel: null == debugCallStackLevel
-          ? _value.debugCallStackLevel
+          ? _self.debugCallStackLevel
           : debugCallStackLevel // ignore: cast_nullable_to_non_nullable
               as int,
     ));
@@ -99,24 +79,28 @@ class __$$FutureContextRequestImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$FutureContextRequestImpl implements _FutureContextRequest {
-  const _$FutureContextRequestImpl({this.debugCallStackLevel = 0});
+class _FutureContextRequest implements FutureContextRequest {
+  const _FutureContextRequest({this.debugCallStackLevel = 0});
 
   /// デバッグ出力時のStackの戻る量を指定する.
   @override
   @JsonKey()
   final int debugCallStackLevel;
 
+  /// Create a copy of FutureContextRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'FutureContextRequest(debugCallStackLevel: $debugCallStackLevel)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$FutureContextRequestCopyWith<_FutureContextRequest> get copyWith =>
+      __$FutureContextRequestCopyWithImpl<_FutureContextRequest>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FutureContextRequestImpl &&
+            other is _FutureContextRequest &&
             (identical(other.debugCallStackLevel, debugCallStackLevel) ||
                 other.debugCallStackLevel == debugCallStackLevel));
   }
@@ -124,29 +108,45 @@ class _$FutureContextRequestImpl implements _FutureContextRequest {
   @override
   int get hashCode => Object.hash(runtimeType, debugCallStackLevel);
 
+  @override
+  String toString() {
+    return 'FutureContextRequest(debugCallStackLevel: $debugCallStackLevel)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$FutureContextRequestCopyWith<$Res>
+    implements $FutureContextRequestCopyWith<$Res> {
+  factory _$FutureContextRequestCopyWith(_FutureContextRequest value,
+          $Res Function(_FutureContextRequest) _then) =
+      __$FutureContextRequestCopyWithImpl;
+  @override
+  @useResult
+  $Res call({int debugCallStackLevel});
+}
+
+/// @nodoc
+class __$FutureContextRequestCopyWithImpl<$Res>
+    implements _$FutureContextRequestCopyWith<$Res> {
+  __$FutureContextRequestCopyWithImpl(this._self, this._then);
+
+  final _FutureContextRequest _self;
+  final $Res Function(_FutureContextRequest) _then;
+
   /// Create a copy of FutureContextRequest
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$FutureContextRequestImplCopyWith<_$FutureContextRequestImpl>
-      get copyWith =>
-          __$$FutureContextRequestImplCopyWithImpl<_$FutureContextRequestImpl>(
-              this, _$identity);
+  $Res call({
+    Object? debugCallStackLevel = null,
+  }) {
+    return _then(_FutureContextRequest(
+      debugCallStackLevel: null == debugCallStackLevel
+          ? _self.debugCallStackLevel
+          : debugCallStackLevel // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
 
-abstract class _FutureContextRequest implements FutureContextRequest {
-  const factory _FutureContextRequest({final int debugCallStackLevel}) =
-      _$FutureContextRequestImpl;
-
-  /// デバッグ出力時のStackの戻る量を指定する.
-  @override
-  int get debugCallStackLevel;
-
-  /// Create a copy of FutureContextRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FutureContextRequestImplCopyWith<_$FutureContextRequestImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
+// dart format on

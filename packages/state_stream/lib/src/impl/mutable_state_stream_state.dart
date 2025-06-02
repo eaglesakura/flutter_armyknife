@@ -12,7 +12,7 @@ enum MutableStateStreamLifecycle {
 
 @internal
 @freezed
-class MutableStateStreamState<T> with _$MutableStateStreamState<T> {
+abstract class MutableStateStreamState<T> with _$MutableStateStreamState<T> {
   const factory MutableStateStreamState({
     /// ライフサイクル.
     @Default(MutableStateStreamLifecycle.alive)

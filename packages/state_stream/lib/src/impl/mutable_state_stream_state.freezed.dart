@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,104 +10,69 @@ part of 'mutable_state_stream_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$MutableStateStreamState<T> {
   /// ライフサイクル.
-  MutableStateStreamLifecycle get lifecycle =>
-      throw _privateConstructorUsedError;
+  MutableStateStreamLifecycle get lifecycle;
 
   /// 現在の値
-  T get state => throw _privateConstructorUsedError;
+  T get state;
 
   /// 開放関数.
-  Future<dynamic> Function(T) get onClose => throw _privateConstructorUsedError;
+  Future Function(T state) get onClose;
 
   /// Create a copy of MutableStateStreamState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $MutableStateStreamStateCopyWith<T, MutableStateStreamState<T>>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $MutableStateStreamStateCopyWith<T, $Res> {
-  factory $MutableStateStreamStateCopyWith(MutableStateStreamState<T> value,
-          $Res Function(MutableStateStreamState<T>) then) =
-      _$MutableStateStreamStateCopyWithImpl<T, $Res,
-          MutableStateStreamState<T>>;
-  @useResult
-  $Res call(
-      {MutableStateStreamLifecycle lifecycle,
-      T state,
-      Future<dynamic> Function(T) onClose});
-}
-
-/// @nodoc
-class _$MutableStateStreamStateCopyWithImpl<T, $Res,
-        $Val extends MutableStateStreamState<T>>
-    implements $MutableStateStreamStateCopyWith<T, $Res> {
-  _$MutableStateStreamStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of MutableStateStreamState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $MutableStateStreamStateCopyWith<T, MutableStateStreamState<T>>
+      get copyWith =>
+          _$MutableStateStreamStateCopyWithImpl<T, MutableStateStreamState<T>>(
+              this as MutableStateStreamState<T>, _$identity);
+
   @override
-  $Res call({
-    Object? lifecycle = null,
-    Object? state = freezed,
-    Object? onClose = null,
-  }) {
-    return _then(_value.copyWith(
-      lifecycle: null == lifecycle
-          ? _value.lifecycle
-          : lifecycle // ignore: cast_nullable_to_non_nullable
-              as MutableStateStreamLifecycle,
-      state: freezed == state
-          ? _value.state
-          : state // ignore: cast_nullable_to_non_nullable
-              as T,
-      onClose: null == onClose
-          ? _value.onClose
-          : onClose // ignore: cast_nullable_to_non_nullable
-              as Future<dynamic> Function(T),
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is MutableStateStreamState<T> &&
+            (identical(other.lifecycle, lifecycle) ||
+                other.lifecycle == lifecycle) &&
+            const DeepCollectionEquality().equals(other.state, state) &&
+            (identical(other.onClose, onClose) || other.onClose == onClose));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, lifecycle,
+      const DeepCollectionEquality().hash(state), onClose);
+
+  @override
+  String toString() {
+    return 'MutableStateStreamState<$T>(lifecycle: $lifecycle, state: $state, onClose: $onClose)';
   }
 }
 
 /// @nodoc
-abstract class _$$MutableStateStreamStateImplCopyWith<T, $Res>
-    implements $MutableStateStreamStateCopyWith<T, $Res> {
-  factory _$$MutableStateStreamStateImplCopyWith(
-          _$MutableStateStreamStateImpl<T> value,
-          $Res Function(_$MutableStateStreamStateImpl<T>) then) =
-      __$$MutableStateStreamStateImplCopyWithImpl<T, $Res>;
-  @override
+abstract mixin class $MutableStateStreamStateCopyWith<T, $Res> {
+  factory $MutableStateStreamStateCopyWith(MutableStateStreamState<T> value,
+          $Res Function(MutableStateStreamState<T>) _then) =
+      _$MutableStateStreamStateCopyWithImpl;
   @useResult
   $Res call(
       {MutableStateStreamLifecycle lifecycle,
       T state,
-      Future<dynamic> Function(T) onClose});
+      Future Function(T state) onClose});
 }
 
 /// @nodoc
-class __$$MutableStateStreamStateImplCopyWithImpl<T, $Res>
-    extends _$MutableStateStreamStateCopyWithImpl<T, $Res,
-        _$MutableStateStreamStateImpl<T>>
-    implements _$$MutableStateStreamStateImplCopyWith<T, $Res> {
-  __$$MutableStateStreamStateImplCopyWithImpl(
-      _$MutableStateStreamStateImpl<T> _value,
-      $Res Function(_$MutableStateStreamStateImpl<T>) _then)
-      : super(_value, _then);
+class _$MutableStateStreamStateCopyWithImpl<T, $Res>
+    implements $MutableStateStreamStateCopyWith<T, $Res> {
+  _$MutableStateStreamStateCopyWithImpl(this._self, this._then);
+
+  final MutableStateStreamState<T> _self;
+  final $Res Function(MutableStateStreamState<T>) _then;
 
   /// Create a copy of MutableStateStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -117,27 +83,27 @@ class __$$MutableStateStreamStateImplCopyWithImpl<T, $Res>
     Object? state = freezed,
     Object? onClose = null,
   }) {
-    return _then(_$MutableStateStreamStateImpl<T>(
+    return _then(_self.copyWith(
       lifecycle: null == lifecycle
-          ? _value.lifecycle
+          ? _self.lifecycle
           : lifecycle // ignore: cast_nullable_to_non_nullable
               as MutableStateStreamLifecycle,
       state: freezed == state
-          ? _value.state
+          ? _self.state
           : state // ignore: cast_nullable_to_non_nullable
               as T,
       onClose: null == onClose
-          ? _value.onClose
+          ? _self.onClose
           : onClose // ignore: cast_nullable_to_non_nullable
-              as Future<dynamic> Function(T),
+              as Future Function(T state),
     ));
   }
 }
 
 /// @nodoc
 
-class _$MutableStateStreamStateImpl<T> extends _MutableStateStreamState<T> {
-  const _$MutableStateStreamStateImpl(
+class _MutableStateStreamState<T> extends MutableStateStreamState<T> {
+  const _MutableStateStreamState(
       {this.lifecycle = MutableStateStreamLifecycle.alive,
       required this.state,
       required this.onClose})
@@ -154,18 +120,22 @@ class _$MutableStateStreamStateImpl<T> extends _MutableStateStreamState<T> {
 
   /// 開放関数.
   @override
-  final Future<dynamic> Function(T) onClose;
+  final Future Function(T state) onClose;
 
+  /// Create a copy of MutableStateStreamState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'MutableStateStreamState<$T>(lifecycle: $lifecycle, state: $state, onClose: $onClose)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$MutableStateStreamStateCopyWith<T, _MutableStateStreamState<T>>
+      get copyWith => __$MutableStateStreamStateCopyWithImpl<T,
+          _MutableStateStreamState<T>>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MutableStateStreamStateImpl<T> &&
+            other is _MutableStateStreamState<T> &&
             (identical(other.lifecycle, lifecycle) ||
                 other.lifecycle == lifecycle) &&
             const DeepCollectionEquality().equals(other.state, state) &&
@@ -176,40 +146,58 @@ class _$MutableStateStreamStateImpl<T> extends _MutableStateStreamState<T> {
   int get hashCode => Object.hash(runtimeType, lifecycle,
       const DeepCollectionEquality().hash(state), onClose);
 
+  @override
+  String toString() {
+    return 'MutableStateStreamState<$T>(lifecycle: $lifecycle, state: $state, onClose: $onClose)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$MutableStateStreamStateCopyWith<T, $Res>
+    implements $MutableStateStreamStateCopyWith<T, $Res> {
+  factory _$MutableStateStreamStateCopyWith(_MutableStateStreamState<T> value,
+          $Res Function(_MutableStateStreamState<T>) _then) =
+      __$MutableStateStreamStateCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {MutableStateStreamLifecycle lifecycle,
+      T state,
+      Future Function(T state) onClose});
+}
+
+/// @nodoc
+class __$MutableStateStreamStateCopyWithImpl<T, $Res>
+    implements _$MutableStateStreamStateCopyWith<T, $Res> {
+  __$MutableStateStreamStateCopyWithImpl(this._self, this._then);
+
+  final _MutableStateStreamState<T> _self;
+  final $Res Function(_MutableStateStreamState<T>) _then;
+
   /// Create a copy of MutableStateStreamState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$MutableStateStreamStateImplCopyWith<T, _$MutableStateStreamStateImpl<T>>
-      get copyWith => __$$MutableStateStreamStateImplCopyWithImpl<T,
-          _$MutableStateStreamStateImpl<T>>(this, _$identity);
+  $Res call({
+    Object? lifecycle = null,
+    Object? state = freezed,
+    Object? onClose = null,
+  }) {
+    return _then(_MutableStateStreamState<T>(
+      lifecycle: null == lifecycle
+          ? _self.lifecycle
+          : lifecycle // ignore: cast_nullable_to_non_nullable
+              as MutableStateStreamLifecycle,
+      state: freezed == state
+          ? _self.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as T,
+      onClose: null == onClose
+          ? _self.onClose
+          : onClose // ignore: cast_nullable_to_non_nullable
+              as Future Function(T state),
+    ));
+  }
 }
 
-abstract class _MutableStateStreamState<T> extends MutableStateStreamState<T> {
-  const factory _MutableStateStreamState(
-          {final MutableStateStreamLifecycle lifecycle,
-          required final T state,
-          required final Future<dynamic> Function(T) onClose}) =
-      _$MutableStateStreamStateImpl<T>;
-  const _MutableStateStreamState._() : super._();
-
-  /// ライフサイクル.
-  @override
-  MutableStateStreamLifecycle get lifecycle;
-
-  /// 現在の値
-  @override
-  T get state;
-
-  /// 開放関数.
-  @override
-  Future<dynamic> Function(T) get onClose;
-
-  /// Create a copy of MutableStateStreamState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MutableStateStreamStateImplCopyWith<T, _$MutableStateStreamStateImpl<T>>
-      get copyWith => throw _privateConstructorUsedError;
-}
+// dart format on
