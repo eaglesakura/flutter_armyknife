@@ -1,6 +1,6 @@
 name: flutterx_riverpod
 description: "A new Flutter package project."
-version: 2025.1.0
+version: 2025.1.1
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/flutterx_riverpod
 
@@ -11,8 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutterx: ^2025.1.0
-  riverpodx: ^2025.1.0
+  flutterx: ^2025.1.1
+  riverpodx: ^2025.1.1
 
 dev_dependencies:
   flutter_test:

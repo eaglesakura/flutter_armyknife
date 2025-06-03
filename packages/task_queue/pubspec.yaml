@@ -1,6 +1,6 @@
 name: task_queue
 description: "A new Flutter package project."
-version: 2025.1.0
+version: 2025.1.1
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/task_queue
 

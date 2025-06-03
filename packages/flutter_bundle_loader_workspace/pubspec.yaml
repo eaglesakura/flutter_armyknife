@@ -1,5 +1,5 @@
 name: flutter_bundle_loader_workspace
-version: 2025.1.0
+version: 2025.1.1
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/flutter_bundle_loader
 
@@ -12,11 +12,11 @@ dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  flutter_bundle_loader: ^2025.1.0
+  flutter_bundle_loader: ^2025.1.1
   data_reference: ^0.0.1+1
   meta: ^1.16.0
   path: ^1.9.1
-  yamlx: ^2025.1.0
+  yamlx: ^2025.1.1
   dartx: ^1.2.0
 
 dev_dependencies:

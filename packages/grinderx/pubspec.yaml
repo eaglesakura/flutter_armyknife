@@ -1,6 +1,6 @@
 name: grinderx
 description: A starting point for Dart libraries or applications.
-version: 2025.1.0
+version: 2025.1.1
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/grinderx
 
@@ -13,10 +13,10 @@ dependencies:
   yaml: ^3.1.2
   yaml_writer: ^2.0.1
   properties: ^2.1.1
-  yamlx: ^2025.1.0
+  yamlx: ^2025.1.1
   path: ^1.9.1
-  dartxx: ^2025.1.0
-  loggerx: ^2025.1.0
+  dartxx: ^2025.1.1
+  loggerx: ^2025.1.1
 
 dev_dependencies:
   lints: ^5.0.0

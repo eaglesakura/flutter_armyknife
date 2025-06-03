@@ -1,6 +1,6 @@
 name: csv2arb
 description: A starting point for Dart libraries or applications.
-version: 2025.1.0
+version: 2025.1.1
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/csv2arb
 
@@ -11,10 +11,10 @@ dependencies:
   grinder: ^0.9.5
   csv: ^6.0.0
   dartx: ^1.2.0
-  dartxx: ^2025.1.0
+  dartxx: ^2025.1.1
   freezed_annotation: ^3.0.0
-  grinderx: ^2025.1.0
-  loggerx: ^2025.1.0
+  grinderx: ^2025.1.1
+  loggerx: ^2025.1.1
   path: ^1.9.1
 
 dev_dependencies:

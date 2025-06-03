@@ -1,6 +1,6 @@
 name: loggerx
 description: A starting point for Dart libraries or applications.
-version: 2025.1.0
+version: 2025.1.1
 repository: https://github.com/eaglesakura/flutter_armyknife/loggerx
 
 environment:
@@ -9,7 +9,7 @@ environment:
 resolution: workspace
 
 dependencies:
-  dartxx: ^2025.1.0
+  dartxx: ^2025.1.1
   logger: ^2.4.0
   platformx: ^1.1.0
 

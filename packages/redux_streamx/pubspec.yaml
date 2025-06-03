@@ -1,6 +1,6 @@
 name: redux_streamx
 description: "A new Flutter package project."
-version: 2025.1.0
+version: 2025.1.1
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/redux_streamx
 
@@ -11,10 +11,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  future_contextx: ^2025.1.0
+  future_contextx: ^2025.1.1
   meta: ^1.15.0
   redux_stream2: ^1.0.0+2
-  riverpodx: ^2025.1.0
+  riverpodx: ^2025.1.1
   runtime_assert: ^0.0.1+2
   rxdart: ^0.28.0
 

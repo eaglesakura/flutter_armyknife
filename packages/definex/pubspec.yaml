@@ -1,6 +1,6 @@
 name: definex
 description: A sample command-line application.
-version: 2025.1.0
+version: 2025.1.1
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/definex
 
@@ -10,7 +10,7 @@ environment:
 dependencies:
   mustache_template: ^2.0.0
   grinder: ^0.9.5
-  grinderx: ^2025.1.0
+  grinderx: ^2025.1.1
   dartx: ^1.2.0
 
 dev_dependencies:

@@ -1,6 +1,6 @@
 name: streamx
 description: A starting point for Dart libraries or applications.
-version: 2025.1.0
+version: 2025.1.1
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/streamx
 
@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   rxdart: ^0.28.0
-  dartxx: ^2025.1.0
+  dartxx: ^2025.1.1
 
 dev_dependencies:
   lints: ^5.0.0

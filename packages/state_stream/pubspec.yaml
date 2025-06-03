@@ -1,6 +1,6 @@
 name: state_stream
 description: "A new Flutter package project."
-version: 2025.1.0
+version: 2025.1.1
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/state_stream
 
@@ -10,16 +10,16 @@ environment:
 
 dependencies:
   async_notify: ^0.0.2
-  dartxx: ^2025.1.0
+  dartxx: ^2025.1.1
   flutter:
     sdk: flutter
   freezed_annotation: ^3.0.0
-  future_contextx: ^2025.1.0
+  future_contextx: ^2025.1.1
   meta: ^1.15.0
-  riverpodx: ^2025.1.0
+  riverpodx: ^2025.1.1
   runtime_assert: ^0.0.1+2
   rxdart: ^0.28.0
-  task_queue: ^2025.1.0
+  task_queue: ^2025.1.1
 
 dev_dependencies:
   flutter_test:
