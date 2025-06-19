@@ -5,15 +5,15 @@ resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/riverpodx
 
 environment:
-  sdk: ^3.6.0
-  flutter: ">=1.17.0"
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.32.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.6.1
   hooks_riverpod: ^2.6.1
-  flutter_hooks: ^0.20.5
+  flutter_hooks: ^0.21.2
   flutterx: ^2025.1.1
   task_queue: ^2025.1.1
   future_contextx: ^2025.1.1
@@ -22,4 +22,4 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0

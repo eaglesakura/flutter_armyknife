@@ -5,14 +5,14 @@ resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/redux_streamx
 
 environment:
-  sdk: ^3.6.0
-  flutter: ">=1.17.0"
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.32.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   future_contextx: ^2025.1.1
-  meta: ^1.15.0
+  meta: ^1.16.0
   redux_stream2: ^1.0.0+2
   riverpodx: ^2025.1.1
   runtime_assert: ^0.0.1+2
@@ -21,4 +21,4 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0

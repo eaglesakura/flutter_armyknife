@@ -5,8 +5,8 @@ resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/state_stream
 
 environment:
-  sdk: ^3.6.0
-  flutter: ">=3.27.0"
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.32.0 <4.0.0"
 
 dependencies:
   async_notify: ^0.0.2
@@ -15,7 +15,7 @@ dependencies:
     sdk: flutter
   freezed_annotation: ^3.0.0
   future_contextx: ^2025.1.1
-  meta: ^1.15.0
+  meta: ^1.16.0
   riverpodx: ^2025.1.1
   runtime_assert: ^0.0.1+2
   rxdart: ^0.28.0
@@ -24,6 +24,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   freezed: ^3.0.0
-  build_runner: ^2.4.13
+  build_runner: ^2.5.2
