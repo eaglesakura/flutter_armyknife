@@ -11,7 +11,7 @@ import 'package:path/path.dart' as p;
 final _flutter = Platform.isWindows ? 'flutter.bat' : 'flutter';
 
 /// dartコマンド
-final _dart = Platform.isWindows ? 'dart.exe' : 'dart';
+final _dart = Platform.isWindows ? 'dart.bat' : 'dart';
 
 extension GrinderContextExtensions on GrinderContext {
   String _normalizedPath(String path) {

@@ -189,8 +189,8 @@ class DartPackage {
     }
 
     await context.dart(
-      'pub',
-      args: ['run', 'build_runner', 'build', '--delete-conflicting-outputs'],
+      'run',
+      args: ['build_runner', 'build', '--delete-conflicting-outputs'],
       workingDirectory: directory.path,
     );
 
