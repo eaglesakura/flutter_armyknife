@@ -11,9 +11,9 @@ class ProviderContainerBuilder {
 
   /// 登録済みの [Provider] と [Override] のリストを取得する.
   List<Override> get overrides => [
-        ..._overrides,
-        ..._providerOverrides.values,
-      ];
+    ..._overrides,
+    ..._providerOverrides.values,
+  ];
 
   /// [ProviderContainer] に追加する [Override] を登録する.
   /// 同じProviderに対して操作が行われた場合、上書きされる.

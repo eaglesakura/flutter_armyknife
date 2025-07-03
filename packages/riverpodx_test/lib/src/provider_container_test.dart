@@ -38,7 +38,8 @@ extension ProviderContainerTestExtensions on ProviderContainer {
   }
 
   List<ProviderListenableOrFamily> _getDependencies(
-      ProviderListenable provider) {
+    ProviderListenable provider,
+  ) {
     if (provider is AutoDisposeProvider) {
       return provider.dependencies?.toList() ?? [];
     } else if (provider is Provider) {

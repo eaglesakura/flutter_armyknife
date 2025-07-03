@@ -54,7 +54,7 @@ final class Exceptions {
       IllegalArgumentException _ => e.cause,
       IllegalStateException _ => e.cause,
       UnsupportedPlatformException _ => e.cause,
-      _ => null
+      _ => null,
     };
   }
 }

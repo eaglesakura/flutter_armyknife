@@ -39,11 +39,13 @@ void main() {
 
     final tasks = <Future<int>>[];
     for (var i = 0; i < loop; ++i) {
-      tasks.add(queue.queue(() async {
-        await Future.delayed(Duration(milliseconds: rand.nextInt(100)));
-        print('task $i');
-        return i;
-      }));
+      tasks.add(
+        queue.queue(() async {
+          await Future.delayed(Duration(milliseconds: rand.nextInt(100)));
+          print('task $i');
+          return i;
+        }),
+      );
     }
 
     await Future.wait(tasks).then((values) {

@@ -29,8 +29,11 @@ class Xcodegen {
 
   /// xcodegenを実行する
   Future run() async {
-    final environment = YamlX.find<Map<dynamic, dynamic>>(
-            configurations, ['xcodegen', 'env']) ??
+    final environment =
+        YamlX.find<Map<dynamic, dynamic>>(configurations, [
+          'xcodegen',
+          'env',
+        ]) ??
         {};
 
     _log.i('xcodegen');

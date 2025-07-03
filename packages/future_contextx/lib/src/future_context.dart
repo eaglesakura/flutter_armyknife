@@ -24,11 +24,12 @@ abstract class FutureContext {
   factory FutureContext({
     String? tag,
     FutureContextRequest request = const FutureContextRequest(),
-  }) =>
-      FutureContextProxy(fc.FutureContext(
-        tag: tag,
-        debugCallStackLevel: request.debugCallStackLevel + 1,
-      ));
+  }) => FutureContextProxy(
+    fc.FutureContext(
+      tag: tag,
+      debugCallStackLevel: request.debugCallStackLevel + 1,
+    ),
+  );
 
   /// 指定した親Contextを持つFutureContextを作成する.
   /// 親のContextがキャンセルされると、このFutureContextもキャンセルされる.
@@ -42,11 +43,13 @@ abstract class FutureContext {
       throw IllegalArgumentException('Unsupported Parent');
     }
 
-    return FutureContextProxy(fc.FutureContext.child(
-      impl,
-      tag: tag,
-      debugCallStackLevel: request.debugCallStackLevel + 1,
-    ));
+    return FutureContextProxy(
+      fc.FutureContext.child(
+        impl,
+        tag: tag,
+        debugCallStackLevel: request.debugCallStackLevel + 1,
+      ),
+    );
   }
 
   /// 指定のContext一覧をグルーピングしてFutureContextを作成する.
@@ -64,11 +67,13 @@ abstract class FutureContext {
       return impl;
     }).toList();
 
-    return FutureContextProxy(fc.FutureContext.group(
-      implList,
-      tag: tag,
-      debugCallStackLevel: request.debugCallStackLevel + 1,
-    ));
+    return FutureContextProxy(
+      fc.FutureContext.group(
+        implList,
+        tag: tag,
+        debugCallStackLevel: request.debugCallStackLevel + 1,
+      ),
+    );
   }
 
   /// 処理が継続中の場合trueを返却する.

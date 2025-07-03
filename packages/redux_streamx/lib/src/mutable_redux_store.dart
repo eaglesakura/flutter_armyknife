@@ -76,13 +76,15 @@ class MutableReduxStore<T extends ReduxState> implements ReduxStore<T> {
 
     final unlock = Completer<T>();
     final initial = Completer<T>();
-    unawaited(update((state) async* {
-      initial.complete(state);
-      final newState = await unlock.future;
-      if (newState != state) {
-        yield newState;
-      }
-    }));
+    unawaited(
+      update((state) async* {
+        initial.complete(state);
+        final newState = await unlock.future;
+        if (newState != state) {
+          yield newState;
+        }
+      }),
+    );
     final state = await initial.future;
     final lock = ReduxStoreLockImpl<T>(state, unlock);
     return lock;
@@ -116,9 +118,11 @@ class MutableReduxStore<T extends ReduxState> implements ReduxStore<T> {
     }
 
     final completer = Completer<T>();
-    unawaited(update((state) async* {
-      completer.complete(state);
-    }));
+    unawaited(
+      update((state) async* {
+        completer.complete(state);
+      }),
+    );
     return completer.future;
   }
 }

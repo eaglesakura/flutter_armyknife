@@ -40,7 +40,7 @@ final class Streams {
 
   /// tupleへの型指定を省略してStreamのcombineを行う
   static CombineLatestStream<dynamic, (T1, T2, T3, T4)>
-      combineLatest4<T1, T2, T3, T4>(
+  combineLatest4<T1, T2, T3, T4>(
     Stream<T1> a,
     Stream<T2> b,
     Stream<T3> c,
@@ -65,20 +65,22 @@ final class Streams {
   ) {
     var launched = false;
     late final Subject<T> subject;
-    subject = PublishSubject(onListen: () async {
-      if (launched) {
-        return;
-      }
-      launched = true;
-      try {
-        await block(StreamEmitter._(subject));
-        // ignore: avoid_catches_without_on_clauses
-      } catch (e, stackTrace) {
-        subject.addError(e, stackTrace);
-      } finally {
-        await subject.close();
-      }
-    });
+    subject = PublishSubject(
+      onListen: () async {
+        if (launched) {
+          return;
+        }
+        launched = true;
+        try {
+          await block(StreamEmitter._(subject));
+          // ignore: avoid_catches_without_on_clauses
+        } catch (e, stackTrace) {
+          subject.addError(e, stackTrace);
+        } finally {
+          await subject.close();
+        }
+      },
+    );
     return subject.stream;
   }
 

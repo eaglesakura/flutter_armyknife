@@ -22,14 +22,14 @@ class MutableStateStreamImpl<T> implements MutableStateStream<T> {
     required T initial,
     required Future<void> Function(T state) onClose,
     required Dispatcher<T>? dispatcher,
-  })  : _subject = BehaviorSubject.seeded(
-          MutableStateStreamState(
-            state: initial,
-            lifecycle: MutableStateStreamLifecycle.alive,
-            onClose: onClose,
-          ),
-        ),
-        _dispatcher = dispatcher ?? Dispatcher<T>();
+  }) : _subject = BehaviorSubject.seeded(
+         MutableStateStreamState(
+           state: initial,
+           lifecycle: MutableStateStreamLifecycle.alive,
+           onClose: onClose,
+         ),
+       ),
+       _dispatcher = dispatcher ?? Dispatcher<T>();
 
   @override
   bool get isClosed =>
@@ -50,13 +50,17 @@ class MutableStateStreamImpl<T> implements MutableStateStream<T> {
 
   @override
   Future close() async {
-    check(_subject.value.lifecycle == MutableStateStreamLifecycle.alive,
-        'StateStream<$T> is already closed.');
+    check(
+      _subject.value.lifecycle == MutableStateStreamLifecycle.alive,
+      'StateStream<$T> is already closed.',
+    );
 
     await _taskQueue.queue(() async {
       final value = _subject.value;
-      check(value.lifecycle == MutableStateStreamLifecycle.alive,
-          'StateStream<$T> is already closed.');
+      check(
+        value.lifecycle == MutableStateStreamLifecycle.alive,
+        'StateStream<$T> is already closed.',
+      );
 
       /// closingに変更
       _subject.value = value.copyWith(
@@ -82,7 +86,8 @@ class MutableStateStreamImpl<T> implements MutableStateStream<T> {
     Future<R> Function(
       T currentState,
       MutableStateStreamEmitter<T> emitter,
-    ) block, {
+    )
+    block, {
     UpdateWithLockOptions options = const UpdateWithLockOptions(),
   }) {
     return _taskQueue.queue(() async {

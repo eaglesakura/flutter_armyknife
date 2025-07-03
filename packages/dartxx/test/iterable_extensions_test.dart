@@ -26,7 +26,7 @@ void main() {
       7,
       8,
       9,
-      10
+      10,
     ].distinctUnique();
     expect(result2, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
   });
@@ -46,7 +46,7 @@ void main() {
         'c': 4,
         'd': {
           'g': 7,
-        }
+        },
       },
     );
     expect(result, {

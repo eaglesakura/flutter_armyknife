@@ -21,7 +21,7 @@ abstract class Logger {
     void Function(String message)? debug,
     void Function(String message)? warning,
     void Function(String message, [dynamic error, StackTrace? stackTrace])?
-        error,
+    error,
   }) {
     // ignore: avoid_print
     void fallback(String msg) => print(msg);

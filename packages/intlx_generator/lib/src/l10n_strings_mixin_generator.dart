@@ -12,6 +12,7 @@ class L10nStringsMixinGenerator {
   /// 各packageごとに生成することで、packageごとのローカライズテキストを管理する.
   Future generate(
     File outputDartFile, {
+
     /// path/to/l10n_strings_mixin.mustache
     required File l10nStringsMixinMustache,
 
@@ -24,11 +25,13 @@ class L10nStringsMixinGenerator {
     final mustacheValues = {
       'className': className,
       'localizeStrings': localizedTexts
-          .map((e) => <String, dynamic>{
-                'id': e.id,
-                'placeholders': e.placeHolders,
-                'hasPlaceholders': e.placeHolders.isNotEmpty,
-              })
+          .map(
+            (e) => <String, dynamic>{
+              'id': e.id,
+              'placeholders': e.placeHolders,
+              'hasPlaceholders': e.placeHolders.isNotEmpty,
+            },
+          )
           .toList(),
     };
 

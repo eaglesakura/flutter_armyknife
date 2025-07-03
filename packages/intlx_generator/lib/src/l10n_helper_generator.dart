@@ -12,6 +12,7 @@ class L10nHelperGenerator {
   /// 生成する.
   Future generate(
     File outputDartFile, {
+
     /// template mustache file.
     required File appDelegateMustache,
 
@@ -28,11 +29,13 @@ class L10nHelperGenerator {
       'importL10n': importL10nDartPath,
       'className': className,
       'localizeStrings': localizedTexts
-          .map((e) => <String, dynamic>{
-                'id': e.id,
-                'placeholders': e.placeHolders,
-                'hasPlaceholders': e.placeHolders.isNotEmpty,
-              })
+          .map(
+            (e) => <String, dynamic>{
+              'id': e.id,
+              'placeholders': e.placeHolders,
+              'hasPlaceholders': e.placeHolders.isNotEmpty,
+            },
+          )
           .toList(),
     };
 

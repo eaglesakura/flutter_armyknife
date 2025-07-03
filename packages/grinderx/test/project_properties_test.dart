@@ -5,10 +5,12 @@ import 'package:test/test.dart';
 
 void main() {
   test('プロパティを読み込める', () async {
-    final props = ProjectProperties.load(files: [
-      File('test_asset/prop_0.properties').absolute,
-      File('test_asset/prop_1.properties').absolute,
-    ]);
+    final props = ProjectProperties.load(
+      files: [
+        File('test_asset/prop_0.properties').absolute,
+        File('test_asset/prop_1.properties').absolute,
+      ],
+    );
 
     expect(props.get('valueA'), 'abc');
     expect(props.get('valueB'), 'def');

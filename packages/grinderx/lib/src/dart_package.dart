@@ -121,14 +121,15 @@ class DartPackage {
       final pubspec = File(p.join(directory.path, 'pubspec.yaml'));
       if (pubspec.existsSync()) {
         _log('pubspec: ${pubspec.path}');
-        final result = [
-          this,
-          ...workspacePackages,
-        ].where(
-          (pub) {
-            return p.equals(pub.directory.path, directory.path);
-          },
-        ).firstOrNull;
+        final result =
+            [
+              this,
+              ...workspacePackages,
+            ].where(
+              (pub) {
+                return p.equals(pub.directory.path, directory.path);
+              },
+            ).firstOrNull;
         _log('focus: ${result?.directory.path}');
         return result;
       }
@@ -200,12 +201,14 @@ class DartPackage {
           .where((entity) => entity.path.endsWith('.freezed.dart'))
           .whereType<File>()
           .forEach((file) {
-        // freezed出力時、Unionで異なる型・同一プロパティ名があると
-        // "InvalidType" という型名が生成されるため、dynamicに変換する
-        final content =
-            file.readAsStringSync().replaceAll('InvalidType', 'dynamic');
-        file.writeAsStringSync(content);
-      });
+            // freezed出力時、Unionで異なる型・同一プロパティ名があると
+            // "InvalidType" という型名が生成されるため、dynamicに変換する
+            final content = file.readAsStringSync().replaceAll(
+              'InvalidType',
+              'dynamic',
+            );
+            file.writeAsStringSync(content);
+          });
     }
     await format();
   }
@@ -228,6 +231,7 @@ class DartPackage {
   /// dartコマンド、もしくはflutterコマンドの適切なほうを実行する.
   Future<String> runDartOrFlutter(
     String subCommand, {
+
     /// 引数
     List<String> args = const [],
 

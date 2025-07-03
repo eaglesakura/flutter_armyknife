@@ -5,7 +5,7 @@ class _CallbackImpl implements Logger {
   final void Function(String message) debug;
   final void Function(String message) warning;
   final void Function(String message, [dynamic error, StackTrace? stackTrace])
-      error;
+  error;
 
   _CallbackImpl({
     required this.info,

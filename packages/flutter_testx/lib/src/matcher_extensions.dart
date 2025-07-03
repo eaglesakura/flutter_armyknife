@@ -12,7 +12,10 @@ T expectIsA<T>(
 
 /// インスタンスがTであることを確認し、assertionを実行する.
 R expectInstanceOf<T, R>(
-    dynamic actual, TypeMatcher<T> matcher, R Function(T value) assertion) {
+  dynamic actual,
+  TypeMatcher<T> matcher,
+  R Function(T value) assertion,
+) {
   expect(actual, matcher);
   return assertion(actual as T);
 }

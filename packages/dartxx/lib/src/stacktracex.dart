@@ -7,7 +7,8 @@ class StackTraceX {
   ///
   /// [popLevel] はスタックトレースの深さを指定することができる.
   static String currentFileName({int popLevel = 0}) {
-    final popLevel_ = () {
+    final popLevel_ =
+        () {
           if (kIsWebCompat) {
             return 2;
           } else {

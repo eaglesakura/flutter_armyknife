@@ -12,12 +12,13 @@ Future<T> withContext<T>(
   late final FutureContext context;
   final contextRequest =
       contexts.whereType<FutureContextRequest>().firstOrNull ??
-          const FutureContextRequest(
-            debugCallStackLevel: 1,
-          );
+      const FutureContextRequest(
+        debugCallStackLevel: 1,
+      );
   final withContextTag = contexts.whereType<WithContextTag>().firstOrNull;
-  final withContextTimeout =
-      contexts.whereType<WithContextTimeout>().firstOrNull;
+  final withContextTimeout = contexts
+      .whereType<WithContextTimeout>()
+      .firstOrNull;
 
   // Iterableが含まれる場合はunwrapを促す
   if (contexts.any((element) => element is Iterable)) {

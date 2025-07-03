@@ -36,7 +36,8 @@ abstract class MutableStateStream<T> implements StateStream<T> {
     Future<R> Function(
       T currentState,
       MutableStateStreamEmitter<T> emitter,
-    ) block, {
+    )
+    block, {
     UpdateWithLockOptions options = const UpdateWithLockOptions(),
   });
 

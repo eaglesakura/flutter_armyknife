@@ -18,7 +18,8 @@ final class LoggerProxy {
     String message, [
     dynamic error,
     StackTrace? stackTrace,
-  ]) e = _DefaultLogImpl.e;
+  ])
+  e = _DefaultLogImpl.e;
 
   /// warningレベル出力関数
   static Function(String tag, String message) w = _DefaultLogImpl.w;
@@ -51,8 +52,12 @@ final class _DefaultLogImpl {
     _warningImpl.d(_format(tag, message));
   }
 
-  static void e(String tag, String message,
-      [dynamic error, StackTrace? stackTrace]) {
+  static void e(
+    String tag,
+    String message, [
+    dynamic error,
+    StackTrace? stackTrace,
+  ]) {
     _warningImpl.e(
       _format(tag, message),
       error: error,

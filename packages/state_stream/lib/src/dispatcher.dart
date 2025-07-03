@@ -20,7 +20,7 @@ abstract class Dispatcher<T> {
     T currentState,
     MutableStateStreamEmitter<T> emitter,
     Future<R> Function(T currentState, MutableStateStreamEmitter<T> emitter)
-        block,
+    block,
   );
 
   static Dispatcher<T> _defaultDispatcherFactory<T>() => _Dispatcher();
@@ -30,11 +30,12 @@ abstract class Dispatcher<T> {
 class _Dispatcher<T> implements Dispatcher<T> {
   @override
   Future<R> dispatch<R>(
-      MutableStateStream<T> stream,
-      T currentState,
-      MutableStateStreamEmitter<T> emitter,
-      Future<R> Function(T currentState, MutableStateStreamEmitter<T> emitter)
-          block) {
+    MutableStateStream<T> stream,
+    T currentState,
+    MutableStateStreamEmitter<T> emitter,
+    Future<R> Function(T currentState, MutableStateStreamEmitter<T> emitter)
+    block,
+  ) {
     return block(currentState, emitter);
   }
 }

@@ -27,10 +27,11 @@ class ProjectProperties {
 
     /// ディレクトリ直下のファイルは列挙する
     for (final dir in directories) {
-      propertyFileList.addAll(dir
-          .listSync()
-          .whereType<File>()
-          .where((e) => e.path.endsWith('.properties')));
+      propertyFileList.addAll(
+        dir.listSync().whereType<File>().where(
+          (e) => e.path.endsWith('.properties'),
+        ),
+      );
     }
 
     final properties = Properties.fromMap({});
@@ -63,6 +64,7 @@ class ProjectProperties {
   /// Propertyから指定のプレフィクスを持つMapを抽出する.
   Map<String, String> subset(
     String prefix, {
+
     /// trueの場合、プレフィクスを削除する.
     bool trimPrefix = true,
   }) {

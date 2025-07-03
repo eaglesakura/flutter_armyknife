@@ -17,6 +17,7 @@ class DefinesGenerator {
   /// defines.dartを生成する.
   void generate(
     File outputDartFile, {
+
     /// path/to/defines.mustache
     required File definesMustache,
 
@@ -36,9 +37,12 @@ class DefinesGenerator {
       outputDartFile.parent.createSync(recursive: true);
     }
     outputDartFile.writeAsStringSync(renderString);
-    context.dart('format', args: [
-      outputDartFile.absolute.path,
-    ]);
+    context.dart(
+      'format',
+      args: [
+        outputDartFile.absolute.path,
+      ],
+    );
   }
 
   /// Mustacheテンプレート引数を生成する.

@@ -74,9 +74,11 @@ class L10nLocalizedTextTable {
     String arbFileNamePrefix = 'intl_',
   }) async {
     final templates = languages
-        .map((lang) => MapEntry(lang, <String, dynamic>{
-              '@@locale': lang,
-            }))
+        .map(
+          (lang) => MapEntry(lang, <String, dynamic>{
+            '@@locale': lang,
+          }),
+        )
         .toMap();
 
     for (final text in localizedTexts) {
@@ -111,8 +113,9 @@ class L10nLocalizedTextTable {
     for (final tmp in templates.entries) {
       final lang = tmp.key;
       final data = tmp.value;
-      final arbFile =
-          File(path.join(output.path, '$arbFileNamePrefix$lang.arb'));
+      final arbFile = File(
+        path.join(output.path, '$arbFileNamePrefix$lang.arb'),
+      );
       const encoder = JsonEncoder.withIndent('  ');
       arbFile.writeAsStringSync(encoder.convert(data));
       _log.i('Generated: ${arbFile.path}');

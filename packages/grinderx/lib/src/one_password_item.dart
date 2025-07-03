@@ -21,10 +21,13 @@ class OnePasswordItem {
     required String field,
     bool trimResult = true,
   }) async {
-    final result = await runAsync('op', arguments: [
-      'read',
-      'op://$vault/$item/$field',
-    ]);
+    final result = await runAsync(
+      'op',
+      arguments: [
+        'read',
+        'op://$vault/$item/$field',
+      ],
+    );
     if (trimResult) {
       return result.trim();
     } else {
@@ -42,13 +45,16 @@ class OnePasswordItem {
     bool force = true,
     required String field,
   }) async {
-    final result = await runAsync('op', arguments: [
-      'read',
-      if (force) '--force',
-      '--out-file',
-      output.path,
-      'op://$vault/$item/$field',
-    ]);
+    final result = await runAsync(
+      'op',
+      arguments: [
+        'read',
+        if (force) '--force',
+        '--out-file',
+        output.path,
+        'op://$vault/$item/$field',
+      ],
+    );
     return result;
   }
 }

@@ -15,7 +15,8 @@ class PathProviders {
   /// Throws a [path_provider.MissingPlatformDirectoryException] if the system is unable to
   /// provide the directory.
   static final applicationCacheDirectory = Provider<Directory>(
-      (ref) => throw UnimplementedError('applicationCacheDirectory'));
+    (ref) => throw UnimplementedError('applicationCacheDirectory'),
+  );
 
   /// Path to a directory where the application may place data that is
   /// user-generated, or that cannot otherwise be recreated by your application.
@@ -31,7 +32,8 @@ class PathProviders {
   /// Throws a [path_provider.MissingPlatformDirectoryException] if the system is unable to
   /// provide the directory.
   static final applicationDocumentsDirectory = Provider<Directory>(
-      (ref) => throw UnimplementedError('applicationDocumentsDirectory'));
+    (ref) => throw UnimplementedError('applicationDocumentsDirectory'),
+  );
 
   /// Path to a directory where the application may place application-specific
   /// cache files.
@@ -41,7 +43,8 @@ class PathProviders {
   /// Throws a [path_provider.MissingPlatformDirectoryException] if the system is unable to
   /// provide the directory.
   static final applicationSupportDirectory = Provider<Directory>(
-      (ref) => throw UnimplementedError('applicationSupportDirectory'));
+    (ref) => throw UnimplementedError('applicationSupportDirectory'),
+  );
 
   /// Path to the directory where downloaded files can be stored.
   ///
@@ -51,7 +54,8 @@ class PathProviders {
   /// Throws an [UnsupportedError] if this is not supported on the current
   /// platform.
   static final downloadsDirectory = Provider<Directory>(
-      (ref) => throw UnimplementedError('downloadsDirectory'));
+    (ref) => throw UnimplementedError('downloadsDirectory'),
+  );
 
   /// Path to a directory where the application may access top level storage.
   ///
@@ -62,7 +66,8 @@ class PathProviders {
   /// platform (for example, on iOS where it is not possible to access outside
   /// the app's sandbox).
   static final externalStorageDirectory = Provider<Directory>(
-      (ref) => throw UnimplementedError('externalStorageDirectory'));
+    (ref) => throw UnimplementedError('externalStorageDirectory'),
+  );
 
   /// Path to the directory where application can store files that are persistent,
   /// backed up, and not visible to the user, such as sqlite.db.
@@ -77,7 +82,8 @@ class PathProviders {
   /// Throws a [path_provider.MissingPlatformDirectoryException] if the system is unable to
   /// provide the directory on a supported platform.
   static final libraryDirectory = Provider<Directory>(
-      (ref) => throw UnimplementedError('libraryDirectory'));
+    (ref) => throw UnimplementedError('libraryDirectory'),
+  );
 
   /// Path to the temporary directory on the device that is not backed up and is
   /// suitable for storing caches of downloaded files.
@@ -94,7 +100,8 @@ class PathProviders {
   /// Throws a [path_provider.MissingPlatformDirectoryException] if the system is unable to
   /// provide the directory.
   static final temporaryDirectory = Provider<Directory>(
-      (ref) => throw UnimplementedError('temporaryDirectory'));
+    (ref) => throw UnimplementedError('temporaryDirectory'),
+  );
 
   /// 指定したディレクトリを上書きして返す.
   static List<Override> injectWithValue({
@@ -108,19 +115,23 @@ class PathProviders {
   }) {
     return [
       if (applicationCacheDirectory != null)
-        PathProviders.applicationCacheDirectory
-            .overrideWithValue(applicationCacheDirectory),
+        PathProviders.applicationCacheDirectory.overrideWithValue(
+          applicationCacheDirectory,
+        ),
       if (applicationDocumentsDirectory != null)
-        PathProviders.applicationDocumentsDirectory
-            .overrideWithValue(applicationDocumentsDirectory),
+        PathProviders.applicationDocumentsDirectory.overrideWithValue(
+          applicationDocumentsDirectory,
+        ),
       if (applicationSupportDirectory != null)
-        PathProviders.applicationSupportDirectory
-            .overrideWithValue(applicationSupportDirectory),
+        PathProviders.applicationSupportDirectory.overrideWithValue(
+          applicationSupportDirectory,
+        ),
       if (downloadsDirectory != null)
         PathProviders.downloadsDirectory.overrideWithValue(downloadsDirectory),
       if (externalStorageDirectory != null)
-        PathProviders.externalStorageDirectory
-            .overrideWithValue(externalStorageDirectory),
+        PathProviders.externalStorageDirectory.overrideWithValue(
+          externalStorageDirectory,
+        ),
       if (libraryDirectory != null)
         PathProviders.libraryDirectory.overrideWithValue(libraryDirectory),
       if (temporaryDirectory != null)
@@ -139,19 +150,25 @@ class PathProviders {
       }
     }
 
-    final applicationCacheDirectory =
-        await getOrNull(path_provider.getApplicationCacheDirectory);
-    final applicationDocumentsDirectory =
-        await getOrNull(path_provider.getApplicationDocumentsDirectory);
-    final applicationSupportDirectory =
-        await getOrNull(path_provider.getApplicationSupportDirectory);
-    final downloadsDirectory =
-        await getOrNull(path_provider.getDownloadsDirectory);
-    final externalStorageDirectory =
-        await getOrNull(path_provider.getExternalStorageDirectory);
+    final applicationCacheDirectory = await getOrNull(
+      path_provider.getApplicationCacheDirectory,
+    );
+    final applicationDocumentsDirectory = await getOrNull(
+      path_provider.getApplicationDocumentsDirectory,
+    );
+    final applicationSupportDirectory = await getOrNull(
+      path_provider.getApplicationSupportDirectory,
+    );
+    final downloadsDirectory = await getOrNull(
+      path_provider.getDownloadsDirectory,
+    );
+    final externalStorageDirectory = await getOrNull(
+      path_provider.getExternalStorageDirectory,
+    );
     final libraryDirectory = await getOrNull(path_provider.getLibraryDirectory);
-    final temporaryDirectory =
-        await getOrNull(path_provider.getTemporaryDirectory);
+    final temporaryDirectory = await getOrNull(
+      path_provider.getTemporaryDirectory,
+    );
     return injectWithValue(
       applicationCacheDirectory: applicationCacheDirectory,
       applicationDocumentsDirectory: applicationDocumentsDirectory,

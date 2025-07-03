@@ -16,7 +16,8 @@ typedef ProviderAsyncDisposeFunction = dynamic Function();
 /// );
 class ProviderContainerAsyncHelper {
   static final _provider = Provider<ProviderContainerAsyncHelper>(
-      (ref) => throw UnimplementedError('$ProviderContainerAsyncHelper'));
+    (ref) => throw UnimplementedError('$ProviderContainerAsyncHelper'),
+  );
 
   static final _inject = [
     _provider.overrideWith((ref) {
@@ -69,9 +70,11 @@ extension RefAsyncExtensions on Ref {
   /// 初期化待ちを行うことができる.
   void registerInitializeTasks(Future task) {
     final helper = read(ProviderContainerAsyncHelper._provider);
-    unawaited(helper._tasks.queue(() async {
-      await task;
-    }));
+    unawaited(
+      helper._tasks.queue(() async {
+        await task;
+      }),
+    );
   }
 
   /// すべての初期化関数が完了するまで待つ.
