@@ -32,7 +32,7 @@ void main() {
   });
 
   test('Map.merge', () {
-    final result = MapX.merge<String, dynamic>(
+    final result = MapX.merge(
       {
         'a': 1,
         'b': 2,

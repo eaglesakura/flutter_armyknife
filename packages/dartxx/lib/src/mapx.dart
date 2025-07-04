@@ -1,18 +1,18 @@
 class MapX {
   const MapX._();
-  static Map<K, V> merge<K, V>(
-    Map<K, V> a,
-    Map<K, V> b,
+  static Map<String, dynamic> merge(
+    Map<String, dynamic> a,
+    Map<String, dynamic> b,
   ) {
-    final result = <K, V>{};
+    final result = <String, dynamic>{};
     _mergeImpl(result, a, b);
     return result;
   }
 
-  static void _mergeImpl<K, V>(
-    Map<K, V> result,
-    Map<K, V> a,
-    Map<K, V> b,
+  static void _mergeImpl(
+    Map<String, dynamic> result,
+    Map<String, dynamic> a,
+    Map<String, dynamic> b,
   ) {
     final keys = {
       ...a.keys,
@@ -21,18 +21,18 @@ class MapX {
     for (final key in keys) {
       if (b.containsKey(key)) {
         if (a[key] is Map && b[key] is Map) {
-          final child = <K, V>{};
+          final child = <String, dynamic>{};
           _mergeImpl(
             child,
-            a[key] as Map<K, V>,
-            b[key] as Map<K, V>,
+            a[key] as Map<String, dynamic>,
+            b[key] as Map<String, dynamic>,
           );
-          result[key] = child as V;
+          result[key] = child;
         } else {
-          result[key] = b[key] as V;
+          result[key] = b[key];
         }
       } else {
-        result[key] = a[key] as V;
+        result[key] = a[key];
       }
     }
   }
