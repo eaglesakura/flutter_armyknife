@@ -53,12 +53,34 @@ final class YamlX {
 
   static void _yamlMapToMap(Map<String, dynamic> result, yml.YamlMap yamlMap) {
     for (final entry in yamlMap.entries) {
-      if (entry.value is yml.YamlMap) {
+      final key = entry.key.toString();
+      final value = entry.value;
+      if (value is yml.YamlMap) {
         final child = <String, dynamic>{};
-        _yamlMapToMap(child, entry.value as yml.YamlMap);
-        result[entry.key.toString()] = child;
+        _yamlMapToMap(child, value);
+        result[key] = child;
+      } else if (value is yml.YamlList) {
+        final child = <dynamic>[];
+        _yamlListToList(child, value);
+        result[key] = child;
       } else {
-        result[entry.key.toString()] = entry.value;
+        result[key] = entry.value;
+      }
+    }
+  }
+
+  static void _yamlListToList(List<dynamic> result, yml.YamlList yamlList) {
+    for (final value in yamlList.value) {
+      if (value is yml.YamlMap) {
+        final child = <String, dynamic>{};
+        _yamlMapToMap(child, value);
+        result.add(child);
+      } else if (value is yml.YamlList) {
+        final child = <dynamic>[];
+        _yamlListToList(child, value);
+        result.add(child);
+      } else {
+        result.add(value);
       }
     }
   }
