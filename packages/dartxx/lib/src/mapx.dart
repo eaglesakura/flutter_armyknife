@@ -9,10 +9,10 @@ class MapX {
     return result;
   }
 
-  static void _mergeImpl(
-    Map<dynamic, dynamic> result,
-    Map<dynamic, dynamic> a,
-    Map<dynamic, dynamic> b,
+  static void _mergeImpl<K, V>(
+    Map<K, V> result,
+    Map<K, V> a,
+    Map<K, V> b,
   ) {
     final keys = {
       ...a.keys,
@@ -21,18 +21,18 @@ class MapX {
     for (final key in keys) {
       if (b.containsKey(key)) {
         if (a[key] is Map && b[key] is Map) {
-          final child = <dynamic, dynamic>{};
+          final child = <K, V>{};
           _mergeImpl(
             child,
-            a[key] as Map<dynamic, dynamic>,
-            b[key] as Map<dynamic, dynamic>,
+            a[key] as Map<K, V>,
+            b[key] as Map<K, V>,
           );
-          result[key] = child;
+          result[key] = child as V;
         } else {
-          result[key] = b[key];
+          result[key] = b[key] as V;
         }
       } else {
-        result[key] = a[key];
+        result[key] = a[key] as V;
       }
     }
   }
