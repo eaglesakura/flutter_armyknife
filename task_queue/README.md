@@ -28,13 +28,13 @@ and the Flutter guide for
 
 ```yaml
 dependencies:
-  task_queue: ^2025.1.0
+  task_queue: ^1.0.0
 ```
 
 パッケージをインポートします：
 
 ```dart
-import 'package:task_queue/task_queue.dart';
+import 'package:armyknife_task_queue/armyknife_task_queue.dart';
 ```
 
 ## 使用方法
