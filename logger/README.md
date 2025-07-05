@@ -1,39 +1,62 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Dartアプリケーション用のシンプルなログライブラリです。統一されたインターフェースで複数のログレベルをサポートし、プラットフォーム固有の最適化も含んでいます。
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- **統一されたログインターフェース**: 4つのログレベル（Debug, Info, Warning, Error）を提供
+- **柔軟なLogger生成**: タグ、型、ファイル名、コールバック関数を指定してLoggerを生成
+- **ログ出力の抑制**: 条件に応じてログ出力を制御
+- **プラットフォーム最適化**: iOS、Android、その他のプラットフォームに応じた最適化された出力
+- **カスタマイズ可能**: 独自のログ出力処理を定義可能
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+pubspec.yamlに依存関係を追加してください：
+
+```yaml
+dependencies:
+  armyknife_logger: ^1.0.0
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+### 基本的な使用方法
 
 ```dart
-const like = 'sample';
+import 'package:armyknife_logger/armyknife_logger.dart';
+
+// タグを指定してLoggerを生成
+final logger = Logger.tag('MyApp');
+
+// 各レベルのログ出力
+logger.i('アプリケーションが開始されました');
+logger.d('デバッグ情報');
+logger.w('警告メッセージ');
+logger.e('エラーが発生しました', error, stackTrace);
+```
+
+### 異なるLogger生成方法
+
+```dart
+// 型を指定してLoggerを生成
+final logger = Logger.of(MyClass);
+
+// 現在のファイル名をタグとしてLoggerを生成
+final logger = Logger.file();
+
+// カスタムコールバック関数を指定してLoggerを生成
+final logger = Logger.create(
+  info: (message) => print('INFO: $message'),
+  debug: (message) => print('DEBUG: $message'),
+  warning: (message) => print('WARNING: $message'),
+  error: (message, [error, stackTrace]) => print('ERROR: $message'),
+);
+
+// 条件に応じてログ出力を抑制
+final logger = Logger.drop(originalLogger, drop: !kDebugMode);
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+このライブラリは`logger` package（pub.dev上の人気のログライブラリ）をベースとしており、プラットフォーム固有の最適化が施されています。iOS、Android、その他のプラットフォームに応じて、色付け、絵文字、フォーマットが最適化されます。
+
+バグ報告や機能リクエストは、[GitHub repository](https://github.com/eaglesakura/flutter_armyknife/)でお受けしています。

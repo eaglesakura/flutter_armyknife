@@ -4,11 +4,10 @@ publish_to: "none"
 
 environment:
   sdk: ">=3.8.0 <4.0.0"
-  flutter: ">=3.32.0 <4.0.0"
-
-dependency_overrides:
-  test_api: ^0.7.6
+  flutter: ">=3.32.0"
 
 workspace:
-  - packages/task_queue/
-  - packages/test_context/
+  - dartx/
+  - logger/
+  - task_queue/
+  - test_context/
