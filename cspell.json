@@ -40,6 +40,7 @@
         "NOTNULL",
         "platformx",
         "PRIMARYKEY",
+        "pubspec",
         "RDLOCK",
         "riverpod",
         "riverpodx",
