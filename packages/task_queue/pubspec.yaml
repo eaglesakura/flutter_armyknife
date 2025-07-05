@@ -1,10 +1,9 @@
-name: task_queue
+name: armyknife_task_queue
 description: |
-  順番を保ったタスク実行を可能にする軽量なキューイングシステムを提供するDartパッケージです。
-  非同期タスクの順序付き実行とタスクの完了待機をサポートします。
-version: 2025.1.1
+  Light-Weight Task Queue for Dart.
+version: 1.0.0
+repository: https://github.com/eaglesakura/flutter_armyknife
 resolution: workspace
-repository: https://github.com/eaglesakura/flutter_armyknife/task_queue
 
 environment:
   sdk: ">=3.8.0 <4.0.0"
