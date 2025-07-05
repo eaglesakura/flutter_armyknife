@@ -1,4 +1,4 @@
-import 'package:dartxx/dartxx.dart';
+import 'package:armyknife_dartx/armyknife_dartx.dart';
 import 'package:test/test.dart';
 
 void main() {

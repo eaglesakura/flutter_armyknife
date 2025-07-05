@@ -1,4 +1,4 @@
-import 'package:dartxx/dartxx.dart';
+import 'package:armyknife_dartx/armyknife_dartx.dart';
 import 'package:future_context/future_context.dart' as fc;
 import 'package:future_contextx/src/future_context.dart';
 import 'package:future_contextx/src/future_context_request.dart';

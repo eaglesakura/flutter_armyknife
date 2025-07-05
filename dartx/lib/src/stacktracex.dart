@@ -1,4 +1,4 @@
-import 'package:dartxx/src/dartxx_functions.dart';
+import 'package:armyknife_dartx/src/dartxx_functions.dart';
 
 class StackTraceX {
   const StackTraceX._();

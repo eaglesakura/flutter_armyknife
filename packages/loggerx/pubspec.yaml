@@ -9,7 +9,7 @@ environment:
 resolution: workspace
 
 dependencies:
-  dartxx: ^2025.1.1
+  armyknife_dartx: ^1.0.0
   logger: ^2.4.0
   platformx: ^1.1.0
 

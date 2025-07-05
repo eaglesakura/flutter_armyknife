@@ -18,7 +18,7 @@ dependencies:
   runtime_assert: ^0.0.1+2
   future_context: ^0.0.2+13
   streamx: ^2025.1.1
-  dartxx: ^2025.1.1
+  armyknife_dartx: ^1.0.0
 
 dev_dependencies:
   flutter_test:

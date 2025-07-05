@@ -1,4 +1,4 @@
-import 'package:dartxx/src/stacktracex.dart';
+import 'package:armyknife_dartx/src/stacktracex.dart';
 import 'package:test/test.dart';
 
 void main() {

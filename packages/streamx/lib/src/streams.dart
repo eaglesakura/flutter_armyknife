@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dartxx/dartxx.dart';
+import 'package:armyknife_dartx/armyknife_dartx.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'streams.stream_emitter.dart';
