@@ -1,6 +1,6 @@
 name: armyknife_test_context
 description: |
-  Unit Testごとに1つのインスタンスが保証されるContextオブジェクト.
+  Context object that guarantees one instance per Unit Test.
 version: 1.0.0
 repository: https://github.com/eaglesakura/flutter_armyknife
 resolution: workspace
