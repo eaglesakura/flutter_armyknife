@@ -29,7 +29,7 @@ migrate_working_dir/
 .flutter-plugins
 .flutter-plugins-dependencies
 build/
-pubspec.yaml
+/pubspec.yaml
 pubspec_overrides.yaml
 
 # FVM Version Cache
