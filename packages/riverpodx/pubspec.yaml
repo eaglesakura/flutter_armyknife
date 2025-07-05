@@ -15,7 +15,7 @@ dependencies:
   hooks_riverpod: ^2.6.1
   flutter_hooks: ^0.21.2
   flutterx: ^2025.1.1
-  task_queue: ^2025.1.1
+  armyknife_task_queue: ^1.0.0
   future_contextx: ^2025.1.1
   collection: ^1.19.1
 

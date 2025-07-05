@@ -19,7 +19,7 @@ dependencies:
   riverpodx: ^2025.1.1
   runtime_assert: ^0.0.1+2
   rxdart: ^0.28.0
-  task_queue: ^2025.1.1
+  armyknife_task_queue: ^1.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,4 @@
+import 'package:armyknife_task_queue/armyknife_task_queue.dart';
 import 'package:async_notify/async_notify.dart';
 import 'package:dartxx/dartxx.dart';
 import 'package:meta/meta.dart';
@@ -7,7 +8,6 @@ import 'package:state_stream/src/dispatcher.dart';
 import 'package:state_stream/src/impl/mutable_state_stream_state.dart';
 import 'package:state_stream/src/mutable_state_stream.dart';
 import 'package:state_stream/src/mutable_state_stream_emitter.dart';
-import 'package:task_queue/task_queue.dart';
 
 @internal
 class MutableStateStreamImpl<T> implements MutableStateStream<T> {
