@@ -16,7 +16,7 @@ dependencies:
   yamlx: ^2025.1.1
   path: ^1.9.1
   armyknife_dartx: ^1.0.0
-  loggerx: ^2025.1.1
+  armyknife_logger: ^1.0.0
 
 dev_dependencies:
   lints: ^6.0.0

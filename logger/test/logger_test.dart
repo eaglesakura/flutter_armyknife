@@ -1,4 +1,4 @@
-import 'package:loggerx/loggerx.dart';
+import 'package:armyknife_logger/armyknife_logger.dart';
 import 'package:test/test.dart';
 
 void main() {

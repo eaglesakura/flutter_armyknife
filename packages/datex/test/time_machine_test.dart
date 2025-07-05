@@ -1,5 +1,5 @@
+import 'package:armyknife_logger/armyknife_logger.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:loggerx/loggerx.dart';
 import 'package:time_machine/time_machine.dart';
 
 final _log = Logger.file();

@@ -1,6 +1,6 @@
-name: loggerx
+name: armyknife_logger
 description: A starting point for Dart libraries or applications.
-version: 2025.1.1
+version: 1.0.0
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
 environment:
