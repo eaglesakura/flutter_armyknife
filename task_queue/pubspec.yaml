@@ -1,7 +1,7 @@
 name: armyknife_task_queue
 description: |
   Light-Weight Task Queue for Dart.
-version: 1.0.0
+version: 1.0.0+1
 repository: https://github.com/eaglesakura/flutter_armyknife
 resolution: workspace
 
