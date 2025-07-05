@@ -2,8 +2,8 @@
 
 import 'dart:math';
 
-import 'package:flutter_test/flutter_test.dart';
 import 'package:task_queue/task_queue.dart';
+import 'package:test/test.dart';
 
 void main() {
   test('タスクを順次実行できる', () async {
