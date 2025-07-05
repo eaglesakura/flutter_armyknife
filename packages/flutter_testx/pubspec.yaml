@@ -2,7 +2,7 @@ name: flutter_testx
 description: "A new Flutter package project."
 version: 2025.1.1
 resolution: workspace
-repository: https://github.com/eaglesakura/flutter_armyknife/flutter_testx
+repository: https://github.com/eaglesakura/flutter_armyknife/
 
 environment:
   sdk: ">=3.8.0 <4.0.0"

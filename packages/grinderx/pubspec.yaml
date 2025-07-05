@@ -2,7 +2,7 @@ name: grinderx
 description: A starting point for Dart libraries or applications.
 version: 2025.1.1
 resolution: workspace
-repository: https://github.com/eaglesakura/flutter_armyknife/grinderx
+repository: https://github.com/eaglesakura/flutter_armyknife/
 
 environment:
   sdk: ">=3.8.0 <4.0.0"
