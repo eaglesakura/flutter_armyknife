@@ -1,39 +1,48 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+YAML ファイルをシンプルな Map 構造として読み込むためのライブラリ。
+標準の yaml ライブラリをベースに、より使いやすい API を提供します。
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- YAML ファイルを Map<String, dynamic>として読み込み
+- 複数の YAML ファイルをマージして読み込み
+- 特定のパスから値を取得する機能
+- 必須値の取得と検証
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+`pubspec.yaml`に以下を追加してください：
+
+```yaml
+dependencies:
+  armyknife_yamlx: ^1.0.0
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+### 基本的な使い方
 
 ```dart
-const like = 'sample';
+import 'dart:io';
+import 'package:armyknife_yamlx/armyknife_yamlx.dart';
+
+// YAMLファイルを読み込み
+final yamlFile = File('config.yaml');
+final config = YamlX.parse(yamlFile);
+
+// 特定のパスから値を取得
+final value = YamlX.find<String>(config, ['database', 'host']);
+
+// 必須値を取得（存在しない場合は例外）
+final port = YamlX.require<int>(config, ['database', 'port']);
+
+// 複数のYAMLファイルをマージ
+final configs = YamlX.parseWithMerge([
+  File('base.yaml'),
+  File('override.yaml'),
+]);
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+このライブラリは flutter_armyknife プロジェクトの一部として開発されています。
+バグ報告や機能要求は GitHub リポジトリまでお願いします。

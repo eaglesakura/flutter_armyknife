@@ -7,7 +7,8 @@ environment:
   flutter: ">=3.32.0"
 
 workspace:
-  - dartx/
-  - logger/
-  - task_queue/
-  - test_context/
+  - dartx
+  - logger
+  - task_queue
+  - test_context
+  - yamlx
