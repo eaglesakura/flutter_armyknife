@@ -1,5 +1,5 @@
-import 'package:riverpodx/riverpodx.dart';
-import 'package:state_stream/src/state_stream.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:state_stream/state_stream.dart';
 
 final class StateStreamProviders {
   /// Provider.autoDispose()を使ってStateを取得するProviderを生成する.
