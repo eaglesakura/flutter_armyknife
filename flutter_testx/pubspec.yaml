@@ -1,6 +1,6 @@
-name: flutter_testx
-description: "A new Flutter package project."
-version: 2025.1.1
+name: armyknife_flutter_testx
+description: "Flutter Test Utilities."
+version: 1.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
@@ -13,7 +13,3 @@ dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  riverpodx: ^2025.1.1
-
-dev_dependencies:
-  flutter_lints: ^6.0.0
