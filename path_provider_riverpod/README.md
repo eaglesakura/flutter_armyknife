@@ -1,39 +1,83 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+`path_provider` ライブラリを Riverpod で使用するための Provider 集です。
+アプリケーションで使用する各種ディレクトリパスを同期的に取得できます。
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+以下のディレクトリパスを Riverpod の Provider として提供します：
+
+- `applicationCacheDirectory` - アプリケーションキャッシュディレクトリ
+- `applicationDocumentsDirectory` - アプリケーションドキュメントディレクトリ
+- `applicationSupportDirectory` - アプリケーションサポートディレクトリ
+- `downloadsDirectory` - ダウンロードディレクトリ
+- `externalStorageDirectory` - 外部ストレージディレクトリ
+- `libraryDirectory` - ライブラリディレクトリ
+- `temporaryDirectory` - テンポラリディレクトリ
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+1. `pubspec.yaml` に依存関係を追加します：
+
+```yaml
+dependencies:
+  path_provider_riverpod: ^1.0.0
+```
+
+2. アプリケーション起動時に Provider を初期化します：
+
+```dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final overrides = await PathProviders.inject();
+
+  runApp(
+    ProviderScope(
+      overrides: overrides,
+      child: MyApp(),
+    ),
+  );
+}
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+Provider を使用してディレクトリパスを取得できます：
 
 ```dart
-const like = 'sample';
+class MyWidget extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cacheDir = ref.watch(PathProviders.applicationCacheDirectory);
+    final documentsDir = ref.watch(PathProviders.applicationDocumentsDirectory);
+
+    return Column(
+      children: [
+        Text('Cache: ${cacheDir.path}'),
+        Text('Documents: ${documentsDir.path}'),
+      ],
+    );
+  }
+}
+```
+
+テスト時には `injectWithValue` メソッドを使用して任意のディレクトリを設定できます：
+
+```dart
+testWidgets('test', (tester) async {
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: PathProviders.injectWithValue(
+        temporaryDirectory: Directory('/tmp/test'),
+      ),
+      child: MyApp(),
+    ),
+  );
+});
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+このパッケージは `path_provider` ライブラリの Riverpod ラッパーです。
+各ディレクトリの詳細については `path_provider` パッケージのドキュメントを参照してください。
+
+バグレポートや機能要求は、GitHub リポジトリの Issues ページで受け付けています。
