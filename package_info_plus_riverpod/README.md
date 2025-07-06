@@ -16,8 +16,6 @@ dependencies:
   package_info_plus_riverpod: ^1.0.0
 ```
 
-または、相対パスを適切に調整して追加してください。
-
 ## Usage
 
 以下のようにしてアプリケーション情報を取得できます：

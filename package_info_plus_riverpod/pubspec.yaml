@@ -1,6 +1,6 @@
 name: package_info_plus_riverpod
 description: "Riverpod Provider for package_info_plus"
-version: 1.0.0
+version: 1.0.0+1
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
