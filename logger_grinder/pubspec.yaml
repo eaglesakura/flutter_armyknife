@@ -1,21 +1,17 @@
-name: armyknife_logger_flutter
+name: armyknife_logger_grinder
 description: Logger proxy for flutter.
 version: 1.0.0
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
 environment:
   sdk: ">=3.8.0 <4.0.0"
-  flutter: ">=3.32.0"
 
 resolution: workspace
 
 dependencies:
-  flutter:
-    sdk: flutter
   armyknife_logger: ^1.0.1
-  logger: ^2.4.0
+  grinder: ^0.9.4
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^6.0.0
+  test: ^1.25.0
+  lints: ^6.0.0
