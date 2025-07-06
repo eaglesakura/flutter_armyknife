@@ -1,29 +1,16 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages). 
--->
-
-Dartのランタイムに便利な関数と拡張機能を提供するライブラリです。非同期処理、コレクション操作、型判定、プラットフォーム判定などの機能を提供し、Dartコードの記述を簡潔にします。
+Dart のランタイムに便利な関数と拡張機能を提供するライブラリです。非同期処理、コレクション操作、型判定、プラットフォーム判定などの機能を提供し、Dart コードの記述を簡潔にします。
 
 ## Features
 
-- **便利な関数群**: Future操作、型判定、プラットフォーム判定
-- **Iterable拡張機能**: 重複排除、Map変換
-- **Map操作ユーティリティ**: 再帰的なマージ機能
+- **便利な関数群**: Future 操作、型判定、プラットフォーム判定
+- **Iterable 拡張機能**: 重複排除、Map 変換
+- **Map 操作ユーティリティ**: 再帰的なマージ機能
 - **スタックトレース操作**: ファイル名取得
-- **コレクション構築関数**: Map、List、Set構築のビルダー
+- **コレクション構築関数**: Map、List、Set 構築のビルダー
 
 ## Getting started
 
-pubspec.yamlに以下を追加してください：
+pubspec.yaml に以下を追加してください：
 
 ```yaml
 dependencies:
@@ -54,7 +41,7 @@ if (kIsWebCompat) {
 }
 ```
 
-### Iterable拡張機能
+### Iterable 拡張機能
 
 ```dart
 // 重複を排除
@@ -70,7 +57,7 @@ final map = entries.toMap();
 print(map); // {a: 1, b: 2}
 ```
 
-### Map操作ユーティリティ
+### Map 操作ユーティリティ
 
 ```dart
 // 2つのMapを再帰的にマージ
@@ -108,5 +95,5 @@ final set = buildSet<int>((set) {
 このライブラリは Flutter Army Knife プロジェクトの一部です。
 
 - **GitHub**: https://github.com/eaglesakura/flutter_armyknife
-- **Issues**: バグ報告や機能要求は GitHubのIssuesをご利用ください
+- **Issues**: バグ報告や機能要求は GitHub の Issues をご利用ください
 - **ライセンス**: MIT License
