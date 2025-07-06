@@ -13,69 +13,27 @@
 
 ## 📚 ライブラリ一覧
 
-### 🔄 非同期処理・並行処理
-
-| ライブラリ | 概要 | 主な機能 |
-|-----------|------|----------|
-| **[async_notify2](./async_notify2/)** | Java/Kotlin の notify/wait を再現 | 非同期処理の待ち合わせ、型安全な値の送受信 |
-| **[future_context2](./future_context2/)** | キャンセル可能な非同期処理 | 非同期処理のキャンセル、タイムアウト、階層管理 |
-| **[task_queue](./task_queue/)** | 順序付きタスク実行システム | タスクの順番保証、同期的な実行制御 |
-
-### 🏗️ データ処理・変換
-
-| ライブラリ | 概要 | 主な機能 |
-|-----------|------|----------|
-| **[dartx](./dartx/)** | Dart 基本機能の拡張 | Iterable 拡張、型判定、コレクション構築 |
-| **[streams](./streams/)** | RxDart ベースの Stream 操作 | Stream 結合、生成型 Stream、Future-Stream 変換 |
-| **[yamlx](./yamlx/)** | YAML ファイル処理 | YAML の Map 変換、マージ機能、パス指定取得 |
-
-### 🗄️ データベース・永続化
-
-| ライブラリ | 概要 | 主な機能 |
-|-----------|------|----------|
-| **[driftx](./driftx/)** | Drift データベース拡張 | SQLite 結果コード、複数データベース同時トランザクション |
-
-### 🎯 状態管理
-
-| ライブラリ | 概要 | 主な機能 |
-|-----------|------|----------|
-| **[riverpodx](./riverpodx/)** | Riverpod 統合ライブラリ | Hooks・Riverpod 統合、ProviderContainer 構築 |
-| **[state_stream](./state_stream/)** | 軽量状態管理 | 型安全な状態管理、リアクティブ更新、スレッドセーフ |
-| **[state_stream_riverpod](./state_stream_riverpod/)** | state_stream の Riverpod 連携 | Riverpod プロバイダーとの統合 |
-
-### 🧪 テスト支援
-
-| ライブラリ | 概要 | 主な機能 |
-|-----------|------|----------|
-| **[flutter_testx](./flutter_testx/)** | Flutter Test 拡張 | 型検証とキャスト、型安全なアサーション |
-| **[test_context](./test_context/)** | テスト用コンテキスト | テスト毎のインスタンス保証、自動クリーンアップ |
-| **[riverpodx_test](./riverpodx_test/)** | riverpodx のテストサポート | riverpodx のテスト機能 |
-
-### 🔧 Flutter 拡張
-
-| ライブラリ | 概要 | 主な機能 |
-|-----------|------|----------|
-| **[flutterx](./flutterx/)** | Flutter SDK 拡張 | テスト環境判定、フレーム同期待機 |
-
-### 📝 ログ・デバッグ
-
-| ライブラリ | 概要 | 主な機能 |
-|-----------|------|----------|
-| **[logger](./logger/)** | ログライブラリ統一インターフェース | 4 つのログレベル、プラットフォーム非依存 |
-| **[logger_flutter](./logger_flutter/)** | Flutter 用ログ実装 | Flutter アプリケーション向けログ出力 |
-| **[logger_grinder](./logger_grinder/)** | Grinder 用ログ実装 | ビルドツール向けログ出力 |
-
-### ⚡ エラーハンドリング
-
-| ライブラリ | 概要 | 主な機能 |
-|-----------|------|----------|
-| **[exceptions](./exceptions/)** | 例外トレース機能 | 例外のアンラップ、例外チェーン検索、カスタムアンラッパー |
-
-### ⏰ 時刻処理
-
-| ライブラリ | 概要 | 主な機能 |
-|-----------|------|----------|
-| **[time](./time/)** | 軽量時刻処理 | time_machine ラッパー、Clock デリゲート、Unix エポック |
+| カテゴリ | ライブラリ | 概要 | 主な機能 |
+|---------|-----------|------|----------|
+| 🔄 非同期処理・並行処理 | **[async_notify2](./async_notify2/)** | Java/Kotlin の notify/wait を再現 | 非同期処理の待ち合わせ、型安全な値の送受信 |
+| 🔄 非同期処理・並行処理 | **[future_context2](./future_context2/)** | キャンセル可能な非同期処理 | 非同期処理のキャンセル、タイムアウト、階層管理 |
+| 🔄 非同期処理・並行処理 | **[task_queue](./task_queue/)** | 順序付きタスク実行システム | タスクの順番保証、同期的な実行制御 |
+| 🏗️ データ処理・変換 | **[dartx](./dartx/)** | Dart 基本機能の拡張 | Iterable 拡張、型判定、コレクション構築 |
+| 🏗️ データ処理・変換 | **[streams](./streams/)** | RxDart ベースの Stream 操作 | Stream 結合、生成型 Stream、Future-Stream 変換 |
+| 🏗️ データ処理・変換 | **[yamlx](./yamlx/)** | YAML ファイル処理 | YAML の Map 変換、マージ機能、パス指定取得 |
+| 🗄️ データベース・永続化 | **[driftx](./driftx/)** | Drift データベース拡張 | SQLite 結果コード、複数データベース同時トランザクション |
+| 🎯 状態管理 | **[riverpodx](./riverpodx/)** | Riverpod 統合ライブラリ | Hooks・Riverpod 統合、ProviderContainer 構築 |
+| 🎯 状態管理 | **[state_stream](./state_stream/)** | 軽量状態管理 | 型安全な状態管理、リアクティブ更新、スレッドセーフ |
+| 🎯 状態管理 | **[state_stream_riverpod](./state_stream_riverpod/)** | state_stream の Riverpod 連携 | Riverpod プロバイダーとの統合 |
+| 🧪 テスト支援 | **[flutter_testx](./flutter_testx/)** | Flutter Test 拡張 | 型検証とキャスト、型安全なアサーション |
+| 🧪 テスト支援 | **[test_context](./test_context/)** | テスト用コンテキスト | テスト毎のインスタンス保証、自動クリーンアップ |
+| 🧪 テスト支援 | **[riverpodx_test](./riverpodx_test/)** | riverpodx のテストサポート | riverpodx のテスト機能 |
+| 🔧 Flutter 拡張 | **[flutterx](./flutterx/)** | Flutter SDK 拡張 | テスト環境判定、フレーム同期待機 |
+| 📝 ログ・デバッグ | **[logger](./logger/)** | ログライブラリ統一インターフェース | 4 つのログレベル、プラットフォーム非依存 |
+| 📝 ログ・デバッグ | **[logger_flutter](./logger_flutter/)** | Flutter 用ログ実装 | Flutter アプリケーション向けログ出力 |
+| 📝 ログ・デバッグ | **[logger_grinder](./logger_grinder/)** | Grinder 用ログ実装 | ビルドツール向けログ出力 |
+| ⚡ エラーハンドリング | **[exceptions](./exceptions/)** | 例外トレース機能 | 例外のアンラップ、例外チェーン検索、カスタムアンラッパー |
+| ⏰ 時刻処理 | **[time](./time/)** | 軽量時刻処理 | time_machine ラッパー、Clock デリゲート、Unix エポック |
 
 ## 🚀 使用開始
 
