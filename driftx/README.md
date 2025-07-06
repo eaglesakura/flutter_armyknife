@@ -1,16 +1,3 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
 Drift ライブラリの便利機能を提供するパッケージです。SQLite 結果コードの型安全な処理と、複数データベースの同時トランザクション機能を提供します。
 
 ## Features
