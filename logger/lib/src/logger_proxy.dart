@@ -1,7 +1,4 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
-import 'package:logger/logger.dart' as impl;
+// ignore_for_file: avoid_print
 
 /// ログ出力を行うためのProxy.
 /// 必要に応じて出力関数を切り替える.
@@ -29,45 +26,8 @@ final class LoggerProxy {
 
 /// デフォルト実装のログ出力.
 final class _DefaultLogImpl {
-  static final _withColorOutput = () {
-    if (kIsWeb) {
-      return true;
-    } else if (Platform.isAndroid || Platform.isIOS) {
-      return false;
-    }
-
-    return true;
-  }();
-
-  static final _withEmoji = () {
-    if (kIsWeb) {
-      return true;
-    } else if (Platform.isIOS) {
-      return false;
-    }
-    return true;
-  }();
-  static final impl.Logger _infoImpl = impl.Logger(
-    printer: impl.PrettyPrinter(
-      lineLength: 120,
-      stackTraceBeginIndex: 2,
-      printEmojis: _withEmoji,
-      noBoxingByDefault: true,
-      colors: _withColorOutput,
-    ),
-  );
-  static final impl.Logger _warningImpl = impl.Logger(
-    printer: impl.PrettyPrinter(
-      lineLength: 120,
-      stackTraceBeginIndex: 2,
-      printEmojis: _withEmoji,
-      dateTimeFormat: impl.DateTimeFormat.onlyTime,
-      colors: _withColorOutput,
-    ),
-  );
-
   static void d(String tag, String message) {
-    _warningImpl.d(_format(tag, message));
+    print(_format(tag, message));
   }
 
   static void e(
@@ -76,19 +36,21 @@ final class _DefaultLogImpl {
     dynamic error,
     StackTrace? stackTrace,
   ]) {
-    _warningImpl.e(
-      _format(tag, message),
-      error: error,
-      stackTrace: stackTrace,
-    );
+    print(_format(tag, message));
+    if (error != null) {
+      print(_format(tag, 'error: $error'));
+    }
+    if (stackTrace != null) {
+      print(_format(tag, 'stackTrace: $stackTrace'));
+    }
   }
 
   static void i(String tag, String message) {
-    _infoImpl.i(_format(tag, message));
+    print(_format(tag, message));
   }
 
   static void w(String tag, String message) {
-    _warningImpl.w(_format(tag, message));
+    print(_format(tag, message));
   }
 
   static String _format(String tag, String msg) => '[$tag] $msg';
