@@ -1,0 +1,53 @@
+name: Flutter Test
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - v*
+      - feature/id/*/*
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+
+    strategy:
+      matrix:
+        package:
+          - async_notify2
+          - dartx
+          - driftx
+          - exceptions
+          - flutter_testx
+          - flutterx
+          - future_context2
+          - logger
+          - riverpodx
+          - riverpodx_test
+          - state_stream
+          - state_stream_riverpod
+          - streams
+          - task_queue
+          - test_context
+          - time
+          - yamlx
+
+    steps:
+      # 最初にリポジトリをチェックアウトする
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      # Flutterをインストールして依存関係を取得する
+      - name: install flutter(by fvm)
+        uses: ./.github/actions/install-flutter
+
+      # テスト
+      - name: flutter test - ${{ matrix.package }}
+        run: |
+          cd ${{ matrix.package }}
+          dart pub get
+          dart analyze
+          dart format --set-exit-if-changed ./lib/
+          dart format --set-exit-if-changed ./test/
+          flutter test ./test/

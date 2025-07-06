@@ -1,0 +1,30 @@
+name: "Install Flutter"
+description: "Install Flutter based on .fvmrc version and get dependencies"
+
+runs:
+  using: "composite"
+  steps:
+    # .fvmrcファイルからFlutterバージョンを読み取る
+    - name: get flutter version from .fvmrc
+      id: flutter-version
+      shell: bash
+      run: |
+        FLUTTER_VERSION=$(cat .fvmrc | grep flutter | cut -d'"' -f4)
+        echo "version=$FLUTTER_VERSION" >> $GITHUB_OUTPUT
+        echo "Flutter version: $FLUTTER_VERSION"
+
+    # Flutterの環境をセットアップする
+    - name: setup flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ steps.flutter-version.outputs.version }}
+        cache: true
+
+    # 現在の環境を出力する
+    - name: flutter environments
+      shell: bash
+      run: |
+        echo "flutter version: $(flutter --version)"
+        echo "flutter path: $(which flutter)"
+        echo "dart version: $(dart --version)"
+        echo "dart path: $(which dart)"

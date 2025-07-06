@@ -7,8 +7,20 @@ environment:
   flutter: ">=3.32.0"
 
 workspace:
+  - async_notify2
   - dartx
+  - driftx
+  - exceptions
+  - flutter_testx
+  - flutterx
+  - future_context2
   - logger
+  - riverpodx
+  - riverpodx_test
+  - state_stream
+  - state_stream_riverpod
+  - streams
   - task_queue
   - test_context
+  - time
   - yamlx
