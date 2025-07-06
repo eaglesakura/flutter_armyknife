@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:future_context/future_context.dart' as fc;
 import 'package:future_contextx/src/future_context_request.dart';
 import 'package:future_contextx/src/impl/future_context_proxy.dart';
+import 'package:future_contextx/src/impl/legacy/future_context.dart' as legacy;
 import 'package:meta/meta.dart';
 import 'package:runtime_assert/runtime_assert.dart';
 
@@ -25,7 +25,7 @@ abstract class FutureContext {
     String? tag,
     FutureContextRequest request = const FutureContextRequest(),
   }) => FutureContextProxy(
-    fc.FutureContext(
+    legacy.FutureContext(
       tag: tag,
       debugCallStackLevel: request.debugCallStackLevel + 1,
     ),
@@ -38,13 +38,13 @@ abstract class FutureContext {
     String? tag,
     FutureContextRequest request = const FutureContextRequest(),
   }) {
-    final impl = parent.queryInterface<fc.FutureContext>();
+    final impl = parent.queryInterface<legacy.FutureContext>();
     if (impl == null) {
       throw IllegalArgumentException('Unsupported Parent');
     }
 
     return FutureContextProxy(
-      fc.FutureContext.child(
+      legacy.FutureContext.child(
         impl,
         tag: tag,
         debugCallStackLevel: request.debugCallStackLevel + 1,
@@ -60,7 +60,7 @@ abstract class FutureContext {
     FutureContextRequest request = const FutureContextRequest(),
   }) {
     final implList = contexts.map((e) {
-      final impl = e.queryInterface<fc.FutureContext>();
+      final impl = e.queryInterface<legacy.FutureContext>();
       if (impl == null) {
         throw IllegalArgumentException('Unsupported Parent');
       }
@@ -68,7 +68,7 @@ abstract class FutureContext {
     }).toList();
 
     return FutureContextProxy(
-      fc.FutureContext.group(
+      legacy.FutureContext.group(
         implList,
         tag: tag,
         debugCallStackLevel: request.debugCallStackLevel + 1,

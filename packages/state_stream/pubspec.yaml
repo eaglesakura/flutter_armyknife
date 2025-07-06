@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  async_notify: ^0.0.2
+  async_notify2: ^1.0.0
   armyknife_dartx: ^1.0.0
   freezed_annotation: ^3.0.0
   future_contextx: ^1.0.0

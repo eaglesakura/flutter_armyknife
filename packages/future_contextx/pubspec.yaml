@@ -12,11 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
   rxdart: ^0.28.0
-  async_notify: ^0.0.2
+  async_notify2: ^1.0.0
   meta: ^1.16.0
   freezed_annotation: ^3.0.0
   runtime_assert: ^0.0.1+2
-  future_context: ^0.0.2+13
   armyknife_streams: ^1.0.0
   armyknife_dartx: ^1.0.0
 

@@ -1,13 +1,13 @@
 import 'package:armyknife_dartx/armyknife_dartx.dart';
-import 'package:future_context/future_context.dart' as fc;
 import 'package:future_contextx/src/future_context.dart';
 import 'package:future_contextx/src/future_context_request.dart';
+import 'package:future_contextx/src/impl/legacy/future_context.dart' as legacy;
 import 'package:meta/meta.dart';
 
-/// [fc.FutureContext] の機能をラップしたデフォルト実装.
+/// [legacy.FutureContext] の機能をラップしたデフォルト実装.
 @internal
 class FutureContextProxy implements FutureContext {
-  final fc.FutureContext _impl;
+  final legacy.FutureContext _impl;
 
   FutureContextProxy(this._impl);
 
@@ -28,7 +28,7 @@ class FutureContextProxy implements FutureContext {
 
   @override
   T? queryInterface<T>() {
-    if (typeEquals<T, fc.FutureContext>()) {
+    if (typeEquals<T, legacy.FutureContext>()) {
       return _impl as T;
     } else if (typeEquals<T, FutureContextProxy>()) {
       return this as T;

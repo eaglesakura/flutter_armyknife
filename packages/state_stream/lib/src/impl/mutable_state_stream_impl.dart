@@ -1,6 +1,6 @@
 import 'package:armyknife_dartx/armyknife_dartx.dart';
 import 'package:armyknife_task_queue/armyknife_task_queue.dart';
-import 'package:async_notify/async_notify.dart';
+import 'package:async_notify2/async_notify2.dart';
 import 'package:meta/meta.dart';
 import 'package:runtime_assert/runtime_assert.dart';
 import 'package:rxdart/rxdart.dart';
