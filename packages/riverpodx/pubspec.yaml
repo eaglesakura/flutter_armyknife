@@ -1,6 +1,6 @@
 name: riverpodx
 description: "A new Flutter package project."
-version: 2025.1.1
+version: 1.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
@@ -16,7 +16,7 @@ dependencies:
   flutter_hooks: ^0.21.2
   armyknife_flutterx: ^1.0.0
   armyknife_task_queue: ^1.0.0
-  future_contextx: ^2025.1.1
+  future_contextx: ^1.0.0
   collection: ^1.19.1
 
 dev_dependencies:

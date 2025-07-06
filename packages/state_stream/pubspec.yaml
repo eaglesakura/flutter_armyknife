@@ -1,6 +1,6 @@
 name: state_stream
-description: "A new Flutter package project."
-version: 2025.1.1
+description: Library for UI=f(State) architecture.
+version: 1.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
@@ -14,7 +14,7 @@ dependencies:
   async_notify: ^0.0.2
   armyknife_dartx: ^1.0.0
   freezed_annotation: ^3.0.0
-  future_contextx: ^2025.1.1
+  future_contextx: ^1.0.0
   meta: ^1.16.0
   runtime_assert: ^0.0.1+2
   rxdart: ^0.28.0
