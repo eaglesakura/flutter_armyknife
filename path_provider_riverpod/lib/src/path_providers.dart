@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-import 'package:riverpodx/riverpodx.dart';
 
 /// path_provider ライブラリの取得内容をProviderとして同期的に取得する.
 class PathProviders {
