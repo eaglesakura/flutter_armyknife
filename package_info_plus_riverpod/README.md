@@ -1,39 +1,58 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+`package_info_plus` を Riverpod から使用するためのプロバイダーを提供するパッケージです。アプリケーションの基本情報（アプリ名、パッケージ名、バージョン等）を同期的に Riverpod 経由で取得することが可能です。
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- アプリケーションの基本情報を Riverpod の Provider として提供
+- アプリ名、パッケージ名、バージョン、ビルド番号、ビルド署名、インストーラーストア情報へのアクセス
+- 非同期初期化による依存注入サポート
+- 既存の `PackageInfo` オブジェクトからの Provider 生成
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+このパッケージは内部依存です。使用するには、対象パッケージの `pubspec.yaml` に以下の依存関係を追加してください：
+
+```yaml
+dependencies:
+  package_info_plus_riverpod: ^1.0.0
+```
+
+または、相対パスを適切に調整して追加してください。
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+以下のようにしてアプリケーション情報を取得できます：
 
 ```dart
-const like = 'sample';
+// 非同期で依存を解決
+final overrides = await PackageInfoPlusProviders.inject();
+
+// ProviderScope で Override を適用
+ProviderScope(
+  overrides: overrides,
+  child: MyApp(),
+)
+
+// Consumer で各プロパティを使用
+Consumer(
+  builder: (context, ref, child) {
+    final appName = ref.watch(PackageInfoPlusProviders.appName);
+    final version = ref.watch(PackageInfoPlusProviders.version);
+    final packageName = ref.watch(PackageInfoPlusProviders.packageName);
+
+    return Text('$appName v$version ($packageName)');
+  },
+)
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+このパッケージは `flutter_armyknife` プロジェクトの一部として開発されており、Flutter アプリケーションでの Riverpod を使用した状態管理を支援します。
+
+利用可能な Provider：
+
+- `appName`: アプリケーション名
+- `packageName`: パッケージ名
+- `version`: バージョン
+- `buildNumber`: ビルド番号
+- `buildSignature`: ビルド署名
+- `installerStore`: インストーラーストア情報
