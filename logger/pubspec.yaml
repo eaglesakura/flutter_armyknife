@@ -14,7 +14,6 @@ dependencies:
     sdk: flutter
   armyknife_dartx: ^1.0.0
   logger: ^2.4.0
-  platformx: ^1.1.0
 
 dev_dependencies:
   flutter_test:

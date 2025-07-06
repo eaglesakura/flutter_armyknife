@@ -1,5 +1,7 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart' as impl;
-import 'package:platformx/platformx.dart';
 
 /// ログ出力を行うためのProxy.
 /// 必要に応じて出力関数を切り替える.
@@ -27,8 +29,24 @@ final class LoggerProxy {
 
 /// デフォルト実装のログ出力.
 final class _DefaultLogImpl {
-  static final _withColorOutput = !PlatformX.isAndroid && !PlatformX.isIOS;
-  static final _withEmoji = !PlatformX.isIOS;
+  static final _withColorOutput = () {
+    if (kIsWeb) {
+      return true;
+    } else if (Platform.isAndroid || Platform.isIOS) {
+      return false;
+    }
+
+    return true;
+  }();
+
+  static final _withEmoji = () {
+    if (kIsWeb) {
+      return true;
+    } else if (Platform.isIOS) {
+      return false;
+    }
+    return true;
+  }();
   static final impl.Logger _infoImpl = impl.Logger(
     printer: impl.PrettyPrinter(
       lineLength: 120,
