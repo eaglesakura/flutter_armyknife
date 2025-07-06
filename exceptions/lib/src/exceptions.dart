@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:runtime_assert/runtime_assert.dart';
 
 /// 内部にある例外を取り出すための関数.
 ///
@@ -11,9 +10,7 @@ typedef ExceptionUnwrapper = Exception? Function(Exception e);
 /// Golangのerrorsパッケージのような例外関連処理を提供する.
 /// as https://pkg.go.dev/errors
 final class Exceptions {
-  static final _unwrapList = <ExceptionUnwrapper>[
-    _unwrapImpl,
-  ];
+  static final _unwrapList = <ExceptionUnwrapper>[];
 
   const Exceptions._();
 
@@ -47,14 +44,5 @@ final class Exceptions {
         }
       }).firstOrNull;
     }
-  }
-
-  static Exception? _unwrapImpl(Exception e) {
-    return switch (e) {
-      IllegalArgumentException _ => e.cause,
-      IllegalStateException _ => e.cause,
-      UnsupportedPlatformException _ => e.cause,
-      _ => null,
-    };
   }
 }
