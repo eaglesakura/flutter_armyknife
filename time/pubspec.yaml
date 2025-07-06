@@ -1,6 +1,7 @@
-name: datex
-description: A starting point for Dart libraries or applications.
-version: 2025.1.1
+name: armyknife_time
+description: |
+  Light-Weight Time(Date/Instant) library.
+version: 1.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
