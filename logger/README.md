@@ -1,20 +1,38 @@
-Dartアプリケーション用のシンプルなログライブラリです。統一されたインターフェースで複数のログレベルをサポートし、プラットフォーム固有の最適化も含んでいます。
+# armyknife_logger
+
+Dart アプリケーション用のログライブラリの統一インターフェースです。具体的な実装は別パッケージで提供され、プラットフォームや用途に応じて選択できます。
 
 ## Features
 
-- **統一されたログインターフェース**: 4つのログレベル（Debug, Info, Warning, Error）を提供
-- **柔軟なLogger生成**: タグ、型、ファイル名、コールバック関数を指定してLoggerを生成
+- **統一されたログインターフェース**: 4 つのログレベル（Debug, Info, Warning, Error）の抽象化
+- **柔軟な Logger 生成**: タグ、型、ファイル名、コールバック関数を指定して Logger を生成
 - **ログ出力の抑制**: 条件に応じてログ出力を制御
-- **プラットフォーム最適化**: iOS、Android、その他のプラットフォームに応じた最適化された出力
+- **プラットフォーム非依存**: 具体的な実装は別パッケージで提供
 - **カスタマイズ可能**: 独自のログ出力処理を定義可能
+
+## 実装パッケージ
+
+このパッケージは抽象化されたインターフェースを提供します。実際の使用には以下の実装パッケージが必要です：
+
+- **armyknife_logger_flutter**: Flutter/Dart アプリケーション用の実装
+- **armyknife_logger_grinder**: Grinder ビルドツール用の実装
 
 ## Getting started
 
-pubspec.yamlに依存関係を追加してください：
+通常、このパッケージを直接使用することはありません。代わりに、用途に応じて実装パッケージを選択してください：
+
+### Flutter アプリケーションの場合
 
 ```yaml
 dependencies:
-  armyknife_logger: ^1.0.0
+  armyknife_logger_flutter: ^1.0.0
+```
+
+### Grinder ビルドツールの場合
+
+```yaml
+dependencies:
+  armyknife_logger_grinder: ^1.0.0
 ```
 
 ## Usage
@@ -34,7 +52,7 @@ logger.w('警告メッセージ');
 logger.e('エラーが発生しました', error, stackTrace);
 ```
 
-### 異なるLogger生成方法
+### 異なる Logger 生成方法
 
 ```dart
 // 型を指定してLoggerを生成
@@ -57,6 +75,6 @@ final logger = Logger.drop(originalLogger, drop: !kDebugMode);
 
 ## Additional information
 
-このライブラリは`logger` package（pub.dev上の人気のログライブラリ）をベースとしており、プラットフォーム固有の最適化が施されています。iOS、Android、その他のプラットフォームに応じて、色付け、絵文字、フォーマットが最適化されます。
+このパッケージは、複数のプラットフォームやツールチェーンで統一されたログインターフェースを提供することを目的としています。具体的な実装は目的に応じて実装パッケージを選択してください。
 
 バグ報告や機能リクエストは、[GitHub repository](https://github.com/eaglesakura/flutter_armyknife/)でお受けしています。
