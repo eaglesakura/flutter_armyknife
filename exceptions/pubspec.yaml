@@ -1,6 +1,6 @@
 name: armyknife_exceptions
 description: Utilities for exceptions.
-version: 1.0.0+1
+version: 1.0.0+2
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
