@@ -1,4 +1,4 @@
-import 'package:riverpodx/riverpodx.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// [ProviderContainer] の生成をサポートするBuilderオブジェクト.
 /// 依存ツリーを構築してから、[ProviderContainer] を生成する.

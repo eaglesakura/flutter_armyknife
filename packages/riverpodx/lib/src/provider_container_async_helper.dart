@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:armyknife_task_queue/armyknife_task_queue.dart';
-import 'package:riverpodx/riverpodx.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// [Provider] のシャットダウン処理を行う関数.
 typedef ProviderAsyncDisposeFunction = dynamic Function();

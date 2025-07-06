@@ -1,6 +1,6 @@
-name: flutterx
-description: "A new Flutter package project."
-version: 2025.1.1
+name: armyknife_flutterx
+description: Light-Weight Flutter utilities.
+version: 1.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
