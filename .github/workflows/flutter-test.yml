@@ -44,6 +44,7 @@ jobs:
       # テスト
       - name: flutter test - ${{ matrix.package }}
         run: |
+          cp pubspec.yaml.template pubspec.yaml
           cd ${{ matrix.package }}
           dart pub get
           dart analyze
