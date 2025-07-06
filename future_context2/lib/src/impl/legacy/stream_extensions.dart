@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:async_notify2/async_notify2.dart';
 import 'package:flutter/foundation.dart';
-import 'package:future_contextx/src/impl/legacy/future_context.dart';
+import 'package:future_context2/src/impl/legacy/future_context.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 

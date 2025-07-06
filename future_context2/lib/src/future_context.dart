@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:future_contextx/src/future_context_request.dart';
-import 'package:future_contextx/src/impl/future_context_proxy.dart';
-import 'package:future_contextx/src/impl/legacy/future_context.dart' as legacy;
+import 'package:future_context2/src/future_context_request.dart';
+import 'package:future_context2/src/impl/future_context_proxy.dart';
+import 'package:future_context2/src/impl/legacy/future_context.dart' as legacy;
 import 'package:meta/meta.dart';
 import 'package:runtime_assert/runtime_assert.dart';
 

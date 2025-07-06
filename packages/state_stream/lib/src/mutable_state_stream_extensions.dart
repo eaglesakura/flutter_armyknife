@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:future_contextx/future_contextx.dart';
+import 'package:future_context2/future_context2.dart';
 import 'package:state_stream/state_stream.dart';
 
 extension MutableStateStreamExtensions<T> on MutableStateStream<T> {

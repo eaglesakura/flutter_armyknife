@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:armyknife_flutterx/armyknife_flutterx.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:future_contextx/future_contextx.dart';
+import 'package:future_context2/future_context2.dart';
 
 /// Hooksを使用してStreamを監視する.
 ///

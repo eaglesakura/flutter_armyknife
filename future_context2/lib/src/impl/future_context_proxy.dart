@@ -1,7 +1,7 @@
 import 'package:armyknife_dartx/armyknife_dartx.dart';
-import 'package:future_contextx/src/future_context.dart';
-import 'package:future_contextx/src/future_context_request.dart';
-import 'package:future_contextx/src/impl/legacy/future_context.dart' as legacy;
+import 'package:future_context2/src/future_context.dart';
+import 'package:future_context2/src/future_context_request.dart';
+import 'package:future_context2/src/impl/legacy/future_context.dart' as legacy;
 import 'package:meta/meta.dart';
 
 /// [legacy.FutureContext] の機能をラップしたデフォルト実装.

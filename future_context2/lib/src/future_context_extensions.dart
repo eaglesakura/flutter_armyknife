@@ -1,6 +1,6 @@
 import 'package:armyknife_streams/armyknife_streams.dart';
-import 'package:future_contextx/src/future_context.dart';
-import 'package:future_contextx/src/future_context_request.dart';
+import 'package:future_context2/src/future_context.dart';
+import 'package:future_context2/src/future_context_request.dart';
 
 /// Contextを自動生成もしくは親からの継承を行い、指定の処理を実行する.
 ///
