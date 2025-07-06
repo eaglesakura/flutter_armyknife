@@ -1,18 +1,22 @@
 name: armyknife_logger
 description: Simple Logger for Dart.
-version: 1.0.0+1
+version: 1.0.0+2
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
 environment:
   sdk: ">=3.8.0 <4.0.0"
+  flutter: ">=3.32.0"
 
 resolution: workspace
 
 dependencies:
+  flutter:
+    sdk: flutter
   armyknife_dartx: ^1.0.0
   logger: ^2.4.0
   platformx: ^1.1.0
 
 dev_dependencies:
-  lints: ^6.0.0
-  test: ^1.25.0
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0

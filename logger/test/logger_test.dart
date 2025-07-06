@@ -1,5 +1,5 @@
 import 'package:armyknife_logger/armyknife_logger.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ログ出力', () {
