@@ -17,7 +17,7 @@ dependencies:
   freezed_annotation: ^3.0.0
   runtime_assert: ^0.0.1+2
   future_context: ^0.0.2+13
-  streamx: ^2025.1.1
+  armyknife_streams: ^1.0.0
   armyknife_dartx: ^1.0.0
 
 dev_dependencies:
