@@ -1,6 +1,6 @@
 name: armyknife_logger
 description: Simple Logger for Dart.
-version: 1.0.0+2
+version: 1.0.0+3
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
 environment:
