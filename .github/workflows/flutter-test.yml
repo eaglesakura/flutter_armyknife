@@ -51,3 +51,4 @@ jobs:
           dart format --set-exit-if-changed ./lib/
           dart format --set-exit-if-changed ./test/
           flutter test ./test/
+          dart pub publish --dry-run
