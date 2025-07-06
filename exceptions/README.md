@@ -1,39 +1,65 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Golang の`errors`パッケージのような例外トレース Util を提供する Dart ライブラリです。例外の内部にある例外を取り出したり、例外チェーンをトレースすることができます。
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- **例外のアンラップ**: 例外の内部にある例外を取り出すことができる
+- **例外の検索**: 指定の型の例外を例外チェーンから検索できる
+- **例外チェーンの列挙**: 例外に含まれるすべての例外を列挙できる
+- **カスタムアンラッパー**: 独自の例外アンラップ処理を追加できる
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+`pubspec.yaml`に依存関係を追加してください：
+
+```yaml
+dependencies:
+  armyknife_exceptions: ^1.0.0
+```
+
+その後、`pub get`を実行してパッケージをインストールしてください。
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+### 基本的な使用例
 
 ```dart
-const like = 'sample';
+import 'package:armyknife_exceptions/armyknife_exceptions.dart';
+
+void main() {
+  try {
+    // 何らかの処理
+    throwNestedException();
+  } catch (e) {
+    if (e is Exception) {
+      // 例外チェーンをすべて列挙
+      for (final exception in Exceptions.unwrap(e)) {
+        print('Exception: $exception');
+      }
+
+      // 特定の型の例外を検索
+      final specificException = Exceptions.find<ArgumentError>(e);
+      if (specificException != null) {
+        print('Found ArgumentError: $specificException');
+      }
+    }
+  }
+}
+```
+
+### カスタムアンラッパーの追加
+
+```dart
+// カスタム例外アンラップ処理を追加
+Exceptions.addUnwrapper((exception) {
+  if (exception is YourCustomException) {
+    return exception.innerException;
+  }
+  return null;
+});
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+このパッケージは、Dart の例外処理をより柔軟にするために開発されました。Golang の`errors`パッケージからインスピレーションを得ており、例外チェーンの処理を簡単にします。
+
+パッケージに関する質問や問題があれば、GitHub の Issue で報告してください。
