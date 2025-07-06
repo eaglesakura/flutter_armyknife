@@ -1,5 +1,5 @@
 name: path_provider_riverpod
-description: "A new Flutter package project."
+description: "Riverpod Provider for path_provider"
 version: 1.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
