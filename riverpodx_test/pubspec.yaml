@@ -1,5 +1,5 @@
-name: riverpodx_test
-description: Riverpod test library.
+name: armyknife_riverpodx_test
+description: armyknife_riverpodx test support library.
 version: 1.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
