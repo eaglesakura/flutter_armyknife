@@ -1,39 +1,51 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+軽量な時刻処理ライブラリである。`time_machine`パッケージをベースに、開発者が使いやすい機能を追加している。
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- **軽量な時刻処理**: `time_machine`パッケージのラッパーとして、効率的な時刻処理を提供
+- **ClockDelegate**: テストやモッキングに便利な`Clock`のデリゲート実装
+- **InstantX**: `Instant`クラスの拡張機能（Unix エポック定数、ミリ秒単位の現在時刻取得）
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+pubspec.yaml に以下を追加してください：
+
+```yaml
+dependencies:
+  armyknife_time: ^1.0.0
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+基本的な時刻処理：
 
 ```dart
-const like = 'sample';
+import 'package:armyknife_time/armyknife_time.dart';
+
+void main() {
+  // 現在時刻を取得
+  final now = Instant.now();
+  print('現在時刻: $now');
+
+  // ミリ秒単位の現在時刻を取得
+  final nowMillis = InstantX.nowMilliSeconds();
+  print('現在時刻（ミリ秒）: $nowMillis');
+
+  // Unixエポック時刻を取得
+  final epoch = InstantX.epoch;
+  print('Unixエポック: $epoch');
+
+  // ClockDelegateを使用したカスタム時刻
+  final customClock = ClockDelegate(
+    getCurrentInstantDelegate: () => InstantX.epoch,
+  );
+  final customTime = customClock.getCurrentInstant();
+  print('カスタム時刻: $customTime');
+}
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+このパッケージは`time_machine`パッケージをベースにしている。より詳細な時刻処理が必要な場合は、`time_machine`パッケージのドキュメントを参照してください。
+
+問題や改善提案がある場合は、[GitHub Issues](https://github.com/eaglesakura/flutter_armyknife/issues)でお知らせください。

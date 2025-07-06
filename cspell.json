@@ -45,6 +45,7 @@
         "ISDIR",
         "loggerx",
         "mapx",
+        "Millis",
         "NOENT",
         "NOLFS",
         "NOMEM",
