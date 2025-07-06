@@ -1,5 +1,5 @@
-name: riverpodx
-description: "A new Flutter package project."
+name: armyknife_riverpodx
+description: Flutter+Riverpod bundle library.
 version: 1.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/

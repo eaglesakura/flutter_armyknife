@@ -1,5 +1,5 @@
+import 'package:armyknife_riverpodx/riverpodx.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:riverpodx/riverpodx.dart';
 
 final class ProviderContainerTest {
   const ProviderContainerTest._();
