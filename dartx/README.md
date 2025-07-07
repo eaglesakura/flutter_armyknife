@@ -92,7 +92,7 @@ final set = buildSet<int>((set) {
 
 ## Additional information
 
-このライブラリは Flutter Army Knife プロジェクトの一部です。
+このライブラリは Flutter Armyknife プロジェクトの一部です。
 
 - **GitHub**: https://github.com/eaglesakura/flutter_armyknife
 - **Issues**: バグ報告や機能要求は GitHub の Issues をご利用ください

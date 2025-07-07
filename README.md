@@ -1,6 +1,8 @@
-# Flutter Army Knife 🔧
+# Flutter Armyknife 🔧
 
-**Flutter Army Knife** は、その名の通り「十徳ナイフ」のように小さな便利を提供する、Dart・Flutter 開発者向けのユーティリティライブラリ集である。
+![Flutter Armyknife](./docs/res/armyknife_logo.png)
+
+**Flutter Armyknife** は、その名の通り「十徳ナイフ」のように小さな便利を提供する、Dart・Flutter 開発者向けのユーティリティライブラリ集である。
 
 日常的な開発作業で遭遇する様々な課題を解決するため、軽量で使いやすい小さなライブラリを多数提供している。それぞれのライブラリは独立して使用でき、プロジェクトの要件に応じて必要なものだけを選択できる。
 
@@ -65,4 +67,4 @@ MIT License
 
 ---
 
-> 🔧 **Army Knife** - 小さな便利を、いつでも手の届く場所に。
+> 🔧 **Armyknife** - 小さな便利を、いつでも手の届く場所に。
