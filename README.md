@@ -19,12 +19,14 @@
 |---------|-----------|------|----------|
 | 🔄 非同期処理・並行処理 | **[async_notify2](./async_notify2/)** | Java/Kotlin の notify/wait を再現 | 非同期処理の待ち合わせ、型安全な値の送受信 |
 | 🔄 非同期処理・並行処理 | **[future_context2](./future_context2/)** | キャンセル可能な非同期処理 | 非同期処理のキャンセル、タイムアウト、階層管理 |
+| 🔄 非同期処理・並行処理 | **[future_context2_hooks](./future_context2_hooks/)** | FutureContext Hooks 統合 | FutureContext の Flutter Hooks 統合、Widget ライフサイクル連携 |
 | 🔄 非同期処理・並行処理 | **[task_queue](./task_queue/)** | 順序付きタスク実行システム | タスクの順番保証、同期的な実行制御 |
 | 🏗️ データ処理・変換 | **[dartx](./dartx/)** | Dart 基本機能の拡張 | Iterable 拡張、型判定、コレクション構築 |
 | 🏗️ データ処理・変換 | **[streams](./streams/)** | RxDart ベースの Stream 操作 | Stream 結合、生成型 Stream、Future-Stream 変換 |
 | 🏗️ データ処理・変換 | **[yamlx](./yamlx/)** | YAML ファイル処理 | YAML の Map 変換、マージ機能、パス指定取得 |
 | 🗄️ データベース・永続化 | **[driftx](./driftx/)** | Drift データベース拡張 | SQLite 結果コード、複数データベース同時トランザクション |
-| 🎯 状態管理 | **[riverpodx](./riverpodx/)** | Riverpod 統合ライブラリ | Hooks・Riverpod 統合、ProviderContainer 構築 |
+| 🎯 状態管理 | **[riverpodx](./riverpodx/)** | Riverpod サポートライブラリ | ProviderContainer 構築、Stream フック、リスト型プロパティ |
+| 🎯 状態管理 | **[riverpod_container_async](./riverpod_container_async/)** | ProviderContainer 非同期サポート | 非同期初期化・削除処理、タスクキュー管理 |
 | 🎯 状態管理 | **[state_stream](./state_stream/)** | 軽量状態管理 | 型安全な状態管理、リアクティブ更新、スレッドセーフ |
 | 🎯 状態管理 | **[state_stream_riverpod](./state_stream_riverpod/)** | state_stream の Riverpod 連携 | Riverpod プロバイダーとの統合 |
 | 🧪 テスト支援 | **[flutter_testx](./flutter_testx/)** | Flutter Test 拡張 | 型検証とキャスト、型安全なアサーション |
