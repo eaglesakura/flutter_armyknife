@@ -72,6 +72,73 @@ class ListWidget extends ConsumerWidget {
 * `riverpod` 系ライブラリのexportが廃止された.
 * 必要に応じて、個別に `riverpod` 系のライブラリのimportを追加する.
 
+### インポートの変更
+
+**1.0.x での書き方:**
+```dart
+// 1つのインポートですべてのriverpod機能が使える
+import 'package:armyknife_riverpodx/armyknife_riverpodx.dart';
+
+class MyWidget extends HookConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // flutter_hooks、flutter_riverpod、hooks_riverpod すべて利用可能
+    return Container();
+  }
+}
+```
+
+**1.1.x での書き方:**
+```dart
+// 必要なライブラリを個別にインポート
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:armyknife_riverpodx/armyknife_riverpodx.dart';
+
+class MyWidget extends HookConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // 同じ機能が利用可能
+    return Container();
+  }
+}
+```
+
+### 非同期処理機能の移行
+
+**1.0.x での書き方:**
+```dart
+import 'package:armyknife_riverpodx/armyknife_riverpodx.dart';
+
+final container = ProviderContainer(
+  overrides: [
+    ...ProviderContainerAsyncHelper.inject(),
+  ],
+);
+
+// 非同期初期化・削除処理
+await container.waitInitializeTasks();
+await container.disposeAsync();
+```
+
+**1.1.x での書き方:**
+```dart
+// 非同期処理機能は別パッケージに移行
+import 'package:riverpod_container_async/riverpod_container_async.dart';
+import 'package:armyknife_riverpodx/armyknife_riverpodx.dart';
+
+final container = ProviderContainer(
+  overrides: [
+    ...ProviderContainerAsyncHelper.inject(),
+  ],
+);
+
+// 同じAPIが利用可能
+await container.waitInitializeTasks();
+await container.disposeAsync();
+```
+
 ## Additional information
 
 このパッケージは Flutter 開発における状態管理を効率化するために作られた。
