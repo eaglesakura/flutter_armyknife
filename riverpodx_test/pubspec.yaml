@@ -14,6 +14,8 @@ dependencies:
   flutter_test:
     sdk: flutter
   armyknife_riverpodx: ^1.0.0
+  flutter_riverpod: ^2.6.1
+  riverpod_provider_container_async: ^1.0.0
 
 dev_dependencies:
   flutter_lints: ^6.0.0

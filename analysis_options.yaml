@@ -7,8 +7,6 @@ analyzer:
     directives_ordering: error
     depend_on_referenced_packages: error
   exclude:
-    - "**/*.g.dart"
-    - "**/*.freezed.dart"
     - "**/*.gen.dart"
   language:
     strict-casts: true

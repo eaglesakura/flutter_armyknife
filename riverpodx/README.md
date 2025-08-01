@@ -6,7 +6,6 @@ FlutterHooks、Riverpod、HooksRiverpod を 1 つのパッケージにバンド�
 
 - **統合された状態管理**: flutter_hooks、flutter_riverpod、hooks_riverpod を一つのインポートで使用可能
 - **ProviderContainer ビルダー**: 依存関係を効率的に構築するビルダーパターン
-- **非同期処理サポート**: ProviderContainer の非同期初期化・解放処理
 - **Stream フック**: UI の安全な Stream 監視機能
 - **FutureContext ライフサイクル**: Widget と FutureContext の自動連携
 - **リスト型プロパティ**: Riverpod での論理一致判定をサポート
@@ -48,50 +47,30 @@ class MyWidget extends HookConsumerWidget {
     return Container();
   }
 }
-```
 
-```dart
-// 非同期初期化・削除をサポートするProviderContainerの作成
-final container = ProviderContainer(
-  overrides: [
-    ...ProviderContainerAsyncHelper.inject(),
-    // 他のoverrides
-  ],
-);
-
-// Provider内で非同期初期化を行う
-final myServiceProvider = Provider((ref) {
-  final service = MyService();
-
-  // 非同期初期化タスクを登録
-  ref.registerInitializeTasks(service.initialize());
-
-  // 非同期削除処理を登録
-  ref.onDisposeAsync(() async {
-    await service.dispose();
-  });
-
-  return service;
+// リスト型プロパティを使った論理一致判定
+final listProvider = StateProvider<ListSelectProperty<String>>((ref) {
+  return ListSelectProperty(['item1', 'item2', 'item3']);
 });
 
-// 使用例
-void main() async {
-  final container = ProviderContainer(
-    overrides: ProviderContainerAsyncHelper.inject(),
-  );
-
-  // すべての初期化タスクが完了するまで待つ
-  await container.waitInitializeTasks();
-
-  // アプリケーションの実行
-  runApp(MyApp());
-
-  // 終了時に非同期削除を実行
-  await container.disposeAsync();
+class ListWidget extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final listProperty = ref.watch(listProvider);
+    final items = listProperty.requireList();
+    
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) => Text(items[index]),
+    );
+  }
 }
 ```
 
 ## Additional information
 
 このパッケージは Flutter 開発における状態管理を効率化するために作られた。
+
+> **注記：** ProviderContainer の非同期初期化・解放処理については、別パッケージ [`riverpod_provider_container_async`](../riverpod_provider_container_async/) に移行されました。非同期処理が必要な場合はそちらをご利用ください。
+
 バグ報告や機能要求は[GitHub](https://github.com/eaglesakura/flutter_armyknife)で受け付けている。
