@@ -29,7 +29,7 @@
 | 🎯 状態管理 | **[state_stream_riverpod](./state_stream_riverpod/)** | state_stream の Riverpod 連携 | Riverpod プロバイダーとの統合 |
 | 🧪 テスト支援 | **[flutter_testx](./flutter_testx/)** | Flutter Test 拡張 | 型検証とキャスト、型安全なアサーション |
 | 🧪 テスト支援 | **[test_context](./test_context/)** | テスト用コンテキスト | テスト毎のインスタンス保証、自動クリーンアップ |
-| 🧪 テスト支援 | **[riverpodx_test](./riverpodx_test/)** | riverpodx のテストサポート | riverpodx のテスト機能 |
+| 🧪 テスト支援 | **[riverpod_container_async_test](./riverpod_container_async_test/)** | riverpod_container_async のテストサポート | riverpod_container_async のテスト機能 |
 | 🔧 Flutter 拡張 | **[flutterx](./flutterx/)** | Flutter SDK 拡張 | テスト環境判定、フレーム同期待機 |
 | 📝 ログ・デバッグ | **[logger](./logger/)** | ログライブラリ統一インターフェース | 4 つのログレベル、プラットフォーム非依存 |
 | 📝 ログ・デバッグ | **[logger_flutter](./logger_flutter/)** | Flutter 用ログ実装 | Flutter アプリケーション向けログ出力 |

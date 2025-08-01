@@ -1,26 +1,12 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-`armyknife_riverpodx`を使用したコードの Unit Test 作成を支援するテストライブラリである。
+`riverpod_container_async`を使用したコードの Unit Test 作成を支援するテストライブラリである。
 ProviderContainer の非同期削除機能、依存関係の自動解決、テスト用のプロバイダー管理機能を提供する。
 
 ## Features
 
-- **自動的な ProviderContainer 管理**: テスト用の ProviderContainer を自動作成・削除
-- **非同期削除サポート**: テスト終了時に ProviderContainer を適切に非同期削除
-- **依存関係の自動解決**: プロバイダーの依存グラフを構築し、準備完了状態にする
-- **AutoDisposeProvider 対応**: 自動的に listen を行い、適切にプロバイダーを管理
-- **テスト用ヘルパー**: 簡単にプロバイダーからインスタンスを取得できる拡張機能
+- **テスト用拡張機能**: `ProviderContainer` に対するテスト専用の拡張メソッドを提供
+- **初期化タスク待機**: `riverpod_container_async` の初期化タスクを自動的に待機し、テスト実行前にプロバイダーを完全に準備
+- **依存関係の自動解決**: `testReady` でプロバイダーの依存グラフを再帰的に構築し、すべての依存プロバイダーを準備完了状態にする
+- **簡単なインスタンス取得**: `testGet` で型安全にプロバイダーからインスタンスを取得
 
 ## Getting started
 
@@ -28,7 +14,7 @@ ProviderContainer の非同期削除機能、依存関係の自動解決、テ�
 
 ```yaml
 dev_dependencies:
-  armyknife_riverpodx_test: ^1.0.0
+  riverpod_container_async_test: ^1.0.0
 ```
 
 ## Usage
@@ -36,13 +22,13 @@ dev_dependencies:
 テスト用の ProviderContainer を作成し、プロバイダーをテストする：
 
 ```dart
-import 'package:armyknife_riverpodx_test/armyknife_riverpodx_test.dart';
+import 'package:riverpod_container_async_test/riverpod_container_async_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Provider tests', () {
     test('should create provider container with async disposal', () async {
-      final container = ProviderContainerTest.create();
+      final container = // ProviderContainer作成
 
       // プロバイダーの値を取得
       final value = container.testGet(myProvider);
@@ -52,7 +38,7 @@ void main() {
     });
 
     test('should ready provider with dependencies', () async {
-      final container = ProviderContainerTest.create();
+      final container = // ProviderContainer作成
 
       // 依存関係を解決してプロバイダーを準備完了状態にする
       final service = await container.testReady(myServiceProvider);
