@@ -71,6 +71,6 @@ class ListWidget extends ConsumerWidget {
 
 このパッケージは Flutter 開発における状態管理を効率化するために作られた。
 
-> **注記：** ProviderContainer の非同期初期化・解放処理については、別パッケージ [`riverpod_provider_container_async`](../riverpod_provider_container_async/) に移行されました。非同期処理が必要な場合はそちらをご利用ください。
+> **注記：** ProviderContainer の非同期初期化・解放処理については、別パッケージ [`riverpod_container_async`](../riverpod_container_async/) に移行されました。非同期処理が必要な場合はそちらをご利用ください。
 
 バグ報告や機能要求は[GitHub](https://github.com/eaglesakura/flutter_armyknife)で受け付けている。

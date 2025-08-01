@@ -17,9 +17,9 @@ workspace:
   - logger
   - logger_flutter
   - logger_grinder
-  - riverpod_provider_container_async
+  - riverpod_container_async
+  - riverpod_container_async_test
   - riverpodx
-  - riverpodx_test
   - state_stream
   - state_stream_riverpod
   - streams

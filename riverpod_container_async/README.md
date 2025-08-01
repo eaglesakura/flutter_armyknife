@@ -13,13 +13,13 @@ Provider 内での非同期初期化タスクの管理や、ProviderContainer �
 
 ```yaml
 dependencies:
-  riverpod_provider_container_async: ^1.0.0
+  riverpod_container_async: ^1.0.0
 ```
 
 ## Usage
 
 ```dart
-import 'package:riverpod_provider_container_async/riverpod_provider_container_async.dart';
+import 'lib/riverpod_container_async.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 非同期初期化・削除をサポートするProviderContainerの作成
