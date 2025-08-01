@@ -1,26 +1,10 @@
-import 'package:armyknife_riverpodx/armyknife_riverpodx.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:riverpod_container_async/riverpod_container_async.dart';
 
-final class ProviderContainerTest {
-  const ProviderContainerTest._();
-
-  static ProviderContainer create({
-    List<Override> overrides = const [],
-  }) {
-    final result = ProviderContainer(
-      overrides: {
-        ...overrides,
-        ...ProviderContainerAsyncHelper.inject(),
-      }.toList(),
-    );
-    addTearDown(() async {
-      await result.disposeAsync();
-    });
-    return result;
-  }
-}
-
-extension ProviderContainerTestExtensions on ProviderContainer {
+/// [ProviderContainerAsyncHelper] を含んで初期化された [ProviderContainer] のUnit Testをサポートする.
+/// 依存の初期待ちを行うことで、Unit Testを行いやすくする.
+extension ProviderContainerAsyncTestExtensions on ProviderContainer {
   /// インスタンスを取得する.
   T testGet<T>(ProviderListenable<T> provider) {
     if (provider is AutoDisposeProvider<T>) {
@@ -32,6 +16,9 @@ extension ProviderContainerTestExtensions on ProviderContainer {
   }
 
   /// インスタンスを取得し、準備完了状態にする.
+  ///
+  /// [ProviderContainerAsyncExtensions.waitInitializeTasks] に登録されたタスクが存在する場合、
+  /// すべてのタスク完了待ちを行う.
   Future<T> testReady<T>(ProviderListenable<T> provider) async {
     await _readyDependencies(provider);
     return testGet(provider);

@@ -14,9 +14,13 @@ workspace:
   - flutter_testx
   - flutterx
   - future_context2
+  - future_context2_hooks
   - logger
+  - logger_flutter
+  - logger_grinder
+  - riverpod_container_async
+  - riverpod_container_async_test
   - riverpodx
-  - riverpodx_test
   - state_stream
   - state_stream_riverpod
   - streams

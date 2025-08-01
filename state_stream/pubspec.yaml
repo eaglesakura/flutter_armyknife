@@ -14,7 +14,7 @@ dependencies:
   async_notify2: ^1.0.0
   armyknife_dartx: ^1.0.0
   freezed_annotation: ^3.0.0
-  future_context2: ^1.0.0
+  future_context2: ^1.0.1
   meta: ^1.16.0
   runtime_assert: ^0.0.1+2
   rxdart: ^0.28.0
