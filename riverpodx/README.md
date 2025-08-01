@@ -67,6 +67,11 @@ class ListWidget extends ConsumerWidget {
 }
 ```
 
+## Migration 1.0.x to 1.1.x
+
+* `riverpod` 系ライブラリのexportが廃止された.
+* 必要に応じて、個別に `riverpod` 系のライブラリのimportを追加する.
+
 ## Additional information
 
 このパッケージは Flutter 開発における状態管理を効率化するために作られた。

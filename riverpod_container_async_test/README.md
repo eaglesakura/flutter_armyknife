@@ -50,7 +50,7 @@ void main() {
 
 ## Additional information
 
-このパッケージは`armyknife_riverpodx`を使用したアプリケーションの
+このパッケージは`riverpod_container_async`を使用したアプリケーションの
 Unit Test 作成を簡単にするために作られた。
 特に ProviderContainer の非同期削除機能により、テスト間でのリソースリークを防ぐことができる。
 バグ報告や機能要求は[GitHub](https://github.com/eaglesakura/flutter_armyknife)で受け付けている。
