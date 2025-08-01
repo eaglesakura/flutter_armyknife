@@ -15,7 +15,7 @@ Dart には非同期処理のキャンセル機能が標準で提供されてい
 
 ```yaml
 dependencies:
-  future_context2: ^1.0.0
+  future_context2: ^1.0.1
 ```
 
 ## Usage

@@ -46,7 +46,7 @@
 ```yaml
 dependencies:
   armyknife_dartx: ^1.0.0
-  armyknife_future_context2: ^1.0.0
+  armyknife_future_context2: ^1.0.1
   armyknife_riverpodx: ^1.0.0
   # 他の必要なライブラリ
 ```
