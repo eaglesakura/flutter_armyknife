@@ -14,6 +14,7 @@ workspace:
   - flutter_testx
   - flutterx
   - future_context2
+  - future_context2_hooks
   - logger
   - logger_flutter
   - logger_grinder
