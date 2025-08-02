@@ -1,3 +1,3 @@
 library;
 
-export 'src/state_stream_providers.dart';
+export 'src/state_stream_provider.dart';
