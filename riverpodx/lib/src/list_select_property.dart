@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 /// List型のRiverpodプロパティ.
 /// RiverpodとListを組み合わせた場合、論理一致を判定することができないため、
 /// 一致を判定するためのプロパティを作成する.
+@Deprecated('Replace to flutter_riverpod_watch_plus package')
 class ListSelectProperty<T> {
   static const _listEquals = ListEquality();
 
