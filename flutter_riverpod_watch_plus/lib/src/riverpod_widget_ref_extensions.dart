@@ -12,10 +12,11 @@ extension WidgetRefWatchBy on WidgetRef {
   ///
   /// It can also be used for non-Collections, but note that intermediate object creation overhead occurs in that case.
   ///
+  /// == 日本語 ==
   /// 指定の値を監視する.
   /// この拡張関数は、Collectionの監視をサポートする.
   ///
-  /// 注意.
+  /// NOTE.
   /// Riverpodの仕様として、Collectionを監視すると、Collectionの参照比較が行われるため、
   /// 内容が同じでも再描画が発生する.
   /// この仕様を回避するために、中間オブジェクトを使用してCollectionの参照を管理する.
