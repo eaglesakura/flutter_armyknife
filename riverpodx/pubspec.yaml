@@ -1,6 +1,6 @@
 name: armyknife_riverpodx
 description: Flutter+Riverpod support library.
-version: 1.1.0
+version: 1.1.1
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
