@@ -18,6 +18,7 @@ jobs:
           - dartx
           - driftx
           - exceptions
+          - flutter_riverpod_watch_plus
           - flutter_testx
           - flutterx
           - future_context2
