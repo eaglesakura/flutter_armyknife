@@ -20,6 +20,7 @@ workspace:
   - logger_grinder
   - riverpod_container_async
   - riverpod_container_async_test
+  - riverpod_watch_plus
   - riverpodx
   - state_stream
   - state_stream_riverpod
