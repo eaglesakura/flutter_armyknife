@@ -1,4 +1,4 @@
-name: riverpod_watch_plus
+name: flutter_riverpod_watch_plus
 description: "A Flutter package that extends the ref.watch functionality of Riverpod."
 version: 1.0.0
 resolution: workspace

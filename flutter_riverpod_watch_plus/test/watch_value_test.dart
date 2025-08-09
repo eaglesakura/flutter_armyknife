@@ -1,5 +1,5 @@
+import 'package:flutter_riverpod_watch_plus/src/watch_value.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:riverpod_watch_plus/src/watch_value.dart';
 
 void main() {
   test('setを比較', () {

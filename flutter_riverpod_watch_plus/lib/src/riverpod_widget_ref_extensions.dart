@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_watch_plus/src/watch_value.dart';
+import 'package:flutter_riverpod_watch_plus/src/watch_value.dart';
 
 extension WidgetRefWatchBy on WidgetRef {
   /// Watches the specified value.
