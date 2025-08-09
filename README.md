@@ -25,6 +25,7 @@
 | 🏗️ データ処理・変換 | **[streams](./streams/)** | RxDart ベースの Stream 操作 | Stream 結合、生成型 Stream、Future-Stream 変換 |
 | 🏗️ データ処理・変換 | **[yamlx](./yamlx/)** | YAML ファイル処理 | YAML の Map 変換、マージ機能、パス指定取得 |
 | 🗄️ データベース・永続化 | **[driftx](./driftx/)** | Drift データベース拡張 | SQLite 結果コード、複数データベース同時トランザクション |
+| 🎯 状態管理 | **[flutter_riverpod_watch_plus](./flutter_riverpod_watch_plus/)** | Riverpod watch() の拡張ライブラリ | Collection ディープイコール対応、不要な再描画防止 |
 | 🎯 状態管理 | **[riverpodx](./riverpodx/)** | Riverpod サポートライブラリ | ProviderContainer 構築、Stream フック、リスト型プロパティ |
 | 🎯 状態管理 | **[riverpod_container_async](./riverpod_container_async/)** | ProviderContainer 非同期サポート | 非同期初期化・削除処理、タスクキュー管理 |
 | 🎯 状態管理 | **[state_stream](./state_stream/)** | 軽量状態管理 | 型安全な状態管理、リアクティブ更新、スレッドセーフ |
@@ -48,6 +49,7 @@ dependencies:
   armyknife_dartx: ^1.0.0
   armyknife_future_context2: ^1.0.1
   armyknife_riverpodx: ^1.0.0
+  flutter_riverpod_watch_plus: ^1.0.0
   # 他の必要なライブラリ
 ```
 
