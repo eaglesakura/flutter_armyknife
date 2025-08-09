@@ -11,6 +11,7 @@ workspace:
   - dartx
   - driftx
   - exceptions
+  - flutter_riverpod_watch_plus
   - flutter_testx
   - flutterx
   - future_context2
@@ -20,7 +21,6 @@ workspace:
   - logger_grinder
   - riverpod_container_async
   - riverpod_container_async_test
-  - riverpod_watch_plus
   - riverpodx
   - state_stream
   - state_stream_riverpod
