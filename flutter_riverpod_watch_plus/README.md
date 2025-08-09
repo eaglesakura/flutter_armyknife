@@ -1,68 +1,64 @@
-Riverpod の ProviderContainer の非同期初期化・削除処理をサポートするライブラリである。
-Provider 内での非同期初期化タスクの管理や、ProviderContainer 削除時の非同期処理を安全に実行できる。
+A library that solves the problem of Riverpod's `Ref.watch()` not supporting deep-equals for Iterables and Maps.
+It prevents unnecessary re-renders caused by reference comparison when watching collections (List, Map, Set) and enables efficient state management.
 
 ## Features
 
-- **非同期初期化サポート**: Provider の初期化時に非同期タスクを登録し、完了を待機
-- **非同期削除処理**: ProviderContainer 削除時に非同期処理を安全に実行
-- **タスクキュー管理**: 初期化・削除タスクを順次実行し、完了を保証
+- **Deep Equals Support**: Efficient state watching with deep comparison for List, Map, and Set
+- **Prevent Unnecessary Re-renders**: Avoids re-rendering when collection contents are the same
+- **Extension Functions**: Easy usage through `Ref.watchBy()` and `WidgetRef.watchBy()`
 
 ## Getting started
 
-`pubspec.yaml`に以下の依存関係を追加する：
+Add the following dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  riverpod_container_async: ^1.0.0
+  flutter_riverpod_watch_plus: ^1.0.0
 ```
 
 ## Usage
 
 ```dart
-import 'lib/riverpod_container_async.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod_watch_plus/flutter_riverpod_watch_plus.dart';
 
-// 非同期初期化・削除をサポートするProviderContainerの作成
-final container = ProviderContainer(
-  overrides: [
-    ...ProviderContainerAsyncHelper.inject(),
-    // 他のoverrides
-  ],
-);
+// Provider watching a regular List
+final listProvider = StateProvider<List<String>>((ref) => ['a', 'b', 'c']);
 
-// Provider内で非同期初期化を行う
-final myServiceProvider = Provider((ref) {
-  final service = MyService();
-
-  // 非同期初期化タスクを登録
-  ref.registerInitializeTasks(service.initialize());
-
-  // 非同期削除処理を登録
-  ref.onDisposeAsync(() async {
-    await service.dispose();
-  });
-
-  return service;
+// Traditional watching method (unnecessary re-renders due to reference comparison)
+final badExample = Provider((ref) {
+  final list = ref.watch(listProvider); // Re-renders even when content is the same
+  return list.length;
 });
 
-// 使用例
-void main() async {
-  final container = ProviderContainer(
-    overrides: ProviderContainerAsyncHelper.inject(),
-  );
+// Using watchBy() for efficient watching (Deep Equals)
+final goodExample = Provider((ref) {
+  final list = ref.watchBy(listProvider, (value) => value); // No re-render when content is the same
+  return list.length;
+});
 
-  // すべての初期化タスクが完了するまで待つ
-  await container.waitInitializeTasks();
+// Usage example in Widget
+class MyWidget extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // watchBy() can also be used with WidgetRef
+    final filteredList = ref.watchBy(
+      listProvider,
+      (list) => list.where((item) => item.startsWith('a')).toList(),
+    );
 
-  // アプリケーションの実行
-  runApp(MyApp());
-
-  // 終了時に非同期削除を実行
-  await container.disposeAsync();
+    return ListView.builder(
+      itemCount: filteredList.length,
+      itemBuilder: (context, index) {
+        return ListTile(title: Text(filteredList[index]));
+      },
+    );
+  }
 }
 ```
 
 ## Additional information
 
-このパッケージは Riverpod の ProviderContainer における非同期処理を安全に実行するために作られた。
-バグ報告や機能要求は[GitHub](https://github.com/eaglesakura/flutter_armyknife)で受け付けている。
+This package extends Riverpod's `Ref.watch()` functionality to provide deep-equals support for collections.
+It uses an intermediate object (WatchValue) to perform content comparison of collections and prevent unnecessary re-renders.
+Bug reports and feature requests are accepted on [GitHub](https://github.com/eaglesakura/flutter_armyknife).

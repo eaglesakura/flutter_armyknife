@@ -1,5 +1,5 @@
 name: flutter_riverpod_watch_plus
-description: "A Flutter package that extends the ref.watch functionality of Riverpod."
+description: "A library that enables DeepEquals support for Riverpod's Ref.watch()."
 version: 1.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
