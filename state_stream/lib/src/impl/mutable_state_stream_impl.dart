@@ -36,6 +36,17 @@ class MutableStateStreamImpl<T> implements MutableStateStream<T> {
       _subject.value.lifecycle != MutableStateStreamLifecycle.alive;
 
   @override
+  bool get isLocking {
+    // すでに閉じている場合は、ロック中ではない.
+    if (isClosed) {
+      return false;
+    }
+
+    // tqにタスクが残っている場合は、ロック中である.
+    return _taskQueue.isNotEmpty;
+  }
+
+  @override
   bool get isNotClosed => !isClosed;
 
   @override

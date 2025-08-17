@@ -25,6 +25,11 @@ abstract class MutableStateStream<T> implements StateStream<T> {
   /// ただし、破棄済みであっても完全に処理が終了していない場合がある.
   bool get isClosed;
 
+  /// このStreamがロックされている場合にtrueを返却する.
+  /// trueの場合、何らかのタスクが実行中である.
+  /// すでに [isClosed] である場合は、常にfalseを返却する.
+  bool get isLocking;
+
   /// このStreamが有効である場合にtrueを返却する.
   bool get isNotClosed;
 
