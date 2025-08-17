@@ -1,3 +1,4 @@
+import 'package:armyknife_dartx/armyknife_dartx.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:state_stream/src/mutable_state_stream.dart';
 
@@ -77,5 +78,33 @@ void main() {
     expect(states[2].integer, 3);
     await subscription.cancel();
     await stream.close();
+  });
+
+  test('ロック中の状態を取得できる', () async {
+    final stream = MutableStateStream(
+      const TestState(
+        integer: 1,
+      ),
+    );
+
+    // ロックを実行する
+    expect(stream.isLocking, isFalse);
+    final lockTask = stream.updateWithLock(
+      (currentState, emitter) async {
+        await nop();
+        // 今はLock中である
+        expect(stream.isLocking, isTrue);
+      },
+    );
+    // lockタスクの中が実行中なので、ロック中である.
+    expect(stream.isLocking, isTrue);
+    await lockTask;
+
+    // lockタスクが終了したので、ロック中ではない.
+    expect(stream.isLocking, isFalse);
+
+    // すでに閉じているので、ロック中ではない.
+    await stream.close();
+    expect(stream.isLocking, isFalse);
   });
 }
