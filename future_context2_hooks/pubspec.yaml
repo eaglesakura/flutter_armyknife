@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.21.2
+  flutter_hooks: ^0.21.3+1
   future_context2: ^1.0.1
 
 dev_dependencies:
