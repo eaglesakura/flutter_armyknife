@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   armyknife_task_queue: ^1.0.0+1
   flutter_riverpod: ^3.0.0
+  riverpod: ^3.0.0
 
 dev_dependencies:
   flutter_test:

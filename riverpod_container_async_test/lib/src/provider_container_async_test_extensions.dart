@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:riverpod/misc.dart';
 import 'package:riverpod_container_async/riverpod_container_async.dart';
 
 /// [ProviderContainerAsyncHelper] を含んで初期化された [ProviderContainer] のUnit Testをサポートする.
@@ -7,7 +8,7 @@ import 'package:riverpod_container_async/riverpod_container_async.dart';
 extension ProviderContainerAsyncTestExtensions on ProviderContainer {
   /// インスタンスを取得する.
   T testGet<T>(ProviderListenable<T> provider) {
-    if (provider is AutoDisposeProvider<T>) {
+    if (provider is NotifierProvider) {
       listen(provider, (prev, next) {});
       return read(provider);
     } else {
@@ -27,7 +28,7 @@ extension ProviderContainerAsyncTestExtensions on ProviderContainer {
   List<ProviderListenableOrFamily> _getDependencies(
     ProviderListenable provider,
   ) {
-    if (provider is AutoDisposeProvider) {
+    if (provider is NotifierProvider) {
       return provider.dependencies?.toList() ?? [];
     } else if (provider is Provider) {
       return provider.dependencies?.toList() ?? [];

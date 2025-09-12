@@ -1,10 +1,8 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:state_stream/state_stream.dart';
+import 'dart:async';
 
-/// [StateStream] からStateを取得するProviderを生成する.
-/// 互換性のために残されている.
-@Deprecated('Use `StateStreamProvider` instead')
-typedef StateStreamProviders = StateStreamProvider;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
+import 'package:state_stream/state_stream.dart';
 
 /// [StateStream] からStateを取得するProviderを生成する.
 final class StateStreamProvider {
@@ -19,18 +17,15 @@ final class _AutoDisposeProvider {
 
   /// [StateStream] からStateを取得するProviderを生成する.
   /// StateStream自体の生成は別な [stateStreamProvider] に任されている.
-  AutoDisposeProvider<T> state<T>(
-    AutoDisposeProvider<StateStream<T>> stateStreamProvider,
+  NotifierProvider<Notifier<T>, T> state<T>(
+    Provider<StateStream<T>> stateStreamProvider,
   ) {
-    return Provider.autoDispose<T>(
-      (ref) {
-        final stateStream = ref.watch(stateStreamProvider);
-
-        final subscribe = stateStream.stream.listen((state) {
-          ref.state = state;
+    return NotifierProvider.autoDispose(
+      () {
+        final result = _StateStreamNotifier((ref) {
+          return ref.watch(stateStreamProvider);
         });
-        ref.onDispose(subscribe.cancel);
-        return stateStream.state;
+        return result;
       },
       dependencies: [
         stateStreamProvider,
@@ -40,22 +35,52 @@ final class _AutoDisposeProvider {
 
   /// [valueProvider] から[selector]で変換した [StateStream]`<T>`を取得し、
   /// [StateStream] からStateを取得するProviderを生成する.
-  AutoDisposeProvider<T> stateBy<V, T>(
-    AutoDisposeProvider<V> valueProvider,
+  NotifierProvider<Notifier<T>, T> stateBy<V, T>(
+    Provider<V> valueProvider,
     StateStream<T> Function(V value) selector,
   ) {
-    return Provider.autoDispose<T>(
-      (ref) {
-        final stateStream = ref.watch(valueProvider.select(selector));
-        final subscribe = stateStream.stream.listen((state) {
-          ref.state = state;
+    return NotifierProvider.autoDispose(
+      () {
+        final result = _StateStreamNotifier((ref) {
+          return ref.watch(valueProvider.select(selector));
         });
-        ref.onDispose(subscribe.cancel);
-        return stateStream.state;
+        return result;
       },
       dependencies: [
         valueProvider,
       ],
     );
+  }
+}
+
+/// [StateStream] と [StateNotifier] を連携させるためのインターフェース.
+///
+/// NOTE.
+/// Riverpod 3.0以降、Refの直接的state更新が行えなくなったため、
+/// [StateNotifier]を利用する.
+/// https://riverpod.dev/docs/migration/from_state_notifier
+class _StateStreamNotifier<T> extends Notifier<T> {
+  final StateStream<T> Function(Ref ref) _getStateStream;
+
+  StreamSubscription? _subscription;
+
+  _StateStreamNotifier(this._getStateStream);
+
+  void dispose() {
+    _subscription?.cancel();
+    _subscription = null;
+  }
+
+  @override
+  T build() {
+    _subscription?.cancel();
+    final stateStream = _getStateStream(ref);
+    _subscription = stateStream.stream.listen((e) {
+      if (!ref.mounted) {
+        return;
+      }
+      state = e;
+    });
+    return stateStream.state;
   }
 }
