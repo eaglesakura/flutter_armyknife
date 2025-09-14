@@ -1,15 +1,16 @@
-Flutter の FutureContext と Flutter Hooks を統合し、
-Widget のライフサイクルと非同期処理を安全に連携するためのライブラリである。
+# future_context2_hooks
+
+A library that integrates Flutter's FutureContext with Flutter Hooks to safely coordinate Widget lifecycle and asynchronous processing.
 
 ## Features
 
-- **FutureContext ライフサイクル連携**: Widget のライフサイクルと FutureContext を自動連携
-- **自動リソース管理**: Widget 破棄時に FutureContext を自動的にクローズ
-- **メモ化サポート**: keys パラメータによる FutureContext の再利用制御
+- **FutureContext Lifecycle Integration**: Automatically links Widget lifecycle with FutureContext
+- **Automatic Resource Management**: Automatically closes FutureContext when Widget is disposed
+- **Memoization Support**: Control FutureContext reuse through keys parameter
 
 ## Getting started
 
-`pubspec.yaml`に以下の依存関係を追加する：
+Add the following dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
@@ -18,7 +19,7 @@ dependencies:
 
 ## Usage
 
-Flutter Hooks を使って FutureContext を Widget のライフサイクルに連携させる：
+Use Flutter Hooks to integrate FutureContext with Widget lifecycle:
 
 ```dart
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -28,45 +29,45 @@ import 'package:future_context2_hooks/future_context2_hooks.dart';
 class MyWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Widget のライフサイクルと連携した FutureContext
+    // FutureContext linked with Widget lifecycle
     final futureContext = useFutureContext();
 
-    // 非同期処理を実行
+    // Execute asynchronous processing
     useEffect(() {
-      // futureContext を使った非同期処理
+      // Asynchronous processing using futureContext
       futureContext.suspend(() async {
-        // 何らかの非同期処理
+        // Some asynchronous processing
         await Future.delayed(Duration(seconds: 1));
-        print('非同期処理完了');
+        print('Asynchronous processing completed');
       });
       
-      return null; // Widget破棄時にfutureContextは自動的にクローズされる
+      return null; // futureContext is automatically closed when Widget is disposed
     }, []);
 
     return Container(
-      child: Text('FutureContext を使用中'),
+      child: Text('Using FutureContext'),
     );
   }
 }
 
 ```
 
-### パラメータによる制御
+### Parameter Control
 
 ```dart
 class MyWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // タグ付きの FutureContext（デバッグ時に便利）
+    // Tagged FutureContext (useful for debugging)
     final futureContext = useFutureContext(
       tag: 'MyWidget',
     );
 
-    // keys による再利用制御
+    // Reuse control with keys
     final userId = ref.watch(userIdProvider);
     final userContext = useFutureContext(
       tag: 'UserData',
-      keys: [userId], // userIdが変わったときのみ新しいFutureContextを作成
+      keys: [userId], // Create new FutureContext only when userId changes
     );
 
     return Container();
@@ -76,7 +77,7 @@ class MyWidget extends HookConsumerWidget {
 
 ## Additional information
 
-このパッケージは FutureContext と Flutter Hooks の統合を簡単にするために作られた。
-Widget のライフサイクルに合わせた非同期処理の管理により、メモリリークや予期しない副作用を防ぐことができる。
+This package was created to simplify the integration of FutureContext and Flutter Hooks.
+By managing asynchronous processing according to Widget lifecycle, it prevents memory leaks and unexpected side effects.
 
-バグ報告や機能要求は[GitHub](https://github.com/eaglesakura/flutter_armyknife)で受け付けている。
+Bug reports and feature requests are accepted at [GitHub](https://github.com/eaglesakura/flutter_armyknife).
