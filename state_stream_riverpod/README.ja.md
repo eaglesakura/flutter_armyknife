@@ -1,15 +1,15 @@
 # State Stream Riverpod
 
-An extension library for integrating the [state_stream](https://pub.dev/packages/state_stream) package with [Riverpod](https://pub.dev/packages/flutter_riverpod).
+[state_stream](https://pub.dev/packages/state_stream) パッケージと [Riverpod](https://pub.dev/packages/flutter_riverpod) を連携させるための拡張ライブラリです。
 
-## Features
+## 特徴
 
-- **Complete Riverpod Integration** - Use StateStream as Riverpod Provider
-- **Automatic Resource Management** - Support for automatic Provider disposal
-- **Type-safe State Management** - Utilize StateStream's type safety with Riverpod
-- **Reactive UI Updates** - Automatically reflect StateStream state changes to Widgets
+- **Riverpod との完全統合** - StateStream を Riverpod Provider として使用可能
+- **自動リソース管理** - Provider の自動破棄に対応
+- **型安全な状態管理** - StateStream の型安全性を Riverpod で利用
+- **リアクティブな UI 更新** - StateStream の状態変更を自動的に Widget に反映
 
-## Installation
+## インストール
 
 ```yaml
 dependencies:
@@ -18,9 +18,9 @@ dependencies:
   flutter_riverpod: ^2.6.1
 ```
 
-## Basic Usage
+## 基本的な使い方
 
-### Using StateStream as Riverpod Provider
+### StateStream を Riverpod Provider として使用
 
 ```dart
 import 'package:flutter/material.dart';
@@ -28,11 +28,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:state_stream/state_stream.dart';
 import 'package:state_stream_riverpod/state_stream_riverpod.dart';
 
-// Define Provider that provides StateStream
+// StateStream を提供する Provider を定義
 final counterStreamProvider = Provider.autoDispose<MutableStateStream<int>>((ref) {
   final counter = MutableStateStream<int>(0);
 
-  // Dispose StateStream when Provider is disposed
+  // Provider が破棄されるときに StateStream も破棄
   ref.onDispose(() {
     counter.close();
   });
@@ -40,12 +40,12 @@ final counterStreamProvider = Provider.autoDispose<MutableStateStream<int>>((ref
   return counter;
 });
 
-// Define Provider that gets StateStream state
+// StateStream の状態を取得する Provider を定義
 final counterProvider = StateStreamProviders.autoDispose.state<int>(
   counterStreamProvider,
 );
 
-// Use state in Widget
+// Widget で状態を使用
 class CounterWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -53,7 +53,7 @@ class CounterWidget extends ConsumerWidget {
 
     return Column(
       children: [
-        Text('Count: $count'),
+        Text('カウント: $count'),
         ElevatedButton(
           onPressed: () async {
             final counterStream = ref.read(counterStreamProvider);
@@ -62,7 +62,7 @@ class CounterWidget extends ConsumerWidget {
               return null;
             });
           },
-          child: Text('Increment'),
+          child: Text('インクリメント'),
         ),
       ],
     );
@@ -70,14 +70,14 @@ class CounterWidget extends ConsumerWidget {
 }
 ```
 
-### Complex State Management Example
+### 複雑な状態管理の例
 
 ```dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:state_stream/state_stream.dart';
 import 'package:state_stream_riverpod/state_stream_riverpod.dart';
 
-// StateStream managing complex state
+// 複雑な状態を管理する StateStream
 class TodoState {
   final List<Todo> todos;
   final bool isLoading;
@@ -110,7 +110,7 @@ class Todo {
   });
 }
 
-// Provider managing TodoState
+// TodoState を管理する Provider
 final todoStreamProvider = Provider.autoDispose<MutableStateStream<TodoState>>((ref) {
   final todoStream = MutableStateStream<TodoState>(
     TodoState(todos: [], isLoading: false),
@@ -123,12 +123,12 @@ final todoStreamProvider = Provider.autoDispose<MutableStateStream<TodoState>>((
   return todoStream;
 });
 
-// Provider for getting TodoState
+// TodoState を取得する Provider
 final todoProvider = StateStreamProviders.autoDispose.state<TodoState>(
   todoStreamProvider,
 );
 
-// Widget displaying TodoList
+// TodoList を表示する Widget
 class TodoListWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -172,18 +172,18 @@ class TodoListWidget extends ConsumerWidget {
 }
 ```
 
-### Combination with Asynchronous Processing
+### 非同期処理との組み合わせ
 
 ```dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:state_stream/state_stream.dart';
 import 'package:state_stream_riverpod/state_stream_riverpod.dart';
 
-// StateStream that fetches data asynchronously
+// 非同期でデータを取得する StateStream
 final userStreamProvider = Provider.autoDispose<MutableStateStream<User?>>((ref) {
   final userStream = MutableStateStream<User?>(null);
 
-  // Fetch data on initialization
+  // 初期化時にデータを取得
   _loadUser(userStream);
 
   ref.onDispose(() {
@@ -195,7 +195,7 @@ final userStreamProvider = Provider.autoDispose<MutableStateStream<User?>>((ref)
 
 Future<void> _loadUser(MutableStateStream<User?> stream) async {
   await stream.updateWithLock((state, emitter) async {
-    // Loading state representation (using separate state class)
+    // ローディング状態の表現（別の状態クラスを使用）
     final user = await _fetchUserFromAPI();
     await emitter.emit(user);
     return null;
@@ -218,8 +218,8 @@ class UserProfileWidget extends ConsumerWidget {
     return Card(
       child: Column(
         children: [
-          Text('Name: ${user.name}'),
-          Text('Email: ${user.email}'),
+          Text('名前: ${user.name}'),
+          Text('メール: ${user.email}'),
         ],
       ),
     );
@@ -227,15 +227,15 @@ class UserProfileWidget extends ConsumerWidget {
 }
 ```
 
-## API Reference
+## API リファレンス
 
 ### StateStreamProviders
 
-Utility class for using StateStream as Riverpod Provider.
+Riverpod Provider として StateStream を使用するためのユーティリティクラスです。
 
 #### StateStreamProviders.autoDispose
 
-Provides automatic resource management using `Provider.autoDispose()`.
+`Provider.autoDispose()` を使用した自動リソース管理を提供します。
 
 ```dart
 AutoDisposeProvider<T> state<T>(
@@ -243,13 +243,13 @@ AutoDisposeProvider<T> state<T>(
 )
 ```
 
-- `stateStreamProvider`: Provider that provides StateStream
-- Return value: Provider that provides the current state of StateStream
+- `stateStreamProvider`: StateStream を提供する Provider
+- 戻り値: StateStream の現在の状態を提供する Provider
 
-## About Basic State Management
+## 基本的な状態管理について
 
-This package only provides Riverpod integration functionality. For basic state management features, please refer to the [state_stream](https://pub.dev/packages/state_stream) package.
+このパッケージは Riverpod との連携機能のみを提供します。基本的な状態管理機能については、[state_stream](https://pub.dev/packages/state_stream) パッケージを参照してください。
 
-## License
+## ライセンス
 
 MIT License

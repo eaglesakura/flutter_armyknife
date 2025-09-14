@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:state_stream/state_stream.dart';
 
 /// [StateStream] からStateを取得するProviderを生成する.
@@ -53,11 +52,11 @@ final class _AutoDisposeProvider {
   }
 }
 
-/// [StateStream] と [StateNotifier] を連携させるためのインターフェース.
+/// [StateStream] と [Notifier] を連携させるためのインターフェース.
 ///
 /// NOTE.
 /// Riverpod 3.0以降、Refの直接的state更新が行えなくなったため、
-/// [StateNotifier]を利用する.
+/// [Notifier]を経由することで連携を行う.
 /// https://riverpod.dev/docs/migration/from_state_notifier
 class _StateStreamNotifier<T> extends Notifier<T> {
   final StateStream<T> Function(Ref ref) _getStateStream;
