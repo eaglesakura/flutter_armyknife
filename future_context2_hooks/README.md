@@ -13,7 +13,7 @@ Widget のライフサイクルと非同期処理を安全に連携するため�
 
 ```yaml
 dependencies:
-  future_context2_hooks: ^1.0.0
+  future_context2_hooks: ^2.0.0
 ```
 
 ## Usage
