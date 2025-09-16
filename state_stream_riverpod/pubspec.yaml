@@ -1,6 +1,6 @@
 name: state_stream_riverpod
 description: StateStream with Riverpod support.
-version: 1.0.1
+version: 2.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_riverpod: ^2.6.1
+  flutter_riverpod: ^3.0.0
   state_stream: ^1.0.0
 
 dev_dependencies:

@@ -1,6 +1,6 @@
 name: riverpod_container_async_test
 description: riverpod_container_async test support library.
-version: 1.0.1
+version: 2.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
@@ -13,8 +13,9 @@ dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  flutter_riverpod: ^2.6.1
-  riverpod_container_async: ^1.0.0
+  riverpod: ^3.0.0
+  flutter_riverpod: ^3.0.0
+  riverpod_container_async: ^2.0.0
 
 dev_dependencies:
   flutter_lints: ^6.0.0

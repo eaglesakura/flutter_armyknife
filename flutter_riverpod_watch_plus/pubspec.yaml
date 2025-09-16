@@ -1,6 +1,6 @@
 name: flutter_riverpod_watch_plus
 description: "A library that enables DeepEquals support for Riverpod's Ref.watch()."
-version: 1.0.0+1
+version: 2.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
@@ -12,8 +12,9 @@ dependencies:
   collection: ^1.19.1
   flutter:
     sdk: flutter
-  flutter_riverpod: ^2.6.1
+  flutter_riverpod: ^3.0.0
   meta: ^1.16.0
+  riverpod: ^3.0.0
 
 dev_dependencies:
   flutter_test:

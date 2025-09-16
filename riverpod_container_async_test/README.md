@@ -1,16 +1,18 @@
-`riverpod_container_async`を使用したコードの Unit Test 作成を支援するテストライブラリである。
-ProviderContainer の非同期削除機能、依存関係の自動解決、テスト用のプロバイダー管理機能を提供する。
+# riverpod_container_async_test
+
+A test library that assists in creating Unit Tests for code using `riverpod_container_async`.
+It provides asynchronous disposal functionality for ProviderContainer, automatic dependency resolution, and provider management features for testing.
 
 ## Features
 
-- **テスト用拡張機能**: `ProviderContainer` に対するテスト専用の拡張メソッドを提供
-- **初期化タスク待機**: `riverpod_container_async` の初期化タスクを自動的に待機し、テスト実行前にプロバイダーを完全に準備
-- **依存関係の自動解決**: `testReady` でプロバイダーの依存グラフを再帰的に構築し、すべての依存プロバイダーを準備完了状態にする
-- **簡単なインスタンス取得**: `testGet` で型安全にプロバイダーからインスタンスを取得
+- **Test Extension Methods**: Provides test-specific extension methods for `ProviderContainer`
+- **Initialization Task Waiting**: Automatically waits for `riverpod_container_async` initialization tasks and fully prepares providers before test execution
+- **Automatic Dependency Resolution**: `testReady` recursively builds the provider dependency graph and prepares all dependent providers to a ready state
+- **Easy Instance Retrieval**: `testGet` provides type-safe instance retrieval from providers
 
 ## Getting started
 
-`pubspec.yaml`の dev_dependencies に以下を追加する：
+Add the following to dev_dependencies in your `pubspec.yaml`:
 
 ```yaml
 dev_dependencies:
@@ -19,7 +21,7 @@ dev_dependencies:
 
 ## Usage
 
-テスト用の ProviderContainer を作成し、プロバイダーをテストする：
+Create a ProviderContainer for testing and test providers:
 
 ```dart
 import 'package:riverpod_container_async_test/riverpod_container_async_test.dart';
@@ -28,19 +30,19 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Provider tests', () {
     test('should create provider container with async disposal', () async {
-      final container = // ProviderContainer作成
+      final container = // Create ProviderContainer
 
-      // プロバイダーの値を取得
+      // Get provider value
       final value = container.testGet(myProvider);
       expect(value, isNotNull);
 
-      // テスト終了時に自動的にdisposeAsync()が呼ばれる
+      // disposeAsync() is automatically called at the end of the test
     });
 
     test('should ready provider with dependencies', () async {
-      final container = // ProviderContainer作成
+      final container = // Create ProviderContainer
 
-      // 依存関係を解決してプロバイダーを準備完了状態にする
+      // Resolve dependencies and prepare provider to ready state
       final service = await container.testReady(myServiceProvider);
       expect(service.isReady, isTrue);
     });
@@ -50,7 +52,6 @@ void main() {
 
 ## Additional information
 
-このパッケージは`riverpod_container_async`を使用したアプリケーションの
-Unit Test 作成を簡単にするために作られた。
-特に ProviderContainer の非同期削除機能により、テスト間でのリソースリークを防ぐことができる。
-バグ報告や機能要求は[GitHub](https://github.com/eaglesakura/flutter_armyknife)で受け付けている。
+This package was created to simplify Unit Test creation for applications using `riverpod_container_async`.
+In particular, the asynchronous disposal functionality of ProviderContainer helps prevent resource leaks between tests.
+Bug reports and feature requests are accepted at [GitHub](https://github.com/eaglesakura/flutter_armyknife).
