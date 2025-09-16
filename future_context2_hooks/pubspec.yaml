@@ -1,6 +1,6 @@
 name: future_context2_hooks
 description: A library that makes FutureContext easier to use from hooks.
-version: 1.0.0
+version: 2.0.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
@@ -11,7 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.21.2
+  flutter_riverpod: ^3.0.0
+  flutter_hooks: ^0.21.3+1
   future_context2: ^1.0.1
 
 dev_dependencies:
