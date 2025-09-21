@@ -6,7 +6,7 @@ import "package:route_lifecycle_detector/src/route_lifecycle.dart";
 import "package:route_lifecycle_detector/src/route_lifecycle_notify.dart";
 import "package:rxdart/rxdart.dart";
 
-/// Route(Scaffold, Dialog, etc.)のライフサイクルを検出する.
+/// Detects the lifecycle of a Route (such as Scaffold, Dialog, etc.).
 ///
 /// e.g.
 /// ```dart
@@ -20,7 +20,7 @@ class RouteLifecycleDetector {
   // ignore: close_sinks
   static final _notifySubject = BehaviorSubject<RouteLifecycleNotify>();
 
-  /// MaterialAppのobserversに追加するためのObserver.
+  /// Observer to add to the observers of MaterialApp.
   ///
   /// e.g.
   /// ```dart
@@ -36,8 +36,8 @@ class RouteLifecycleDetector {
 
   RouteLifecycleDetector._();
 
-  /// Route(Scaffold, Dialog, etc.)のライフサイクルを検出する.
-  /// [RouteLifecycle.destroyed] になった場合にStreamを終了する.
+  /// Detects the lifecycle of a Route (such as Scaffold, Dialog, etc.).
+  /// The stream will be closed when [RouteLifecycle.destroyed] is reached.
   ///
   /// e.g.
   /// ```dart
@@ -92,8 +92,13 @@ class RouteLifecycleDetector {
     return ConcatStream([initialStream, mainStream]).distinct();
   }
 
-  /// [context] が所属しているModalRouteが[RouteLifecycle.active]または[RouteLifecycle.destroyed]になった場合に、その状態を返す.
-  /// この関数は、他の画面が開いている場合、 [BuildContext] が属しているModalRouteが最前面になるまで待つことができる.
+  /// Returns the state when the ModalRoute to which [context] belongs becomes [RouteLifecycle.active]
+  /// or [RouteLifecycle.destroyed].
+  ///
+  /// This function can wait until the ModalRoute to which the [BuildContext] / [ModalRoute] belongs
+  /// comes to the front if another screen is open.
+  ///
+  /// It can prevent screens in the background from opening dialogs or starting unintended transitions.
   static Future<RouteLifecycle> waitResumeOrDestroy(
     BuildContext context,
   ) async {

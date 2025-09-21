@@ -1,41 +1,46 @@
 import "package:flutter/material.dart";
 import "package:flutter_fgbg/flutter_fgbg.dart";
 
-/// Route(Scaffold, Dialog, etc.)の、現在のライフサイクル状態.
-/// 現在の情報のみで判断するため、AndroidのLifecycleに比べてシンプルである.
+/// The current lifecycle state of a Route (such as Scaffold, Dialog, etc.).
+/// It is simpler than Android's Lifecycle because it is determined only by the current information.
 enum RouteLifecycle {
-  /// Widgetビルド中であり、まだRouteが生成されていない.
+  /// The widget is being built and the Route has not yet been created.
   building,
 
-  /// 実行中.
+  /// The app is in the foreground and the Route is at the top of the stack.
   ///
   /// State:
   ///   - App: Foreground.
   ///   - Route: Top of stack.
   active,
 
-  /// 一時停止.
+  /// The app is in the foreground, but the Route is not at the top of the stack.
+  /// It is assumed that the user cannot interact with this Route because another page is in the foreground.
   ///
   /// State:
   ///   - App: Foreground.
   ///   - Route: Not top of stack.
   inactive,
 
-  /// アプリがバックグラウンド状態である.
+  /// The app is in the background.
+  /// The app screen is completely hidden, so user interaction is not possible.
   ///
   /// State:
   ///   - App: Background.
   ///   - Route: any.
   hidden,
 
-  /// 破棄.
+  /// One of Widget, ModalRoute, or BuildContext has been disposed.
   ///
   /// State:
   ///   - App: any.
   ///   - Route: destroyed.
   destroyed;
 
-  /// 現在のライフサイクル状態を取得する.
+  /// Gets the current lifecycle state.
+  ///
+  /// NOTE:
+  /// [BuildContext.mounted] is checked internally, so callers do not need to consider it.
   static RouteLifecycle of(BuildContext context) {
     if (!context.mounted) {
       /// BuildContextが破棄されているならば、破棄状態.
