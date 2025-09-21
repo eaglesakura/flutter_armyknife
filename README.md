@@ -39,6 +39,8 @@ To solve various challenges encountered in daily development work, it provides n
 | 📝 Logging・Debug | **[logger_grinder](./logger_grinder/)** | Grinder logging implementation | Log output for build tools |
 | ⚡ Error Handling | **[exceptions](./exceptions/)** | Exception trace functionality | Exception unwrapping, exception chain search, custom unwrappers |
 | ⏰ Time Processing | **[time](./time/)** | Lightweight time processing | time_machine wrapper, Clock delegate, Unix epoch |
+| 🛤️ Route Lifecycle | **[route_lifecycle_detector](./route_lifecycle_detector/)** | Navigator lifecycle management | Dialog multiple display prevention, Route state detection, async processing control |
+| 🛠️ Code Generation | **[openapi-template](./openapi-template/)** | OpenAPI code generation template | Dart/Flutter OpenAPI client generation, custom templates |
 
 ## 🚀 Getting Started
 
