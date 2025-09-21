@@ -22,6 +22,7 @@ workspace:
   - riverpod_container_async
   - riverpod_container_async_test
   - riverpodx
+  - route_lifecycle_detector
   - state_stream
   - state_stream_riverpod
   - streams
