@@ -171,46 +171,47 @@ class FutureContextImpl implements FutureContext {
   Future<T2> suspend<T2>(FutureSuspendBlock<T2> block) async {
     _resume();
 
-    final stackTrace = StackTrace.current;
-    final complete = Completer<T2>();
-    final subscribe = isCanceledStream
-        .takeWhile((_) => !complete.isCompleted)
-        .where((event) => event)
-        .listen((event) {
-          if (!complete.isCompleted) {
-            complete.completeError(
-              CancellationException('${toString()} is canceled.'),
-              stackTrace,
-            );
-          }
-        });
-    final future = complete.future;
+    var done = false;
+    T2? result;
+    Exception? exception;
+    StackTrace? stackTrace;
+
+    // 非同期処理を開始する
+    // 完了したら、通知を発行する.
     unawaited(() async {
+      await Future.delayed(Duration.zero);
       try {
-        final result = await block(this);
-        if (!complete.isCompleted) {
-          complete.complete(result);
-        }
-        // ignore: avoid_catches_without_on_clauses
-      } catch (e, trace) {
-        if (!complete.isCompleted) {
-          complete.completeError(
-            e,
-            StackTrace.fromString('$trace\n$stackTrace'),
-          );
-        }
+        result = await block(this);
+      } on Exception catch (e, s) {
+        exception = e;
+        stackTrace = s;
       } finally {
+        done = true;
         _notify();
       }
     }());
-    try {
-      final result = await future;
-      _resume();
-      return result;
-    } finally {
-      _notify();
-      await subscribe.cancel();
+
+    /// キャンセルが発生していたらキャンセル例外を投げる.
+    void throwIfCanceled() {
+      if (exception != null) {
+        throw CancellationException(
+          '${toString()} is canceled. caused by exception: $exception, stackTrace: $stackTrace',
+        );
+      } else if (isCanceled) {
+        throw CancellationException('${toString()} is canceled.');
+      }
     }
+
+    // 通知を待ち合わせる.
+    // キャンセルが発生していたらキャンセル例外を投げる.
+    // 完了したら、結果を返却する.
+    await for (final _ in _controller.notifyStream) {
+      throwIfCanceled();
+      if (done) {
+        return result as T2;
+      }
+    }
+    throw CancellationException('${toString()} is canceled.');
   }
 
   @override
@@ -247,28 +248,6 @@ class FutureContextImpl implements FutureContext {
     }
     _notify();
   }
-
-  // Stream<bool> _isCanceledStream() async* {
-  //   try {
-  //     _log('isCanceledStream start');
-  //     if (isCanceled) {
-  //       // すでに閉じられていたら終了
-  //       yield true;
-  //       return;
-  //     }
-  //     // 閉じられるまでイベントを待つ
-  //     yield false;
-  //     await for (final _ in _systemSubject) {
-  //       if (isCanceled) {
-  //         yield true;
-  //         return;
-  //       }
-  //       yield false;
-  //     }
-  //   } finally {
-  //     _log('isCanceledStream close');
-  //   }
-  // }
 
   void _log(String message) {
     _controller.log('[$this] $message');
