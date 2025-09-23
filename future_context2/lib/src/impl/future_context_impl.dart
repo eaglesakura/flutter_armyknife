@@ -271,10 +271,7 @@ class FutureContextImpl implements FutureContext {
   // }
 
   void _log(String message) {
-    if (!kDebugMode) {
-      return;
-    }
-    debugPrint('[$this] $message');
+    _controller.log('[$this] $message');
   }
 
   void _notify() {
