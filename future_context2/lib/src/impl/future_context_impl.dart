@@ -108,7 +108,8 @@ class FutureContextImpl implements FutureContext {
 
   /// キャンセル状態をハンドリングするStreamを返却する.
   @override
-  Stream<bool> get isCanceledStream => _isCanceledStream();
+  Stream<bool> get isCanceledStream =>
+      _stateStream().map((e) => e == _ContextState.canceled);
 
   /// Futureをキャンセルする.
   /// すでにキャンセル済みの場合は何もしない.
@@ -254,41 +255,6 @@ class FutureContextImpl implements FutureContext {
     _notify();
   }
 
-  /// キャンセル状態をハンドリングするStreamを返却する.
-  ///
-  /// キャンセルが発生していない場合でも、FutureContext全体通知が発生したタイミングで
-  /// キャンセル状態を通知する.
-  Stream<bool> _isCanceledStream() {
-    return ConcatStream([
-          Stream.value(isCanceled),
-          _systemSubject.stream.map((_) {
-            return isCanceled;
-          }),
-        ])
-        .doOnListen(() {
-          if (isCanceled) {
-            // すでにキャンセル済みの場合は、通知を発火することでフリーズを防ぐ
-            _log('isCanceledStream.notify');
-            Future.delayed(Duration.zero, () {
-              _notify();
-            });
-          }
-        })
-        .transform(
-          StreamTransformer.fromHandlers(
-            handleData: (cancel, sink) {
-              _log('CanceledStream.notify: $cancel');
-              sink.add(cancel);
-              if (cancel) {
-                // キャンセルされたので、ここで終了.
-                sink.close();
-                return;
-              }
-            },
-          ),
-        );
-  }
-
   // Stream<bool> _isCanceledStream() async* {
   //   try {
   //     _log('isCanceledStream start');
@@ -332,6 +298,41 @@ class FutureContextImpl implements FutureContext {
     } finally {
       _notify();
     }
+  }
+
+  /// キャンセル状態をハンドリングするStreamを返却する.
+  ///
+  /// キャンセルが発生していない場合でも、FutureContext全体通知が発生したタイミングで
+  /// キャンセル状態を通知する.
+  Stream<_ContextState> _stateStream() {
+    return ConcatStream([
+          Stream.value(_state),
+          _systemSubject.stream.map((_) {
+            return _state;
+          }),
+        ])
+        .doOnListen(() {
+          if (_state == _ContextState.canceled) {
+            // すでにキャンセル済みの場合は、通知を発火することでフリーズを防ぐ
+            _log('isCanceledStream.notify');
+            Future.delayed(Duration.zero, () {
+              _notify();
+            });
+          }
+        })
+        .transform(
+          StreamTransformer.fromHandlers(
+            handleData: (state, sink) {
+              _log('CanceledStream.notify: $state');
+              sink.add(state);
+              if (state == _ContextState.canceled) {
+                // キャンセルされたので、ここで終了.
+                sink.close();
+                return;
+              }
+            },
+          ),
+        );
   }
 
   static String _getOptimizedTag({
