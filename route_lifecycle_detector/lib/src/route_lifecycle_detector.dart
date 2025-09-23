@@ -1,8 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
-import 'package:route_lifecycle_detector/src/route_lifecycle.dart';
+import 'package:meta/meta.dart';
 import 'package:route_lifecycle_detector/src/route_lifecycle_notify.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -17,8 +15,10 @@ import 'package:rxdart/rxdart.dart';
 /// )
 /// ```
 class RouteLifecycleDetector {
+  /// Notify for RouteLifecycleNotify.
+  @internal
   // ignore: close_sinks
-  static final _notifySubject = BehaviorSubject<RouteLifecycleNotify>();
+  static final notify = BehaviorSubject<RouteLifecycleNotify>();
 
   /// Observer to add to the observers of MaterialApp.
   ///
@@ -31,98 +31,10 @@ class RouteLifecycleDetector {
   /// )
   /// ```
   static final NavigatorObserver navigatorObserver = _NavigationObserver(
-    _notifySubject,
+    notify,
   );
 
   RouteLifecycleDetector._();
-
-  /// Detects the lifecycle of a Route (such as Scaffold, Dialog, etc.).
-  /// The stream will be closed when [RouteLifecycle.destroyed] is reached.
-  ///
-  /// e.g.
-  /// ```dart
-  /// RouteLifecycleDetector.streamOf(context).listen((lifecycle) {
-  ///   print(lifecycle);
-  /// });
-  /// ```
-  static Stream<RouteLifecycle> streamOf(BuildContext context) {
-    // 初期値を通知するStream.
-    // NOTE.
-    // ModalRouteの管理を簡略化するため、初期値送信と2回目以降の送信を分離する.
-    final initialStream = Stream.value(RouteLifecycle.of(context));
-
-    // Routeのライフサイクルイベント通知Stream.
-    final mainStream =
-        Stream.fromFuture(() async {
-          do {
-            try {
-              return ModalRoute.of(context);
-              // ignore: avoid_catches_without_on_clauses
-            } catch (_) {
-              // drop error
-              await Future<void>.delayed(Duration.zero);
-            }
-          } while (context.mounted);
-
-          return null;
-        }()).switchMap<RouteLifecycle>(
-          (route) {
-            if (route == null) {
-              return Stream.value(RouteLifecycle.of(context));
-            }
-
-            return _notifySubject.stream
-                .map((event) {
-                  // ignore: use_build_context_synchronously
-                  return RouteLifecycle.of(context);
-                })
-                .transform(
-                  StreamTransformer.fromHandlers(
-                    handleData: (lifecycle, sink) {
-                      sink.add(lifecycle);
-                      // destroyedの場合はイベントを出力後にストリームを終了する
-                      if (lifecycle == RouteLifecycle.destroyed) {
-                        sink.close();
-                      }
-                    },
-                  ),
-                );
-          },
-        );
-    return ConcatStream([initialStream, mainStream]).distinct();
-  }
-
-  /// Returns the state when the ModalRoute to which [context] belongs becomes [RouteLifecycle.active]
-  /// or [RouteLifecycle.destroyed].
-  ///
-  /// This function can wait until the ModalRoute to which the [BuildContext] / [ModalRoute] belongs
-  /// comes to the front if another screen is open.
-  ///
-  /// It can prevent screens in the background from opening dialogs or starting unintended transitions.
-  static Future<RouteLifecycle> waitResumeOrDestroy(
-    BuildContext context,
-  ) async {
-    // 初期状態が問題なければ、そこで終了
-    {
-      final initialLifecycle = RouteLifecycle.of(context);
-      if (initialLifecycle == RouteLifecycle.active ||
-          initialLifecycle == RouteLifecycle.destroyed) {
-        return initialLifecycle;
-      }
-    }
-
-    // ignore: use_build_context_synchronously
-    final stream = streamOf(context);
-    await for (final lifecycle in stream) {
-      if (lifecycle == RouteLifecycle.active ||
-          lifecycle == RouteLifecycle.destroyed) {
-        return lifecycle;
-      }
-    }
-    // Streamが終了した場合も、最後の状態を返す.
-    // ignore: use_build_context_synchronously
-    return RouteLifecycle.of(context);
-  }
 }
 
 class _NavigationObserver extends NavigatorObserver {

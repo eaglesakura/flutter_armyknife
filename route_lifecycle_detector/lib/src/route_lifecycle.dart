@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:route_lifecycle_detector/src/route_lifecycle_detector.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'route_lifecycle.freezed.dart';
 
@@ -100,5 +104,61 @@ sealed class RouteLifecycle with _$RouteLifecycle {
       route: route,
       isForeground: isForeground,
     );
+  }
+
+  /// Detects the lifecycle of a Route (such as Scaffold, Dialog, etc.).
+  /// The stream will be closed when [RouteLifecycle.destroyed] is reached.
+  ///
+  /// e.g.
+  /// ```dart
+  /// RouteLifecycleDetector.streamOf(context).listen((lifecycle) {
+  ///   print(lifecycle);
+  /// });
+  /// ```
+  static Stream<RouteLifecycle> streamOf(BuildContext context) {
+    // 初期値を通知するStream.
+    // NOTE.
+    // ModalRouteの管理を簡略化するため、初期値送信と2回目以降の送信を分離する.
+    final initialStream = Stream.value(RouteLifecycle.of(context));
+
+    // Routeのライフサイクルイベント通知Stream.
+    final mainStream =
+        Stream.fromFuture(() async {
+          do {
+            try {
+              return ModalRoute.of(context);
+              // ignore: avoid_catches_without_on_clauses
+            } catch (_) {
+              // drop error
+              await Future<void>.delayed(Duration.zero);
+            }
+          } while (context.mounted);
+
+          return null;
+        }()).switchMap<RouteLifecycle>(
+          (route) {
+            if (route == null) {
+              return Stream.value(RouteLifecycle.of(context));
+            }
+
+            return RouteLifecycleDetector.notify.stream
+                .map((event) {
+                  // ignore: use_build_context_synchronously
+                  return RouteLifecycle.of(context);
+                })
+                .transform(
+                  StreamTransformer.fromHandlers(
+                    handleData: (lifecycle, sink) {
+                      sink.add(lifecycle);
+                      // destroyedの場合はイベントを出力後にストリームを終了する
+                      if (lifecycle is RouteLifecycleDestroyed) {
+                        sink.close();
+                      }
+                    },
+                  ),
+                );
+          },
+        );
+    return ConcatStream([initialStream, mainStream]).distinct();
   }
 }
