@@ -146,6 +146,13 @@ class FutureContextImpl implements FutureContext {
     }
   }
 
+  @override
+  Future<void> resume() async {
+    if (isCanceled) {
+      throw CancellationException('${toString()} is canceled.');
+    }
+  }
+
   /// 非同期処理の特定1ブロックを実行する.
   /// これはFutureContext(T)の実行最小単位として機能する.
   /// suspend内部では実行開始時・終了時にそれぞれAsyncContextのステートチェックを行い、
@@ -172,10 +179,8 @@ class FutureContextImpl implements FutureContext {
     unawaited(() async {
       await Future.delayed(Duration.zero);
       try {
-        if (isCanceled) {
-          throw CancellationException('${toString()} is canceled.');
-        }
-
+        // 実行前に、実行可能状態まで待機する.
+        await resume();
         result = await block(this);
       } on Exception catch (e, s) {
         exception = e;
@@ -204,7 +209,9 @@ class FutureContextImpl implements FutureContext {
         // その他、キャンセルが発生していたらキャンセルを投げる.
         throw CancellationException('${toString()} is canceled.');
       } else if (done) {
-        // 処理が完了している
+        // 処理が完了している.
+        // 返却前に、実行可能であることをチェックする
+        await resume();
         return result as T2;
       }
     }

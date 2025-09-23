@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:future_context2/src/future_context_request.dart';
 import 'package:future_context2/src/impl/future_context_impl.dart' as legacy;
+import 'package:meta/meta.dart';
 
 /// 非同期処理のキャンセル不可能な1ブロック処理
 /// このブロック完了後、FutureContextは復帰チェックを行い、必要であればキャンセル等を行う.
@@ -76,6 +77,12 @@ abstract class FutureContext {
   /// e.g.
   /// context.delayed(Duration(seconds: 1));
   Future<void> delayed(final Duration duration);
+
+  /// 非同期処理の状態をチェックし、実行可能状態まで待機する.
+  /// 実行不可能な状態である場合、resume()処理はロックを行うことを許容する.
+  /// ただし、関連するContextが閉じられたら直ちにキャンセルが発生しなければならない.
+  @protected
+  Future<void> resume();
 
   /// 非同期処理の特定1ブロックを実行する.
   /// これはFutureContext<"T">の実行最小単位として機能する.
