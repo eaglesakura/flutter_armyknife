@@ -3,7 +3,10 @@ import 'package:route_lifecycle_detector/src/route_lifecycle.dart';
 
 /// Extensions for BuildContext to detect the lifecycle of a Route.
 extension BuildContextRouteLifecycleExtensions on BuildContext {
-  /// Waits until the BuildContext's lifecycle satisfies [test] or is destroyed.
+  /// Waits until the BuildContext's lifecycle satisfies [test].
+  ///
+  /// If the lifecycle reaches [RouteLifecycle.destroyed] before reaching the specified lifecycle,
+  /// an exception will be thrown.
   Future<RouteLifecycle> waitLifecycleWith(
     bool Function(RouteLifecycle lifecycle) test,
   ) async {
@@ -24,6 +27,18 @@ extension BuildContextRouteLifecycleExtensions on BuildContext {
       }
     }
     // Streamが終了した場合も、最後の状態を返す.
-    return latestLifecycle;
+    throw BadLifecycleException(latestLifecycle);
+  }
+}
+
+/// Exception thrown when the route lifecycle is invalid.
+class BadLifecycleException implements Exception {
+  final RouteLifecycle latestLifecycle;
+
+  BadLifecycleException(this.latestLifecycle);
+
+  @override
+  String toString() {
+    return "BadLifecycleException: $latestLifecycle";
   }
 }
