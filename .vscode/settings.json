@@ -21,5 +21,10 @@
   "dart.flutterSdkPath": ".fvm/versions/3.32.1",
   "[markdown]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always",
+    "source.organizeImports": "always",
+    "source.sortMembers": "always",
   }
 }

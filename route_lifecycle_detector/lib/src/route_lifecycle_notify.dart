@@ -1,8 +1,8 @@
-import "package:flutter/material.dart";
-import "package:flutter_fgbg/flutter_fgbg.dart" show FGBGEvents, FGBGType;
-import "package:freezed_annotation/freezed_annotation.dart";
+import 'package:flutter/material.dart';
+import 'package:flutter_fgbg/flutter_fgbg.dart' show FGBGEvents, FGBGType;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-part "route_lifecycle_notify.freezed.dart";
+part 'route_lifecycle_notify.freezed.dart';
 
 /// Route(Scaffold, Dialog, etc.)のライフサイクルを通知する.
 @internal

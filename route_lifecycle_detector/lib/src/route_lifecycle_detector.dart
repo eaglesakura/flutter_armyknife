@@ -1,10 +1,10 @@
-import "dart:async";
+import 'dart:async';
 
-import "package:flutter/material.dart";
-import "package:flutter_fgbg/flutter_fgbg.dart";
-import "package:route_lifecycle_detector/src/route_lifecycle.dart";
-import "package:route_lifecycle_detector/src/route_lifecycle_notify.dart";
-import "package:rxdart/rxdart.dart";
+import 'package:flutter/material.dart';
+import 'package:flutter_fgbg/flutter_fgbg.dart';
+import 'package:route_lifecycle_detector/src/route_lifecycle.dart';
+import 'package:route_lifecycle_detector/src/route_lifecycle_notify.dart';
+import 'package:rxdart/rxdart.dart';
 
 /// Detects the lifecycle of a Route (such as Scaffold, Dialog, etc.).
 ///

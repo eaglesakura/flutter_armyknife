@@ -1,5 +1,5 @@
-import "package:flutter/material.dart";
-import "package:flutter_fgbg/flutter_fgbg.dart";
+import 'package:flutter/material.dart';
+import 'package:flutter_fgbg/flutter_fgbg.dart';
 
 /// The current lifecycle state of a Route (such as Scaffold, Dialog, etc.).
 /// It is simpler than Android's Lifecycle because it is determined only by the current information.
