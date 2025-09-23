@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:armyknife_dartx/armyknife_dartx.dart';
 import 'package:async_notify2/async_notify2.dart';
 import 'package:flutter/foundation.dart';
 import 'package:future_context2/src/future_context.dart';
+import 'package:future_context2/src/future_context_controller.dart';
 import 'package:future_context2/src/future_context_request.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
@@ -29,11 +29,12 @@ import 'package:rxdart/rxdart.dart';
 /// 使用箇所については慎重に検討が必要.
 @internal
 class FutureContextImpl implements FutureContext {
-  static final _systemSubject = PublishSubject<FutureContextImpl>();
-
   /// このしきい値より短い時間の場合、delayed()はキャンセルチェックを行わず直接実行する.
   /// Streamの生成・破棄コストを最小化するためである.
   static const _delayedThreshold = Duration(milliseconds: 60);
+
+  /// 全体制御用コントローラ
+  final FutureContextController _controller = FutureContextController.instance;
 
   /// 親Context.
   final Set<FutureContext> _group;
@@ -57,7 +58,7 @@ class FutureContextImpl implements FutureContext {
 
   /// 指定した親Contextを持つFutureContextを作成する.
   FutureContextImpl.child(
-    FutureContextImpl parent, {
+    FutureContext parent, {
     String? tag,
     int debugCallStackLevel = 0,
   }) : tag = _getOptimizedTag(
@@ -154,14 +155,6 @@ class FutureContextImpl implements FutureContext {
         timer.cancel();
       }
     }
-  }
-
-  @override
-  T? queryInterface<T>() {
-    if (typeEquals<T, FutureContextImpl>()) {
-      return this as T;
-    }
-    return null;
   }
 
   /// 非同期処理の特定1ブロックを実行する.
@@ -285,7 +278,7 @@ class FutureContextImpl implements FutureContext {
   }
 
   void _notify() {
-    _systemSubject.add(this);
+    _controller.notify(this);
   }
 
   /// 非同期処理の状態をチェックし、必要であれはキャンセル処理を発生させる.
@@ -307,7 +300,7 @@ class FutureContextImpl implements FutureContext {
   Stream<_ContextState> _stateStream() {
     return ConcatStream([
           Stream.value(_state),
-          _systemSubject.stream.map((_) {
+          _controller.notifyStream.map((_) {
             return _state;
           }),
         ])

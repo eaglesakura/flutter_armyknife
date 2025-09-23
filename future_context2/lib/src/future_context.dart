@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:future_context2/src/future_context_request.dart';
 import 'package:future_context2/src/impl/future_context_impl.dart' as legacy;
-import 'package:meta/meta.dart';
-import 'package:runtime_assert/runtime_assert.dart';
 
 /// 非同期処理のキャンセル不可能な1ブロック処理
 /// このブロック完了後、FutureContextは復帰チェックを行い、必要であればキャンセル等を行う.
@@ -35,13 +33,8 @@ abstract class FutureContext {
     String? tag,
     FutureContextRequest request = const FutureContextRequest(),
   }) {
-    final impl = parent.queryInterface<legacy.FutureContextImpl>();
-    if (impl == null) {
-      throw IllegalArgumentException('Unsupported Parent');
-    }
-
     return legacy.FutureContextImpl.child(
-      impl,
+      parent,
       tag: tag,
       debugCallStackLevel: request.debugCallStackLevel + 1,
     );
@@ -54,16 +47,8 @@ abstract class FutureContext {
     String? tag,
     FutureContextRequest request = const FutureContextRequest(),
   }) {
-    final implList = contexts.map((e) {
-      final impl = e.queryInterface<legacy.FutureContextImpl>();
-      if (impl == null) {
-        throw IllegalArgumentException('Unsupported Parent');
-      }
-      return impl;
-    }).toList();
-
     return legacy.FutureContextImpl.group(
-      implList,
+      contexts,
       tag: tag,
       debugCallStackLevel: request.debugCallStackLevel + 1,
     );
@@ -91,11 +76,6 @@ abstract class FutureContext {
   /// e.g.
   /// context.delayed(Duration(seconds: 1));
   Future delayed(final Duration duration);
-
-  /// 指定のインターフェースを検索する.
-  /// 内部実装の検索等に使用する.
-  @protected
-  T? queryInterface<T>();
 
   /// 非同期処理の特定1ブロックを実行する.
   /// これはFutureContext<"T">の実行最小単位として機能する.
