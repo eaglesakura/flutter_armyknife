@@ -68,14 +68,14 @@ abstract class FutureContext {
 
   /// Futureをキャンセルする.
   /// すでにキャンセル済みの場合は何もしない.
-  Future close();
+  Future<void> close();
 
   /// 指定時間Contextを停止させる.
   /// delayed()の最中にキャンセルが発生した場合、速やかにContext処理は停止する.
   ///
   /// e.g.
   /// context.delayed(Duration(seconds: 1));
-  Future delayed(final Duration duration);
+  Future<void> delayed(final Duration duration);
 
   /// 非同期処理の特定1ブロックを実行する.
   /// これはFutureContext<"T">の実行最小単位として機能する.

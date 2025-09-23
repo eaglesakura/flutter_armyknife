@@ -29,10 +29,6 @@ import 'package:rxdart/rxdart.dart';
 /// 使用箇所については慎重に検討が必要.
 @internal
 class FutureContextImpl implements FutureContext {
-  /// このしきい値より短い時間の場合、delayed()はキャンセルチェックを行わず直接実行する.
-  /// Streamの生成・破棄コストを最小化するためである.
-  static const _delayedThreshold = Duration(milliseconds: 60);
-
   /// 全体制御用コントローラ
   final FutureContextController _controller = FutureContextController.instance;
 
@@ -93,7 +89,7 @@ class FutureContextImpl implements FutureContext {
   /// 処理がキャンセル済みの場合true.
   @override
   bool get isCanceled {
-    // 軽量処理を選考して呼び出す
+    // 軽量処理を先行して呼び出す
     if (_state == _ContextState.canceled) {
       return true;
     }
@@ -124,36 +120,29 @@ class FutureContextImpl implements FutureContext {
   /// context.delayed(Duration(seconds: 1));
   @override
   Future delayed(final Duration duration) async {
-    _resume();
-    // _delayedThresholdよりもdurationが小さいなら直接delayedをかける
-    if (duration < _delayedThreshold) {
-      await Future.delayed(duration);
-      _resume();
-      return;
-    } else {
-      // キャンセル最適化を行う
-      final complete = Completer<int>();
-      final timer = Timer(duration, () {
-        if (!complete.isCompleted) {
-          _log('delayed.done: $duration');
-          complete.complete(0);
+    if (isCanceled) {
+      throw CancellationException('${toString()} is canceled.');
+    }
+
+    // 完了時間タイマーを開始する.
+    var timerDone = false;
+    final timer = Timer(duration, () {
+      timerDone = true;
+      _notify();
+    });
+
+    try {
+      await for (final _ in _controller.notifyStream) {
+        if (isCanceled) {
+          // キャンセルされたら、キャンセルを優先する
+          throw CancellationException('${toString()} is canceled.');
+        } else if (timerDone) {
+          // 所定時間が経過したなら、これで完了
+          return;
         }
-      });
-      final subscribe = isCanceledStream.where((event) => event).take(1).listen(
-        (event) {
-          if (!complete.isCompleted) {
-            _log('delayed.cancel: $duration');
-            complete.complete(1);
-          }
-        },
-      );
-      try {
-        await complete.future;
-        _resume();
-      } finally {
-        await subscribe.cancel();
-        timer.cancel();
       }
+    } finally {
+      timer.cancel();
     }
   }
 
@@ -169,7 +158,9 @@ class FutureContextImpl implements FutureContext {
   /// 内部でキャンセル処理が必要なほど長い場合に利用する.
   @override
   Future<T2> suspend<T2>(FutureSuspendBlock<T2> block) async {
-    _resume();
+    if (isCanceled) {
+      throw CancellationException('${toString()} is canceled.');
+    }
 
     var done = false;
     T2? result;
@@ -181,6 +172,10 @@ class FutureContextImpl implements FutureContext {
     unawaited(() async {
       await Future.delayed(Duration.zero);
       try {
+        if (isCanceled) {
+          throw CancellationException('${toString()} is canceled.');
+        }
+
         result = await block(this);
       } on Exception catch (e, s) {
         exception = e;
@@ -191,23 +186,25 @@ class FutureContextImpl implements FutureContext {
       }
     }());
 
-    /// キャンセルが発生していたらキャンセル例外を投げる.
-    void throwIfCanceled() {
-      if (exception != null) {
-        throw CancellationException(
-          '${toString()} is canceled. caused by exception: $exception, stackTrace: $stackTrace',
-        );
-      } else if (isCanceled) {
-        throw CancellationException('${toString()} is canceled.');
-      }
-    }
-
     // 通知を待ち合わせる.
     // キャンセルが発生していたらキャンセル例外を投げる.
     // 完了したら、結果を返却する.
     await for (final _ in _controller.notifyStream) {
-      throwIfCanceled();
-      if (done) {
+      if (exception != null) {
+        // 発生した例外をチェックする.
+        if (exception is CancellationException) {
+          throw CancellationException(
+            '${toString()} is canceled. caused by exception: $exception, stackTrace: $stackTrace',
+          );
+        } else {
+          // 発生した例外をそのまま投げる
+          throw exception!;
+        }
+      } else if (isCanceled) {
+        // その他、キャンセルが発生していたらキャンセルを投げる.
+        throw CancellationException('${toString()} is canceled.');
+      } else if (done) {
+        // 処理が完了している
         return result as T2;
       }
     }
@@ -255,18 +252,6 @@ class FutureContextImpl implements FutureContext {
 
   void _notify() {
     _controller.notify(this);
-  }
-
-  /// 非同期処理の状態をチェックし、必要であれはキャンセル処理を発生させる.
-  void _resume() {
-    // 自分自身のResume Check.
-    try {
-      if (isCanceled) {
-        throw CancellationException('${toString()} is canceled.');
-      }
-    } finally {
-      _notify();
-    }
   }
 
   /// キャンセル状態をハンドリングするStreamを返却する.
