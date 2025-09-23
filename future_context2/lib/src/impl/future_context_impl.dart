@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:future_context2/src/future_context.dart';
 import 'package:future_context2/src/future_context_controller.dart';
 import 'package:future_context2/src/future_context_request.dart';
+import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 /// port from https://github.com/vivitainc/flutter_future_context
