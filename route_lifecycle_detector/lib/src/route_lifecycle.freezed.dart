@@ -157,13 +157,13 @@ return inactive(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( ModalRoute<dynamic> route,  bool isForeground)?  active,TResult Function( bool isForeground)?  building,TResult Function( ModalRoute<dynamic>? route,  bool isForeground)?  destroyed,TResult Function( ModalRoute<dynamic> route,  bool isForeground)?  inactive,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( bool isForeground)?  active,TResult Function( bool isForeground)?  building,TResult Function( bool isForeground)?  destroyed,TResult Function( bool isForeground)?  inactive,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case RouteLifecycleActive() when active != null:
-return active(_that.route,_that.isForeground);case RouteLifecycleBuilding() when building != null:
+return active(_that.isForeground);case RouteLifecycleBuilding() when building != null:
 return building(_that.isForeground);case RouteLifecycleDestroyed() when destroyed != null:
-return destroyed(_that.route,_that.isForeground);case RouteLifecycleInactive() when inactive != null:
-return inactive(_that.route,_that.isForeground);case _:
+return destroyed(_that.isForeground);case RouteLifecycleInactive() when inactive != null:
+return inactive(_that.isForeground);case _:
   return orElse();
 
 }
@@ -181,13 +181,13 @@ return inactive(_that.route,_that.isForeground);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( ModalRoute<dynamic> route,  bool isForeground)  active,required TResult Function( bool isForeground)  building,required TResult Function( ModalRoute<dynamic>? route,  bool isForeground)  destroyed,required TResult Function( ModalRoute<dynamic> route,  bool isForeground)  inactive,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( bool isForeground)  active,required TResult Function( bool isForeground)  building,required TResult Function( bool isForeground)  destroyed,required TResult Function( bool isForeground)  inactive,}) {final _that = this;
 switch (_that) {
 case RouteLifecycleActive():
-return active(_that.route,_that.isForeground);case RouteLifecycleBuilding():
+return active(_that.isForeground);case RouteLifecycleBuilding():
 return building(_that.isForeground);case RouteLifecycleDestroyed():
-return destroyed(_that.route,_that.isForeground);case RouteLifecycleInactive():
-return inactive(_that.route,_that.isForeground);}
+return destroyed(_that.isForeground);case RouteLifecycleInactive():
+return inactive(_that.isForeground);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -201,13 +201,13 @@ return inactive(_that.route,_that.isForeground);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( ModalRoute<dynamic> route,  bool isForeground)?  active,TResult? Function( bool isForeground)?  building,TResult? Function( ModalRoute<dynamic>? route,  bool isForeground)?  destroyed,TResult? Function( ModalRoute<dynamic> route,  bool isForeground)?  inactive,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( bool isForeground)?  active,TResult? Function( bool isForeground)?  building,TResult? Function( bool isForeground)?  destroyed,TResult? Function( bool isForeground)?  inactive,}) {final _that = this;
 switch (_that) {
 case RouteLifecycleActive() when active != null:
-return active(_that.route,_that.isForeground);case RouteLifecycleBuilding() when building != null:
+return active(_that.isForeground);case RouteLifecycleBuilding() when building != null:
 return building(_that.isForeground);case RouteLifecycleDestroyed() when destroyed != null:
-return destroyed(_that.route,_that.isForeground);case RouteLifecycleInactive() when inactive != null:
-return inactive(_that.route,_that.isForeground);case _:
+return destroyed(_that.isForeground);case RouteLifecycleInactive() when inactive != null:
+return inactive(_that.isForeground);case _:
   return null;
 
 }
@@ -219,11 +219,9 @@ return inactive(_that.route,_that.isForeground);case _:
 
 
 class RouteLifecycleActive implements RouteLifecycle {
-  const RouteLifecycleActive({required this.route, required this.isForeground});
+  const RouteLifecycleActive({required this.isForeground});
   
 
-/// Route is at the top of the stack.
- final  ModalRoute<dynamic> route;
 /// App is in the foreground.
 @override final  bool isForeground;
 
@@ -237,16 +235,16 @@ $RouteLifecycleActiveCopyWith<RouteLifecycleActive> get copyWith => _$RouteLifec
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RouteLifecycleActive&&(identical(other.route, route) || other.route == route)&&(identical(other.isForeground, isForeground) || other.isForeground == isForeground));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RouteLifecycleActive&&(identical(other.isForeground, isForeground) || other.isForeground == isForeground));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,route,isForeground);
+int get hashCode => Object.hash(runtimeType,isForeground);
 
 @override
 String toString() {
-  return 'RouteLifecycle.active(route: $route, isForeground: $isForeground)';
+  return 'RouteLifecycle.active(isForeground: $isForeground)';
 }
 
 
@@ -257,7 +255,7 @@ abstract mixin class $RouteLifecycleActiveCopyWith<$Res> implements $RouteLifecy
   factory $RouteLifecycleActiveCopyWith(RouteLifecycleActive value, $Res Function(RouteLifecycleActive) _then) = _$RouteLifecycleActiveCopyWithImpl;
 @override @useResult
 $Res call({
- ModalRoute<dynamic> route, bool isForeground
+ bool isForeground
 });
 
 
@@ -274,10 +272,9 @@ class _$RouteLifecycleActiveCopyWithImpl<$Res>
 
 /// Create a copy of RouteLifecycle
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? route = null,Object? isForeground = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isForeground = null,}) {
   return _then(RouteLifecycleActive(
-route: null == route ? _self.route : route // ignore: cast_nullable_to_non_nullable
-as ModalRoute<dynamic>,isForeground: null == isForeground ? _self.isForeground : isForeground // ignore: cast_nullable_to_non_nullable
+isForeground: null == isForeground ? _self.isForeground : isForeground // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -356,11 +353,9 @@ as bool,
 
 
 class RouteLifecycleDestroyed implements RouteLifecycle {
-  const RouteLifecycleDestroyed({required this.route, required this.isForeground});
+  const RouteLifecycleDestroyed({required this.isForeground});
   
 
-/// Route is at the top of the stack.
- final  ModalRoute<dynamic>? route;
 /// App is in the foreground.
 @override final  bool isForeground;
 
@@ -374,16 +369,16 @@ $RouteLifecycleDestroyedCopyWith<RouteLifecycleDestroyed> get copyWith => _$Rout
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RouteLifecycleDestroyed&&(identical(other.route, route) || other.route == route)&&(identical(other.isForeground, isForeground) || other.isForeground == isForeground));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RouteLifecycleDestroyed&&(identical(other.isForeground, isForeground) || other.isForeground == isForeground));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,route,isForeground);
+int get hashCode => Object.hash(runtimeType,isForeground);
 
 @override
 String toString() {
-  return 'RouteLifecycle.destroyed(route: $route, isForeground: $isForeground)';
+  return 'RouteLifecycle.destroyed(isForeground: $isForeground)';
 }
 
 
@@ -394,7 +389,7 @@ abstract mixin class $RouteLifecycleDestroyedCopyWith<$Res> implements $RouteLif
   factory $RouteLifecycleDestroyedCopyWith(RouteLifecycleDestroyed value, $Res Function(RouteLifecycleDestroyed) _then) = _$RouteLifecycleDestroyedCopyWithImpl;
 @override @useResult
 $Res call({
- ModalRoute<dynamic>? route, bool isForeground
+ bool isForeground
 });
 
 
@@ -411,10 +406,9 @@ class _$RouteLifecycleDestroyedCopyWithImpl<$Res>
 
 /// Create a copy of RouteLifecycle
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? route = freezed,Object? isForeground = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isForeground = null,}) {
   return _then(RouteLifecycleDestroyed(
-route: freezed == route ? _self.route : route // ignore: cast_nullable_to_non_nullable
-as ModalRoute<dynamic>?,isForeground: null == isForeground ? _self.isForeground : isForeground // ignore: cast_nullable_to_non_nullable
+isForeground: null == isForeground ? _self.isForeground : isForeground // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -426,11 +420,9 @@ as bool,
 
 
 class RouteLifecycleInactive implements RouteLifecycle {
-  const RouteLifecycleInactive({required this.route, required this.isForeground});
+  const RouteLifecycleInactive({required this.isForeground});
   
 
-/// Route is at the top of the stack.
- final  ModalRoute<dynamic> route;
 /// App is in the foreground.
 @override final  bool isForeground;
 
@@ -444,16 +436,16 @@ $RouteLifecycleInactiveCopyWith<RouteLifecycleInactive> get copyWith => _$RouteL
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RouteLifecycleInactive&&(identical(other.route, route) || other.route == route)&&(identical(other.isForeground, isForeground) || other.isForeground == isForeground));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RouteLifecycleInactive&&(identical(other.isForeground, isForeground) || other.isForeground == isForeground));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,route,isForeground);
+int get hashCode => Object.hash(runtimeType,isForeground);
 
 @override
 String toString() {
-  return 'RouteLifecycle.inactive(route: $route, isForeground: $isForeground)';
+  return 'RouteLifecycle.inactive(isForeground: $isForeground)';
 }
 
 
@@ -464,7 +456,7 @@ abstract mixin class $RouteLifecycleInactiveCopyWith<$Res> implements $RouteLife
   factory $RouteLifecycleInactiveCopyWith(RouteLifecycleInactive value, $Res Function(RouteLifecycleInactive) _then) = _$RouteLifecycleInactiveCopyWithImpl;
 @override @useResult
 $Res call({
- ModalRoute<dynamic> route, bool isForeground
+ bool isForeground
 });
 
 
@@ -481,10 +473,9 @@ class _$RouteLifecycleInactiveCopyWithImpl<$Res>
 
 /// Create a copy of RouteLifecycle
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? route = null,Object? isForeground = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isForeground = null,}) {
   return _then(RouteLifecycleInactive(
-route: null == route ? _self.route : route // ignore: cast_nullable_to_non_nullable
-as ModalRoute<dynamic>,isForeground: null == isForeground ? _self.isForeground : isForeground // ignore: cast_nullable_to_non_nullable
+isForeground: null == isForeground ? _self.isForeground : isForeground // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

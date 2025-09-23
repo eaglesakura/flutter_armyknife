@@ -17,9 +17,6 @@ sealed class RouteLifecycle with _$RouteLifecycle {
   /// State:
   ///   - Route: Top of stack.
   const factory RouteLifecycle.active({
-    /// Route is at the top of the stack.
-    required ModalRoute<dynamic> route,
-
     /// App is in the foreground.
     required bool isForeground,
   }) = RouteLifecycleActive;
@@ -36,9 +33,6 @@ sealed class RouteLifecycle with _$RouteLifecycle {
   ///   - App: any.
   ///   - Route: destroyed.
   const factory RouteLifecycle.destroyed({
-    /// Route is at the top of the stack.
-    required ModalRoute<dynamic>? route,
-
     /// App is in the foreground.
     required bool isForeground,
   }) = RouteLifecycleDestroyed;
@@ -49,9 +43,6 @@ sealed class RouteLifecycle with _$RouteLifecycle {
   /// State:
   ///   - Route: Not top of stack.
   const factory RouteLifecycle.inactive({
-    /// Route is at the top of the stack.
-    required ModalRoute<dynamic> route,
-
     /// App is in the foreground.
     required bool isForeground,
   }) = RouteLifecycleInactive;
@@ -65,7 +56,6 @@ sealed class RouteLifecycle with _$RouteLifecycle {
     if (!context.mounted) {
       /// BuildContextが破棄されているならば、破棄状態.
       return RouteLifecycle.destroyed(
-        route: null,
         isForeground: isForeground,
       );
     }
@@ -87,13 +77,11 @@ sealed class RouteLifecycle with _$RouteLifecycle {
       if (route.isActive) {
         // まだRouteが生きているなら、pause
         return RouteLifecycle.inactive(
-          route: route,
           isForeground: isForeground,
         );
       } else {
         // すでにRouteが破棄されているなら、破棄状態
         return RouteLifecycle.destroyed(
-          route: route,
           isForeground: isForeground,
         );
       }
@@ -101,7 +89,6 @@ sealed class RouteLifecycle with _$RouteLifecycle {
 
     /// すべての状態を満たしているならば、実行中状態
     return RouteLifecycle.active(
-      route: route,
       isForeground: isForeground,
     );
   }

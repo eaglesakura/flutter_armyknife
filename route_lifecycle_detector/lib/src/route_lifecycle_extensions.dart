@@ -16,7 +16,6 @@ extension BuildContextRouteLifecycleExtensions on BuildContext {
       }
     }
 
-    // ignore: use_build_context_synchronously
     final stream = RouteLifecycle.streamOf(this);
     await for (final lifecycle in stream) {
       latestLifecycle = lifecycle;
@@ -25,7 +24,6 @@ extension BuildContextRouteLifecycleExtensions on BuildContext {
       }
     }
     // Streamが終了した場合も、最後の状態を返す.
-    // ignore: use_build_context_synchronously
     return latestLifecycle;
   }
 }

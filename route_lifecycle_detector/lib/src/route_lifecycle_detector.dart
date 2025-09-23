@@ -26,7 +26,7 @@ class RouteLifecycleDetector {
   /// ```dart
   /// MaterialApp(
   ///   navigatorObservers: [
-  ///     RouteLifecycleDetector.observer,
+  ///     RouteLifecycleDetector.navigatorObserver,
   ///   ],
   /// )
   /// ```
