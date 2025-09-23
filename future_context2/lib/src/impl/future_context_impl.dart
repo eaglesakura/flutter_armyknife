@@ -146,10 +146,15 @@ class FutureContextImpl implements FutureContext {
     }
   }
 
+  /// 関連するContextすべてのresumeを実行する.
   @override
   Future<void> resume() async {
-    if (isCanceled) {
+    if (_state == _ContextState.canceled) {
       throw CancellationException('${toString()} is canceled.');
+    }
+
+    for (final c in _group) {
+      await c.resume();
     }
   }
 
