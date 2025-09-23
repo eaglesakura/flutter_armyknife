@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:future_context2/src/future_context_request.dart';
-import 'package:future_context2/src/impl/future_context_proxy.dart';
-import 'package:future_context2/src/impl/legacy/future_context.dart' as legacy;
+import 'package:future_context2/src/impl/future_context_impl.dart' as legacy;
 import 'package:meta/meta.dart';
 import 'package:runtime_assert/runtime_assert.dart';
 
@@ -24,11 +23,9 @@ abstract class FutureContext {
   factory FutureContext({
     String? tag,
     FutureContextRequest request = const FutureContextRequest(),
-  }) => FutureContextProxy(
-    legacy.FutureContext(
-      tag: tag,
-      debugCallStackLevel: request.debugCallStackLevel + 1,
-    ),
+  }) => legacy.FutureContextImpl(
+    tag: tag,
+    debugCallStackLevel: request.debugCallStackLevel + 1,
   );
 
   /// 指定した親Contextを持つFutureContextを作成する.
@@ -38,17 +35,15 @@ abstract class FutureContext {
     String? tag,
     FutureContextRequest request = const FutureContextRequest(),
   }) {
-    final impl = parent.queryInterface<legacy.FutureContext>();
+    final impl = parent.queryInterface<legacy.FutureContextImpl>();
     if (impl == null) {
       throw IllegalArgumentException('Unsupported Parent');
     }
 
-    return FutureContextProxy(
-      legacy.FutureContext.child(
-        impl,
-        tag: tag,
-        debugCallStackLevel: request.debugCallStackLevel + 1,
-      ),
+    return legacy.FutureContextImpl.child(
+      impl,
+      tag: tag,
+      debugCallStackLevel: request.debugCallStackLevel + 1,
     );
   }
 
@@ -60,19 +55,17 @@ abstract class FutureContext {
     FutureContextRequest request = const FutureContextRequest(),
   }) {
     final implList = contexts.map((e) {
-      final impl = e.queryInterface<legacy.FutureContext>();
+      final impl = e.queryInterface<legacy.FutureContextImpl>();
       if (impl == null) {
         throw IllegalArgumentException('Unsupported Parent');
       }
       return impl;
     }).toList();
 
-    return FutureContextProxy(
-      legacy.FutureContext.group(
-        implList,
-        tag: tag,
-        debugCallStackLevel: request.debugCallStackLevel + 1,
-      ),
+    return legacy.FutureContextImpl.group(
+      implList,
+      tag: tag,
+      debugCallStackLevel: request.debugCallStackLevel + 1,
     );
   }
 
@@ -84,6 +77,9 @@ abstract class FutureContext {
 
   /// キャンセル状態をハンドリングするStreamを返却する.
   Stream<bool> get isCanceledStream;
+
+  /// Logging用Tag.
+  String get tag;
 
   /// Futureをキャンセルする.
   /// すでにキャンセル済みの場合は何もしない.

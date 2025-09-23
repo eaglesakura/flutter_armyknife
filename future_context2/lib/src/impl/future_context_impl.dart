@@ -1,13 +1,12 @@
 import 'dart:async';
 
+import 'package:armyknife_dartx/armyknife_dartx.dart';
 import 'package:async_notify2/async_notify2.dart';
 import 'package:flutter/foundation.dart';
+import 'package:future_context2/src/future_context.dart';
+import 'package:future_context2/src/future_context_request.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
-
-/// 非同期処理のキャンセル不可能な1ブロック処理
-/// このブロック完了後、FutureContextは復帰チェックを行い、必要であればキャンセル等を行う.
-typedef FutureSuspendBlock<T> = Future<T> Function(FutureContext context);
 
 /// port from https://github.com/vivitainc/flutter_future_context
 /// 非同期（Async）状態を管理する.
@@ -29,8 +28,8 @@ typedef FutureSuspendBlock<T> = Future<T> Function(FutureContext context);
 /// 処理が冗長になることと、Dart標準からかけ離れていくリスクがあるため、
 /// 使用箇所については慎重に検討が必要.
 @internal
-class FutureContext {
-  static final _systemSubject = PublishSubject<FutureContext>();
+class FutureContextImpl implements FutureContext {
+  static final _systemSubject = PublishSubject<FutureContextImpl>();
 
   /// このしきい値より短い時間の場合、delayed()はキャンセルチェックを行わず直接実行する.
   /// Streamの生成・破棄コストを最小化するためである.
@@ -43,52 +42,43 @@ class FutureContext {
   var _state = _ContextState.active;
 
   /// キャンセル識別用タグ
-  final String? tag;
-
-  static String? _newDefaultTag(int debugCallStackLevel) {
-    if (kReleaseMode) {
-      return null;
-    } else {
-      // StackTraceの先頭から3つ目のファイル・行を取得する
-      const popLevel = kIsWeb ? 3 : 2;
-      final trace = StackTrace.current.toString().split(
-        '\n',
-      )[popLevel + debugCallStackLevel];
-      var file = trace.replaceAll(r'\', '/').split('/').last;
-      final split = file.split(':');
-      if (kIsWeb) {
-        file = split[0].replaceAll('.dart', '.dart:').replaceAll('::', ':');
-      } else if (split.length >= 2) {
-        file = '${split[0]}:${split[1]}';
-      }
-      return file.replaceAll(')', '').replaceAll(' ', '');
-    }
-  }
+  @override
+  final String tag;
 
   /// 空のFutureContextを作成する.
-  FutureContext({
+  FutureContextImpl({
     String? tag,
     int debugCallStackLevel = 0,
-  }) : tag = tag ?? _newDefaultTag(debugCallStackLevel),
+  }) : tag = _getOptimizedTag(
+         group: const {},
+         tag: tag ?? _newDefaultTag(debugCallStackLevel),
+       ),
        _group = const {};
 
   /// 指定した親Contextを持つFutureContextを作成する.
-  FutureContext.child(
-    FutureContext parent, {
+  FutureContextImpl.child(
+    FutureContextImpl parent, {
     String? tag,
     int debugCallStackLevel = 0,
-  }) : tag = tag ?? _newDefaultTag(debugCallStackLevel),
+  }) : tag = _getOptimizedTag(
+         group: {parent},
+         tag: tag ?? _newDefaultTag(debugCallStackLevel),
+       ),
        _group = {parent};
 
   /// 指定した複数の親Contextを持つFutureContextを作成する.
-  FutureContext.group(
+  FutureContextImpl.group(
     Iterable<FutureContext> group, {
     String? tag,
     int debugCallStackLevel = 0,
-  }) : tag = tag ?? _newDefaultTag(debugCallStackLevel),
-       _group = group.toSet();
+  }) : tag = _getOptimizedTag(
+         group: {...group},
+         tag: tag ?? _newDefaultTag(debugCallStackLevel),
+       ),
+       _group = {...group};
 
   /// 処理が継続中の場合trueを返却する.
+  @override
   bool get isActive {
     // 一つでも非アクティブなものがあれば、このContextも非アクティブ.
     for (final c in _group) {
@@ -100,6 +90,7 @@ class FutureContext {
   }
 
   /// 処理がキャンセル済みの場合true.
+  @override
   bool get isCanceled {
     // 軽量処理を選考して呼び出す
     if (_state == _ContextState.canceled) {
@@ -116,31 +107,12 @@ class FutureContext {
   }
 
   /// キャンセル状態をハンドリングするStreamを返却する.
+  @override
   Stream<bool> get isCanceledStream => _isCanceledStream();
-
-  late final String _optimizedTag = () {
-    final tag = this.tag;
-    if (_group.isNotEmpty) {
-      final builder = StringBuffer();
-      builder.write('[');
-      var i = 0;
-      for (final p in _group) {
-        if (i > 0) {
-          builder.write(',');
-        }
-        builder.write(p._optimizedTag);
-        ++i;
-      }
-      builder.write(']#');
-      builder.write(tag ?? 'NoName');
-      return builder.toString();
-    } else {
-      return tag ?? 'NoName';
-    }
-  }();
 
   /// Futureをキャンセルする.
   /// すでにキャンセル済みの場合は何もしない.
+  @override
   Future close() => _closeWith(next: _ContextState.canceled);
 
   /// 指定時間Contextを停止させる.
@@ -148,6 +120,7 @@ class FutureContext {
   ///
   /// e.g.
   /// context.delayed(Duration(seconds: 1));
+  @override
   Future delayed(final Duration duration) async {
     _resume();
     // _delayedThresholdよりもdurationが小さいなら直接delayedをかける
@@ -182,6 +155,14 @@ class FutureContext {
     }
   }
 
+  @override
+  T? queryInterface<T>() {
+    if (typeEquals<T, FutureContextImpl>()) {
+      return this as T;
+    }
+    return null;
+  }
+
   /// 非同期処理の特定1ブロックを実行する.
   /// これはFutureContext(T)の実行最小単位として機能する.
   /// suspend内部では実行開始時・終了時にそれぞれAsyncContextのステートチェックを行い、
@@ -192,6 +173,7 @@ class FutureContext {
   ///
   /// suspend()関数は1コールのオーバーヘッドが大きいため、
   /// 内部でキャンセル処理が必要なほど長い場合に利用する.
+  @override
   Future<T2> suspend<T2>(FutureSuspendBlock<T2> block) async {
     _resume();
 
@@ -238,20 +220,21 @@ class FutureContext {
   }
 
   @override
-  String toString() => 'FutureContext($_optimizedTag)';
+  String toString() => 'FutureContext($tag)';
 
   /// タイムアウト付きの非同期処理を開始する.
   ///
   /// タイムアウトが発生した場合、
   /// block()は [TimeoutException] が発生して終了する.
+  @override
   Future<T2> withTimeout<T2>(
     Duration timeout,
     FutureSuspendBlock<T2> block, {
-    int? debugCallStackLevel,
+    FutureContextRequest request = const FutureContextRequest(),
   }) async {
-    final child = FutureContext.child(
+    final child = FutureContextImpl.child(
       this,
-      debugCallStackLevel: debugCallStackLevel ?? 1,
+      debugCallStackLevel: request.debugCallStackLevel + 1,
     );
     try {
       return await child.suspend(block).timeout(timeout);
@@ -313,6 +296,49 @@ class FutureContext {
       }
     } finally {
       _notify();
+    }
+  }
+
+  static String _getOptimizedTag({
+    required Set<FutureContext> group,
+    required String? tag,
+  }) {
+    if (group.isNotEmpty) {
+      final builder = StringBuffer();
+      builder.write('[');
+      var i = 0;
+      for (final p in group) {
+        if (i > 0) {
+          builder.write(',');
+        }
+        builder.write(p.tag);
+        ++i;
+      }
+      builder.write(']#');
+      builder.write(tag ?? 'NoName');
+      return builder.toString();
+    } else {
+      return tag ?? 'NoName';
+    }
+  }
+
+  static String? _newDefaultTag(int debugCallStackLevel) {
+    if (kReleaseMode) {
+      return null;
+    } else {
+      // StackTraceの先頭から3つ目のファイル・行を取得する
+      const popLevel = kIsWeb ? 3 : 2;
+      final trace = StackTrace.current.toString().split(
+        '\n',
+      )[popLevel + debugCallStackLevel];
+      var file = trace.replaceAll(r'\', '/').split('/').last;
+      final split = file.split(':');
+      if (kIsWeb) {
+        file = split[0].replaceAll('.dart', '.dart:').replaceAll('::', ':');
+      } else if (split.length >= 2) {
+        file = '${split[0]}:${split[1]}';
+      }
+      return file.replaceAll(')', '').replaceAll(' ', '');
     }
   }
 }
