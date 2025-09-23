@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:route_lifecycle_detector/src/route_lifecycle.dart';
+import 'package:route_lifecycle_detector/src/route_lifecycle_exceptions.dart';
 
 /// Extensions for BuildContext to detect the lifecycle of a Route.
 extension BuildContextRouteLifecycleExtensions on BuildContext {
@@ -26,19 +27,6 @@ extension BuildContextRouteLifecycleExtensions on BuildContext {
         return latestLifecycle;
       }
     }
-    // Streamが終了した場合も、最後の状態を返す.
     throw BadLifecycleException(latestLifecycle);
-  }
-}
-
-/// Exception thrown when the route lifecycle is invalid.
-class BadLifecycleException implements Exception {
-  final RouteLifecycle latestLifecycle;
-
-  BadLifecycleException(this.latestLifecycle);
-
-  @override
-  String toString() {
-    return "BadLifecycleException: $latestLifecycle";
   }
 }
