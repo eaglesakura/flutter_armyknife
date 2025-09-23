@@ -1,50 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'route_lifecycle.freezed.dart';
 
 /// The current lifecycle state of a Route (such as Scaffold, Dialog, etc.).
 /// It is simpler than Android's Lifecycle because it is determined only by the current information.
-enum RouteLifecycle {
-  /// The widget is being built and the Route has not yet been created.
-  building,
-
+@freezed
+sealed class RouteLifecycle with _$RouteLifecycle {
   /// The app is in the foreground and the Route is at the top of the stack.
   ///
   /// State:
-  ///   - App: Foreground.
   ///   - Route: Top of stack.
-  active,
+  const factory RouteLifecycle.active({
+    /// Route is at the top of the stack.
+    required ModalRoute<dynamic> route,
 
-  /// The app is in the foreground, but the Route is not at the top of the stack.
-  /// It is assumed that the user cannot interact with this Route because another page is in the foreground.
-  ///
-  /// State:
-  ///   - App: Foreground.
-  ///   - Route: Not top of stack.
-  inactive,
+    /// App is in the foreground.
+    required bool isForeground,
+  }) = RouteLifecycleActive;
 
-  /// The app is in the background.
-  /// The app screen is completely hidden, so user interaction is not possible.
-  ///
-  /// State:
-  ///   - App: Background.
-  ///   - Route: any.
-  hidden,
+  /// The widget is being built and the Route has not yet been created.
+  const factory RouteLifecycle.building({
+    /// App is in the foreground.
+    required bool isForeground,
+  }) = RouteLifecycleBuilding;
 
   /// One of Widget, ModalRoute, or BuildContext has been disposed.
   ///
   /// State:
   ///   - App: any.
   ///   - Route: destroyed.
-  destroyed;
+  const factory RouteLifecycle.destroyed({
+    /// Route is at the top of the stack.
+    required ModalRoute<dynamic>? route,
+
+    /// App is in the foreground.
+    required bool isForeground,
+  }) = RouteLifecycleDestroyed;
+
+  /// The app is in the foreground, but the Route is not at the top of the stack.
+  /// It is assumed that the user cannot interact with this Route because another page is in the foreground.
+  ///
+  /// State:
+  ///   - Route: Not top of stack.
+  const factory RouteLifecycle.inactive({
+    /// Route is at the top of the stack.
+    required ModalRoute<dynamic> route,
+
+    /// App is in the foreground.
+    required bool isForeground,
+  }) = RouteLifecycleInactive;
 
   /// Gets the current lifecycle state.
   ///
   /// NOTE:
   /// [BuildContext.mounted] is checked internally, so callers do not need to consider it.
   static RouteLifecycle of(BuildContext context) {
+    final isForeground = FGBGEvents.last == FGBGType.foreground;
     if (!context.mounted) {
       /// BuildContextが破棄されているならば、破棄状態.
-      return RouteLifecycle.destroyed;
+      return RouteLifecycle.destroyed(
+        route: null,
+        isForeground: isForeground,
+      );
     }
 
     /// Routeが破棄されているならば、破棄状態.
@@ -54,26 +73,32 @@ enum RouteLifecycle {
       // ignore: avoid_catches_without_on_clauses
     } catch (_) {
       // drop error
-      return RouteLifecycle.building;
-    }
-
-    /// アプリが最前面に無いのならば、停止状態
-    if (FGBGEvents.last != FGBGType.foreground) {
-      return RouteLifecycle.hidden;
+      return RouteLifecycle.building(
+        isForeground: isForeground,
+      );
     }
 
     /// アプリが最前面にあるが、Routeが最前面ではないならば、一時停止状態
     if (!route.isCurrent) {
       if (route.isActive) {
         // まだRouteが生きているなら、pause
-        return RouteLifecycle.inactive;
+        return RouteLifecycle.inactive(
+          route: route,
+          isForeground: isForeground,
+        );
       } else {
         // すでにRouteが破棄されているなら、破棄状態
-        return RouteLifecycle.destroyed;
+        return RouteLifecycle.destroyed(
+          route: route,
+          isForeground: isForeground,
+        );
       }
     }
 
     /// すべての状態を満たしているならば、実行中状態
-    return RouteLifecycle.active;
+    return RouteLifecycle.active(
+      route: route,
+      isForeground: isForeground,
+    );
   }
 }

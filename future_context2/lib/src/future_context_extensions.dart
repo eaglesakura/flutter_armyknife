@@ -71,7 +71,7 @@ Future<T> withContext<T>(
 /// 結果はStreamで処理される.
 ///
 /// 例外を受け取る場合、 yield* は推奨されない.
-/// yield*を使用する場合、例外が発生した場合、その例外はStreamの外に出てしまうため、
+@Deprecated('use withContext instead')
 Stream<T> withContextStream<T>(
   List contexts,
   Stream<T> Function(FutureContext context) block,
@@ -117,7 +117,7 @@ class WithContextTimeout {
   const WithContextTimeout(this.duration);
 
   @override
-  String toString() => 'WithContextTimeout(duration: $duration)';
+  int get hashCode => duration.hashCode;
 
   @override
   bool operator ==(covariant WithContextTimeout other) {
@@ -129,5 +129,5 @@ class WithContextTimeout {
   }
 
   @override
-  int get hashCode => duration.hashCode;
+  String toString() => 'WithContextTimeout(duration: $duration)';
 }
