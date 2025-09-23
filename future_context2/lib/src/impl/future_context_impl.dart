@@ -254,27 +254,62 @@ class FutureContextImpl implements FutureContext {
     _notify();
   }
 
-  Stream<bool> _isCanceledStream() async* {
-    try {
-      _log('isCanceledStream start');
-      if (isCanceled) {
-        // すでに閉じられていたら終了
-        yield true;
-        return;
-      }
-      // 閉じられるまでイベントを待つ
-      yield false;
-      await for (final _ in _systemSubject) {
-        if (isCanceled) {
-          yield true;
-          return;
-        }
-        yield false;
-      }
-    } finally {
-      _log('isCanceledStream close');
-    }
+  /// キャンセル状態をハンドリングするStreamを返却する.
+  ///
+  /// キャンセルが発生していない場合でも、FutureContext全体通知が発生したタイミングで
+  /// キャンセル状態を通知する.
+  Stream<bool> _isCanceledStream() {
+    return ConcatStream([
+          Stream.value(isCanceled),
+          _systemSubject.stream.map((_) {
+            return isCanceled;
+          }),
+        ])
+        .doOnListen(() {
+          if (isCanceled) {
+            // すでにキャンセル済みの場合は、通知を発火することでフリーズを防ぐ
+            _log('isCanceledStream.notify');
+            Future.delayed(Duration.zero, () {
+              _notify();
+            });
+          }
+        })
+        .transform(
+          StreamTransformer.fromHandlers(
+            handleData: (cancel, sink) {
+              _log('CanceledStream.notify: $cancel');
+              sink.add(cancel);
+              if (cancel) {
+                // キャンセルされたので、ここで終了.
+                sink.close();
+                return;
+              }
+            },
+          ),
+        );
   }
+
+  // Stream<bool> _isCanceledStream() async* {
+  //   try {
+  //     _log('isCanceledStream start');
+  //     if (isCanceled) {
+  //       // すでに閉じられていたら終了
+  //       yield true;
+  //       return;
+  //     }
+  //     // 閉じられるまでイベントを待つ
+  //     yield false;
+  //     await for (final _ in _systemSubject) {
+  //       if (isCanceled) {
+  //         yield true;
+  //         return;
+  //       }
+  //       yield false;
+  //     }
+  //   } finally {
+  //     _log('isCanceledStream close');
+  //   }
+  // }
 
   void _log(String message) {
     if (!kDebugMode) {
