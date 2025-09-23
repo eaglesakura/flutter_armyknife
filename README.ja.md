@@ -39,6 +39,8 @@
 | 📝 ログ・デバッグ | **[logger_grinder](./logger_grinder/)** | Grinder 用ログ実装 | ビルドツール向けログ出力 |
 | ⚡ エラーハンドリング | **[exceptions](./exceptions/)** | 例外トレース機能 | 例外のアンラップ、例外チェーン検索、カスタムアンラッパー |
 | ⏰ 時刻処理 | **[time](./time/)** | 軽量時刻処理 | time_machine ラッパー、Clock デリゲート、Unix エポック |
+| 🛤️ ルートライフサイクル | **[route_lifecycle_detector](./route_lifecycle_detector/)** | Navigator ライフサイクル管理 | ダイアログ多重表示防止、Route 状態検出、非同期処理制御 |
+| 🛠️ コード生成 | **[openapi-template](./openapi-template/)** | OpenAPI コード生成テンプレート | Dart/Flutter 向け OpenAPI クライアント生成、カスタムテンプレート |
 
 ## 🚀 使用開始
 

@@ -1,0 +1,24 @@
+name: route_lifecycle_detector
+description: ""
+version: 1.0.0
+resolution: workspace
+repository: https://github.com/eaglesakura/flutter_armyknife/
+
+environment:
+  sdk: ">=3.8.0 <4.0.0"
+  flutter: ">=3.32.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  rxdart: ^0.28.0
+  meta: ^1.16.0
+  flutter_fgbg: ^0.7.1
+  freezed_annotation: ^3.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  freezed: ^3.0.0
+  build_runner: ^2.5.2

@@ -29,6 +29,7 @@ jobs:
           - riverpod_container_async
           - riverpod_container_async_test
           - riverpodx
+          - route_lifecycle_detector
           - state_stream
           - state_stream_riverpod
           - streams
@@ -52,7 +53,7 @@ jobs:
           cp pubspec.yaml.template pubspec.yaml
           cd ${{ matrix.package }}
           dart pub get
-          dart analyze
+          dart analyze --fatal-infos --fatal-warnings
           dart format --set-exit-if-changed ./lib/
           dart format --set-exit-if-changed ./test/
           flutter test ./test/
