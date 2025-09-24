@@ -1,6 +1,7 @@
-## 1.1.0
+## 1.1.0+1
 
-- Support pausing of FutureContext
+- Support pausing of FutureContext.
+- Fix documents.
 
 ## 1.0.1
 

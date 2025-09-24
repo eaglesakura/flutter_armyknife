@@ -124,7 +124,7 @@ abstract class FutureContext {
   Future<void> resume();
 
   /// English: Executes a specific block of asynchronous processing.
-  /// This functions as the minimum execution unit of FutureContext<T>.
+  /// This functions as the minimum execution unit of [FutureContext<T>].
   /// Inside suspend, AsyncContext state checks are performed at both start and end of execution,
   /// and interruption processing such as throwing exceptions is performed as needed.
   ///
@@ -135,7 +135,7 @@ abstract class FutureContext {
   /// when the internal processing is long enough to require cancellation handling.
   ///
   /// 日本語: 非同期処理の特定1ブロックを実行する.
-  /// これはFutureContext<"T">の実行最小単位として機能する.
+  /// これは[FutureContext<T>]の実行最小単位として機能する.
   /// suspend内部では実行開始時・終了時にそれぞれAsyncContextのステートチェックを行い、
   /// 必要であれば例外を投げる等の中断処理を行う.
   ///
