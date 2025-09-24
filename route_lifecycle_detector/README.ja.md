@@ -14,10 +14,11 @@ Navigator/ModalRoute/BuildContext のライフサイクルを検出する軽量�
 ## Features
 
 - **ダイアログ多重表示の防止**: Route が非アクティブな間はUI表示を遅延
-- **ライフサイクル状態の検出**: Route の現在の状態（active/inactive/hidden/destroyed）をリアルタイムで取得
+- **詳細なライフサイクル状態の検出**: Route の現在の状態（active/inactive/building/destroyed）とアプリのフォアグラウンド/バックグラウンド状態をリアルタイムで取得
 - **Stream ベースの監視**: Route のライフサイクル変化を Stream で監視
+- **型安全な状態管理**: Freezed による sealed class で型安全なパターンマッチングが可能
+- **柔軟な待機機能**: カスタム条件でライフサイクル状態の変化を待機
 - **軽量設計**: 最小限の依存関係とパフォーマンスオーバーヘッド
-- **非同期処理の待機**: Route が適切な状態になるまでの待機機能
 
 ## Getting started
 
@@ -25,7 +26,7 @@ Navigator/ModalRoute/BuildContext のライフサイクルを検出する軽量�
 
 ```yaml
 dependencies:
-  route_lifecycle_detector: ^1.0.0
+  route_lifecycle_detector: ^1.1.0
 ```
 
 MaterialApp に RouteLifecycleDetector のオブザーバーを追加してください：
@@ -98,9 +99,11 @@ class _GoodExamplePageState extends State<GoodExamplePage> {
     // 重い処理2: 3秒後にダイアログを開く（ライフサイクルを考慮）
     Future.delayed(Duration(seconds: 3), () async {
       // Route が active 状態になるまで待機
-      final lifecycle = await RouteLifecycleDetector.waitResumeOrDestroy(context);
+      final lifecycle = await context.waitLifecycleWith(
+        (lifecycle) => lifecycle is RouteLifecycleActive,
+      );
       
-      if (lifecycle == RouteLifecycle.active && mounted) {
+      if (lifecycle is RouteLifecycleActive && mounted) {
         // 画面が前面に戻ってからダイアログを表示
         showDialog(
           context: context,
@@ -122,15 +125,15 @@ class _GoodExamplePageState extends State<GoodExamplePage> {
 void showDialogSafely(BuildContext context) {
   final lifecycle = RouteLifecycle.of(context);
   
-  if (lifecycle == RouteLifecycle.active) {
-    // Route が最前面の場合のみダイアログを表示
+  if (lifecycle is RouteLifecycleActive && lifecycle.isForeground) {
+    // Route が最前面かつアプリがフォアグラウンドの場合のみダイアログを表示
     showDialog(
       context: context,
       builder: (_) => AlertDialog(title: Text('安全に表示されました')),
     );
   } else {
-    // Route が非アクティブの場合は表示を遅延
-    print('Route が非アクティブのため、ダイアログ表示を遅延します');
+    // Route が非アクティブまたはアプリがバックグラウンドの場合は表示を遅延
+    print('Route が非アクティブまたはアプリがバックグラウンドのため、ダイアログ表示を遅延します');
   }
 }
 ```
@@ -144,9 +147,11 @@ class SmartDialogController {
   final List<VoidCallback> _pendingDialogs = [];
   
   void startListening(BuildContext context) {
-    _subscription = RouteLifecycleDetector.streamOf(context).listen((lifecycle) {
-      if (lifecycle == RouteLifecycle.active && _pendingDialogs.isNotEmpty) {
-        // Route が前面に戻った時に保留中のダイアログを表示
+    _subscription = RouteLifecycle.streamOf(context).listen((lifecycle) {
+      if (lifecycle is RouteLifecycleActive && 
+          lifecycle.isForeground && 
+          _pendingDialogs.isNotEmpty) {
+        // Route が前面に戻り、アプリがフォアグラウンドの時に保留中のダイアログを表示
         final dialogs = List<VoidCallback>.from(_pendingDialogs);
         _pendingDialogs.clear();
         
@@ -158,7 +163,8 @@ class SmartDialogController {
   }
   
   void showDialogWhenActive(BuildContext context, WidgetBuilder builder) {
-    if (RouteLifecycle.of(context) == RouteLifecycle.active) {
+    final lifecycle = RouteLifecycle.of(context);
+    if (lifecycle is RouteLifecycleActive && lifecycle.isForeground) {
       // 即座に表示
       showDialog(context: context, builder: builder);
     } else {
@@ -174,18 +180,19 @@ class SmartDialogController {
 }
 ```
 
-### Route の再開待ち
+### ライフサイクルの待機
 
 ```dart
-// Route が再開または破棄されるまで待機
-final result = await RouteLifecycleDetector.waitResumeOrDestroy(context);
-
-if (result == RouteLifecycle.active) {
+// Route が active かつフォアグラウンドになるまで待機
+try {
+  final result = await context.waitLifecycleWith(
+    (lifecycle) => lifecycle is RouteLifecycleActive && lifecycle.isForeground,
+  );
   // Route が再開された
-  print('Route が再開されました');
-} else if (result == RouteLifecycle.destroyed) {
-  // Route が破棄された
-  print('Route が破棄されました');
+  print('Route が再開されました: $result');
+} on BadLifecycleException catch (e) {
+  // Route が破棄されるなど、期待した状態に到達できなかった場合
+  print('期待した状態に到達できませんでした: ${e.latestLifecycle}');
 }
 ```
 
@@ -209,9 +216,9 @@ class _MyPageState extends State<MyPage> {
   }
   
   void _startProcessing() {
-    _subscription = RouteLifecycleDetector.streamOf(context).listen((lifecycle) {
-      if (lifecycle == RouteLifecycle.active) {
-        // Route が前面に来たときだけ処理を実行
+    _subscription = RouteLifecycle.streamOf(context).listen((lifecycle) {
+      if (lifecycle is RouteLifecycleActive && lifecycle.isForeground) {
+        // Route が前面に来て、アプリがフォアグラウンドのときだけ処理を実行
         _performBackgroundTask();
       }
     });
@@ -260,13 +267,15 @@ class _MyPageState extends State<MyPage> {
 
 ## ライフサイクル状態
 
-| 状態 | 説明 | ダイアログ表示 |
+| 状態 | 説明 | ダイアログ表示の推奨 |
 |------|------|-------------|
-| `active` | アプリが前面にあり、Route がスタックの最上位にある | 🟢 安全に表示可能 |
-| `inactive` | アプリは前面にあるが、Route がスタックの最上位ではない | 🔴 表示を遅延すべき |
-| `hidden` | アプリがバックグラウンド状態にある | 🔴 表示を遅延すべき |
-| `building` | Widget ビルド中であり、まだ Route が生成されていない | 🔴 表示不可 |
-| `destroyed` | Route が破棄されている | 🔴 表示不可 |
+| `RouteLifecycleActive(isForeground: true)` | アプリが前面にあり、Route がスタックの最上位にある | 🟢 安全に表示可能 |
+| `RouteLifecycleActive(isForeground: false)` | Route はスタックの最上位だが、アプリがバックグラウンドにある | 🔴 表示を遅延有無を検討すべき |
+| `RouteLifecycleInactive` | Route がスタックの最上位ではない | 🔴 表示を遅延すべき |
+| `RouteLifecycleBuilding` | Widget ビルド中であり、まだ Route が生成されていない | 🔴 表示不可 |
+| `RouteLifecycleDestroyed` | Route が破棄されている | 🔴 表示不可 |
+
+**注意:** `isForeground` プロパティにより、アプリのフォアグラウンド/バックグラウンド状態を細かく制御できるようになりました。
 
 ## Additional information
 

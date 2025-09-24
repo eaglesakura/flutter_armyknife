@@ -14,10 +14,11 @@ Using this library, you can automatically delay dialog display until Screen B cl
 ## Features
 
 - **Prevent Multiple Dialog Display**: Delay UI display while Route is inactive
-- **Lifecycle State Detection**: Real-time detection of Route's current state (active/inactive/hidden/destroyed)
+- **Detailed Lifecycle State Detection**: Real-time detection of Route's current state (active/inactive/building/destroyed) and app foreground/background state
 - **Stream-based Monitoring**: Monitor Route lifecycle changes via Stream
+- **Type-safe State Management**: Type-safe pattern matching with sealed class using Freezed
+- **Flexible Waiting Feature**: Wait for lifecycle state changes with custom conditions
 - **Lightweight Design**: Minimal dependencies and performance overhead
-- **Async Process Waiting**: Wait for Route to reach appropriate state
 
 ## Getting started
 
@@ -25,7 +26,7 @@ Add the library to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  route_lifecycle_detector: ^1.0.0
+  route_lifecycle_detector: ^1.1.0
 ```
 
 Add RouteLifecycleDetector observer to MaterialApp:
@@ -98,9 +99,11 @@ class _GoodExamplePageState extends State<GoodExamplePage> {
     // Heavy process 2: Open dialog after 3 seconds (with lifecycle consideration)
     Future.delayed(Duration(seconds: 3), () async {
       // Wait until Route becomes active
-      final lifecycle = await RouteLifecycleDetector.waitResumeOrDestroy(context);
+      final lifecycle = await context.waitLifecycleWith(
+        (lifecycle) => lifecycle is RouteLifecycleActive,
+      );
       
-      if (lifecycle == RouteLifecycle.active && mounted) {
+      if (lifecycle is RouteLifecycleActive && mounted) {
         // Display dialog after screen returns to foreground
         showDialog(
           context: context,
@@ -122,15 +125,15 @@ class _GoodExamplePageState extends State<GoodExamplePage> {
 void showDialogSafely(BuildContext context) {
   final lifecycle = RouteLifecycle.of(context);
   
-  if (lifecycle == RouteLifecycle.active) {
-    // Display dialog only when Route is at foreground
+  if (lifecycle is RouteLifecycleActive && lifecycle.isForeground) {
+    // Display dialog only when Route is at foreground and app is in foreground
     showDialog(
       context: context,
       builder: (_) => AlertDialog(title: Text('Safely Displayed')),
     );
   } else {
-    // Delay display when Route is inactive
-    print('Route is inactive, delaying dialog display');
+    // Delay display when Route is inactive or app is in background
+    print('Route is inactive or app is in background, delaying dialog display');
   }
 }
 ```
@@ -144,9 +147,11 @@ class SmartDialogController {
   final List<VoidCallback> _pendingDialogs = [];
   
   void startListening(BuildContext context) {
-    _subscription = RouteLifecycleDetector.streamOf(context).listen((lifecycle) {
-      if (lifecycle == RouteLifecycle.active && _pendingDialogs.isNotEmpty) {
-        // Display pending dialogs when Route returns to foreground
+    _subscription = RouteLifecycle.streamOf(context).listen((lifecycle) {
+      if (lifecycle is RouteLifecycleActive && 
+          lifecycle.isForeground && 
+          _pendingDialogs.isNotEmpty) {
+        // Display pending dialogs when Route returns to foreground and app is in foreground
         final dialogs = List<VoidCallback>.from(_pendingDialogs);
         _pendingDialogs.clear();
         
@@ -158,7 +163,8 @@ class SmartDialogController {
   }
   
   void showDialogWhenActive(BuildContext context, WidgetBuilder builder) {
-    if (RouteLifecycle.of(context) == RouteLifecycle.active) {
+    final lifecycle = RouteLifecycle.of(context);
+    if (lifecycle is RouteLifecycleActive && lifecycle.isForeground) {
       // Display immediately
       showDialog(context: context, builder: builder);
     } else {
@@ -174,18 +180,19 @@ class SmartDialogController {
 }
 ```
 
-### Waiting for Route Resume
+### Waiting for Lifecycle Changes
 
 ```dart
-// Wait until Route resumes or is destroyed
-final result = await RouteLifecycleDetector.waitResumeOrDestroy(context);
-
-if (result == RouteLifecycle.active) {
+// Wait until Route becomes active and app is in foreground
+try {
+  final result = await context.waitLifecycleWith(
+    (lifecycle) => lifecycle is RouteLifecycleActive && lifecycle.isForeground,
+  );
   // Route has resumed
-  print('Route has resumed');
-} else if (result == RouteLifecycle.destroyed) {
-  // Route has been destroyed
-  print('Route has been destroyed');
+  print('Route has resumed: $result');
+} on BadLifecycleException catch (e) {
+  // Route was destroyed or could not reach the expected state
+  print('Could not reach expected state: ${e.latestLifecycle}');
 }
 ```
 
@@ -209,9 +216,9 @@ class _MyPageState extends State<MyPage> {
   }
   
   void _startProcessing() {
-    _subscription = RouteLifecycleDetector.streamOf(context).listen((lifecycle) {
-      if (lifecycle == RouteLifecycle.active) {
-        // Execute processing only when Route is at foreground
+    _subscription = RouteLifecycle.streamOf(context).listen((lifecycle) {
+      if (lifecycle is RouteLifecycleActive && lifecycle.isForeground) {
+        // Execute processing only when Route is at foreground and app is in foreground
         _performBackgroundTask();
       }
     });
@@ -260,13 +267,15 @@ class _MyPageState extends State<MyPage> {
 
 ## Lifecycle States
 
-| State | Description | Dialog Display |
+| State | Description | Dialog Display Recommendation |
 |-------|-------------|----------------|
-| `active` | App is in foreground and Route is at top of stack | 🟢 Safe to display |
-| `inactive` | App is in foreground but Route is not at top of stack | 🔴 Should delay display |
-| `hidden` | App is in background state | 🔴 Should delay display |
-| `building` | Widget is being built and Route is not yet created | 🔴 Cannot display |
-| `destroyed` | Route has been destroyed | 🔴 Cannot display |
+| `RouteLifecycleActive(isForeground: true)` | App is in foreground and Route is at top of stack | 🟢 Safe to display |
+| `RouteLifecycleActive(isForeground: false)` | Route is at top of stack but app is in background | 🔴 Should delay display |
+| `RouteLifecycleInactive` | Route is not at top of stack | 🔴 Should delay display |
+| `RouteLifecycleBuilding` | Widget is being built and Route is not yet created | 🔴 Cannot display |
+| `RouteLifecycleDestroyed` | Route has been destroyed | 🔴 Cannot display |
+
+**Note:** The `isForeground` property allows fine-grained control over app foreground/background state.
 
 ## Additional information
 
