@@ -1,35 +1,36 @@
-Flutter で Kotlin coroutines のような **キャンセル可能な非同期処理** を実現するライブラリです。
-Dart には非同期処理のキャンセル機能が標準で提供されていないため、このライブラリがその機能を提供します。
+A library that provides **cancellable asynchronous operations** similar to Kotlin coroutines in Flutter.
+Since Dart doesn't provide built-in cancellation functionality for asynchronous operations, this library fills that gap.
 
 ## Features
 
-- **キャンセル可能な非同期処理**: `FutureContext.suspend()` を使用して非同期処理をキャンセル可能にします
-- **親子関係とグループ化**: 複数の Context を階層化やグループ化して管理できます
-- **タイムアウト処理**: 指定時間での自動タイムアウト処理をサポートします
-- **拡張機能**: `withContext()` や `withContextStream()` による簡単な Context 管理
-- **デバッグサポート**: タグ付き Context 管理とデバッグ出力機能
+- **Cancellable asynchronous operations**: Make asynchronous operations cancellable using `FutureContext.suspend()`
+- **Pause and resume functionality**: Support for pausing and resuming asynchronous operations using `FutureContext.resume()`
+- **Parent-child relationships and grouping**: Manage multiple Contexts in hierarchical or grouped structures
+- **Timeout handling**: Support for automatic timeout processing within specified time periods
+- **Extension features**: Easy Context management with `withContext()` and `withContextStream()`
+- **Debug support**: Tagged Context management and debug output functionality
 
 ## Getting started
 
-`pubspec.yaml` にライブラリを追加してください：
+Add the library to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  future_context2: ^1.0.1
+  future_context2: ^1.1.0
 ```
 
 ## Usage
 
-### 基本的な使用方法
+### Basic Usage
 
 ```dart
 import 'package:future_context2/future_context2.dart';
 
-// FutureContext を作成
+// Create a FutureContext
 final context = FutureContext();
 
 try {
-  // キャンセル可能な非同期処理を実行
+  // Execute cancellable asynchronous operation
   final result = await context.suspend((context) async {
     await Future.delayed(Duration(seconds: 2));
     return 'completed';
@@ -37,47 +38,47 @@ try {
 
   print(result); // 'completed'
 } on CancellationException {
-  print('処理がキャンセルされました');
+  print('Operation was cancelled');
 } finally {
-  // Context を必ずクローズ
+  // Always close the Context
   await context.close();
 }
 ```
 
-### キャンセル処理
+### Cancellation
 
 ```dart
 final context = FutureContext();
 
-// 1秒後にキャンセル
+// Cancel after 1 second
 Timer(Duration(seconds: 1), () async {
   await context.close();
 });
 
 try {
   await context.suspend((context) async {
-    // 長時間の処理（10秒）
+    // Long-running operation (10 seconds)
     await context.delayed(Duration(seconds: 10));
   });
 } on CancellationException {
-  print('1秒でキャンセルされました');
+  print('Cancelled after 1 second');
 }
 ```
 
-### 親子関係とグループ化
+### Parent-child relationships and grouping
 
 ```dart
 final parentContext = FutureContext();
 final childContext = FutureContext.child(parentContext);
 
-// 複数のContextをグループ化
+// Group multiple Contexts
 final groupContext = FutureContext.group([parentContext, childContext]);
 
-// 親がキャンセルされると子も自動的にキャンセル
+// When parent is cancelled, child is automatically cancelled
 await parentContext.close();
 ```
 
-### タイムアウト処理
+### Timeout handling
 
 ```dart
 final context = FutureContext();
@@ -86,19 +87,19 @@ try {
   await context.withTimeout(
     Duration(seconds: 5),
     (context) async {
-      // 5秒でタイムアウト
+      // Times out after 5 seconds
       await someVeryLongOperation();
     },
   );
 } on TimeoutException {
-  print('5秒でタイムアウトしました');
+  print('Timed out after 5 seconds');
 }
 ```
 
-### 拡張機能の使用
+### Using extension features
 
 ```dart
-// withContext でContext管理を簡素化
+// Simplify Context management with withContext
 final result = await withContext(
   [
     WithContextTag('MyOperation'),
@@ -110,16 +111,31 @@ final result = await withContext(
 );
 ```
 
+### Pause and resume functionality
+
+```dart
+final context = FutureContext();
+
+// Custom pause logic can be implemented
+await context.suspend((context) async {
+  // resume() is automatically called before execution, waiting for an executable state
+  // Processes can be paused based on external conditions as needed
+  await someConditionalOperation();
+  return 'result';
+});
+```
+
 ## Additional information
 
-このライブラリは [flutter_future_context](https://github.com/vivitainc/flutter_future_context) の改良版です。
+This library is an improved version of [flutter_future_context](https://github.com/vivitainc/flutter_future_context).
 
-**主な改良点:**
+**Key improvements:**
 
-- パフォーマンスの向上
-- より直感的な API 設計
-- 拡張機能の充実
-- デバッグサポートの強化
+- Performance improvements
+- More intuitive API design
+- Enhanced extension features
+- Strengthened debug support
+- Support for pause and resume functionality
 
-**contribute について:**
-バグ報告や機能要求は [GitHub Issues](https://github.com/eaglesakura/flutter_armyknife/issues) にお願いします。
+**About contributions:**
+Please submit bug reports and feature requests to [GitHub Issues](https://github.com/eaglesakura/flutter_armyknife/issues).
