@@ -1,6 +1,6 @@
 name: route_lifecycle_detector
-description: ""
-version: 1.0.0
+description: "A lightweight library for detecting Navigator/ModalRoute/BuildContext lifecycles."
+version: 1.1.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 

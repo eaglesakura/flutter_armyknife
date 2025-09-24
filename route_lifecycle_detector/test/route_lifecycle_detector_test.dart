@@ -14,7 +14,7 @@ void main() {
             builder: (context) {
               expect(
                 RouteLifecycle.of(context),
-                isNot(equals(RouteLifecycle.destroyed)),
+                isA<RouteLifecycleActive>(),
               );
               return const SizedBox();
             },

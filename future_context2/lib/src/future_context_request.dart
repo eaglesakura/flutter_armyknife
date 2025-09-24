@@ -2,11 +2,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'future_context_request.freezed.dart';
 
-/// FutureContextのリクエストパラメータ.
+/// English: Request parameters for FutureContext.
+/// 日本語: FutureContextのリクエストパラメータ.
 @freezed
 sealed class FutureContextRequest with _$FutureContextRequest {
   const factory FutureContextRequest({
-    /// デバッグ出力時のStackの戻る量を指定する.
+    /// English: Specifies the amount of stack to return when debugging.
+    /// 日本語: デバッグ時に返すスタックの量を指定します。
     @Default(0) int debugCallStackLevel,
   }) = _FutureContextRequest;
 }
