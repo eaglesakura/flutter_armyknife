@@ -8,12 +8,8 @@ import 'package:riverpod_container_async/riverpod_container_async.dart';
 extension ProviderContainerAsyncTestExtensions on ProviderContainer {
   /// インスタンスを取得する.
   T testGet<T>(ProviderListenable<T> provider) {
-    if (provider is NotifierProvider) {
-      listen(provider, (prev, next) {});
-      return read(provider);
-    } else {
-      return read(provider);
-    }
+    listen(provider, (prev, next) {});
+    return read(provider);
   }
 
   /// インスタンスを取得し、準備完了状態にする.
