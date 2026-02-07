@@ -1,6 +1,6 @@
 name: state_stream
 description: Library for UI=f(State) architecture.
-version: 1.0.1
+version: 1.0.2
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 

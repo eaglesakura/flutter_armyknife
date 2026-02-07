@@ -14,7 +14,7 @@ A lightweight and type-safe state management library for Flutter/Dart applicatio
 
 ```yaml
 dependencies:
-  state_stream: ^1.0.0
+  state_stream: ^1.0.2
 ```
 
 ## Basic Usage
@@ -171,6 +171,16 @@ await counter.close();
 
 // Not in lock state after closing
 print('Lock state after closing: ${counter.isLocking}'); // false
+
+// Attempting to operate after closing throws StateStreamClosedException
+try {
+  await counter.updateWithLock((state, emitter) async {
+    await emitter.emit(state + 1);
+    return null;
+  });
+} on StateStreamClosedException catch (e) {
+  print('Error: $e');
+}
 ```
 
 ## Integration with Riverpod
