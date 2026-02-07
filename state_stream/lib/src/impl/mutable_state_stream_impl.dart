@@ -1,6 +1,5 @@
 import 'package:armyknife_dartx/armyknife_dartx.dart';
 import 'package:armyknife_task_queue/armyknife_task_queue.dart';
-import 'package:async_notify2/async_notify2.dart';
 import 'package:meta/meta.dart';
 import 'package:runtime_assert/runtime_assert.dart';
 import 'package:rxdart/rxdart.dart';
@@ -8,6 +7,7 @@ import 'package:state_stream/src/dispatcher.dart';
 import 'package:state_stream/src/impl/mutable_state_stream_state.dart';
 import 'package:state_stream/src/mutable_state_stream.dart';
 import 'package:state_stream/src/mutable_state_stream_emitter.dart';
+import 'package:state_stream/src/state_stream_closed_exception.dart';
 
 @internal
 class MutableStateStreamImpl<T> implements MutableStateStream<T> {
@@ -104,7 +104,7 @@ class MutableStateStreamImpl<T> implements MutableStateStream<T> {
     return _taskQueue.queue(() async {
       // 実行権を得た
       if (isClosed) {
-        throw CancellationException('StateStream<$T> is already closed.');
+        throw StateStreamClosedException('StateStream<$T> is already closed.');
       }
 
       final emitter = _MutableStateStreamEmitterImpl(_subject);
@@ -164,7 +164,7 @@ class _MutableStateStreamEmitterImpl<T>
 
     final value = _subject.value;
     if (value.lifecycle != MutableStateStreamLifecycle.alive) {
-      throw CancellationException('StateStream<$T> is already closed.');
+      throw StateStreamClosedException('StateStream<$T> is already closed.');
     }
   }
 }

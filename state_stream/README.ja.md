@@ -14,7 +14,7 @@ Flutter/Dart アプリケーション向けの軽量で型安全な状態管理�
 
 ```yaml
 dependencies:
-  state_stream: ^1.0.0
+  state_stream: ^1.0.2
 ```
 
 ## 基本的な使い方
@@ -171,6 +171,16 @@ await counter.close();
 
 // 閉じた後はロック状態ではない
 print('閉じた後のロック状態: ${counter.isLocking}'); // false
+
+// 閉じた後に操作しようとすると StateStreamClosedException が投げられる
+try {
+  await counter.updateWithLock((state, emitter) async {
+    await emitter.emit(state + 1);
+    return null;
+  });
+} on StateStreamClosedException catch (e) {
+  print('エラー: $e');
+}
 ```
 
 ## Riverpod との連携
