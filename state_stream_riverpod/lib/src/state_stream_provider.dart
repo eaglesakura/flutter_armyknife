@@ -65,20 +65,19 @@ class _StateStreamNotifier<T> extends Notifier<T> {
 
   _StateStreamNotifier(this._getStateStream);
 
-  void dispose() {
-    _subscription?.cancel();
-    _subscription = null;
-  }
-
   @override
   T build() {
     _subscription?.cancel();
     final stateStream = _getStateStream(ref);
     _subscription = stateStream.stream.listen((e) {
-      if (!ref.mounted) {
-        return;
+      if (ref.mounted) {
+        state = e;
       }
-      state = e;
+    });
+
+    ref.onDispose(() {
+      _subscription?.cancel();
+      _subscription = null;
     });
     return stateStream.state;
   }

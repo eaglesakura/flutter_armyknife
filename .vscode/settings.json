@@ -18,13 +18,13 @@
   },
   "editor.formatOnSave": true,
   "explorer.fileNesting.enabled": true,
-  "dart.flutterSdkPath": ".fvm/versions/3.32.1",
+  "dart.flutterSdkPath": ".fvm/versions/3.41.1",
   "[markdown]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   },
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
     "source.organizeImports": "always",
-    "source.sortMembers": "always",
+    "source.sortMembers": "always"
   }
 }
