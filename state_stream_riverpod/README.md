@@ -14,8 +14,8 @@ An extension library for integrating the [state_stream](https://pub.dev/packages
 ```yaml
 dependencies:
   state_stream: ^1.0.0
-  state_stream_riverpod: ^2.0.0
-  flutter_riverpod: ^2.6.1
+  state_stream_riverpod: ^2.0.1
+  flutter_riverpod: ^3.0.0
 ```
 
 ## Basic Usage

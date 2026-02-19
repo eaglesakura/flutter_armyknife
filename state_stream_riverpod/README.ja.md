@@ -14,8 +14,8 @@
 ```yaml
 dependencies:
   state_stream: ^1.0.0
-  state_stream_riverpod: ^2.0.0
-  flutter_riverpod: ^2.6.1
+  state_stream_riverpod: ^2.0.1
+  flutter_riverpod: ^3.0.0
 ```
 
 ## 基本的な使い方
