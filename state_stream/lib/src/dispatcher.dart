@@ -1,6 +1,9 @@
 import 'package:state_stream/src/mutable_state_stream.dart';
 import 'package:state_stream/src/mutable_state_stream_emitter.dart';
 
+/// [Dispatcher]を生成するファクトリ関数の型定義.
+typedef DispatcherFactory = Dispatcher<T> Function<T>();
+
 /// 状態更新処理の実行本体.
 ///
 /// 実行方法やキューイングの方法は実装に依存する.
@@ -8,8 +11,7 @@ import 'package:state_stream/src/mutable_state_stream_emitter.dart';
 abstract class Dispatcher<T> {
   /// デフォルトのDispatcher生成ファクトリ.
   /// アプリシステム側でデフォルト挙動を変更したい場合に使用する.
-  static Dispatcher<T> Function<T>() defaultDispatcherFactory =
-      _defaultDispatcherFactory;
+  static DispatcherFactory defaultDispatcherFactory = _defaultDispatcherFactory;
 
   /// デフォルト実装を生成する.
   factory Dispatcher() => _defaultDispatcherFactory();
