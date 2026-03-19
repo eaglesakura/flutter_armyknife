@@ -102,6 +102,38 @@ void main() {
       }
     });
 
+    test('error(String)', () async {
+      try {
+        await context.suspend((context) async {
+          await Future.delayed(const Duration(milliseconds: 100));
+          // ignore: only_throw_errors
+          throw 'string error';
+        });
+        // ignore: dead_code
+        fail('always Nothing');
+        // ignore: avoid_catches_without_on_clauses
+      } catch (e) {
+        expect(e, 'string error');
+        debugPrint('caught non-Exception: $e');
+      }
+    });
+
+    test('error(int)', () async {
+      try {
+        await context.suspend((context) async {
+          await Future.delayed(const Duration(milliseconds: 100));
+          // ignore: only_throw_errors
+          throw 42;
+        });
+        // ignore: dead_code
+        fail('always Nothing');
+        // ignore: avoid_catches_without_on_clauses
+      } catch (e) {
+        expect(e, 42);
+        debugPrint('caught non-Exception: $e');
+      }
+    });
+
     test('cancel', () async {
       unawaited(() async {
         await Future<void>.delayed(const Duration(milliseconds: 100));
