@@ -175,7 +175,7 @@ class FutureContextImpl implements FutureContext {
 
     var done = false;
     T2? result;
-    Exception? exception;
+    Object? exception;
     StackTrace? stackTrace;
 
     // 非同期処理を開始する
@@ -186,7 +186,7 @@ class FutureContextImpl implements FutureContext {
         // 実行前に、実行可能状態まで待機する.
         await resume();
         result = await block(this);
-      } on Exception catch (e, s) {
+      } on Object catch (e, s) {
         exception = e;
         stackTrace = s;
       } finally {
