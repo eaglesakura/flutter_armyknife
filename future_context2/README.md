@@ -16,7 +16,7 @@ Add the library to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  future_context2: ^1.1.0
+  future_context2: ^1.1.1
 ```
 
 ## Usage
