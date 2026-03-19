@@ -175,7 +175,7 @@ class FutureContextImpl implements FutureContext {
 
     var done = false;
     T2? result;
-    Object? exception;
+    Object? error;
     StackTrace? stackTrace;
 
     // 非同期処理を開始する
@@ -187,7 +187,7 @@ class FutureContextImpl implements FutureContext {
         await resume();
         result = await block(this);
       } on Object catch (e, s) {
-        exception = e;
+        error = e;
         stackTrace = s;
       } finally {
         done = true;
@@ -199,15 +199,16 @@ class FutureContextImpl implements FutureContext {
     // キャンセルが発生していたらキャンセル例外を投げる.
     // 完了したら、結果を返却する.
     await for (final _ in _controller.notifyStream) {
-      if (exception != null) {
+      if (error != null) {
         // 発生した例外をチェックする.
-        if (exception is CancellationException) {
+        if (error is CancellationException) {
           throw CancellationException(
-            '${toString()} is canceled. caused by exception: $exception, stackTrace: $stackTrace',
+            '${toString()} is canceled. caused by exception: $error, stackTrace: $stackTrace',
           );
         } else {
           // 発生した例外をそのまま投げる
-          throw exception!;
+          // ignore: only_throw_errors
+          throw error!;
         }
       } else if (isCanceled) {
         // その他、キャンセルが発生していたらキャンセルを投げる.
