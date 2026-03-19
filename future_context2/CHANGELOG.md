@@ -1,3 +1,7 @@
+## 1.1.1+1
+
+- Fix Analyzer warnings for `suspend()` error handling.
+
 ## 1.1.1
 
 - Fix `suspend()` to catch non-Exception thrown objects (e.g. String, int) by using `Object` type instead of `Exception`.
