@@ -1,0 +1,10 @@
+[tools]
+flutter = "3.44.0"
+
+[tasks.setup]
+description = "Setup Repository"
+depends = []
+run = """
+chmod +x scripts/setup.sh
+scripts/setup.sh
+"""
