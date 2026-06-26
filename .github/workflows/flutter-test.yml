@@ -1,11 +1,14 @@
 name: Flutter Test
 
+# プルリクエストとmainブランチへのプッシュ時にテストを実行する
 on:
   push:
     branches:
       - main
-      - develop
-      - feature/id/*/*
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   test:
