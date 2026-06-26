@@ -41,10 +41,16 @@ jobs:
     steps:
       # 最初にリポジトリをチェックアウトする
       - name: checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+
+      # mise を使った開発環境のセットアップ
+      - name: Setup development environment with mise
+        uses: jdx/mise-action@v4
+        with:
+          version: 2026.6.14
 
       # Flutterをインストールして依存関係を取得する
-      - name: install flutter(by fvm)
+      - name: install flutter
         uses: ./.github/actions/install-flutter
 
       # テスト
