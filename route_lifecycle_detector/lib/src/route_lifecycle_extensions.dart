@@ -2,12 +2,19 @@ import 'package:flutter/widgets.dart';
 import 'package:route_lifecycle_detector/src/route_lifecycle.dart';
 import 'package:route_lifecycle_detector/src/route_lifecycle_exceptions.dart';
 
-/// Extensions for BuildContext to detect the lifecycle of a Route.
+/// [BuildContext] からRouteライフサイクルを待つための拡張.
 extension BuildContextRouteLifecycleExtensions on BuildContext {
-  /// Waits until the BuildContext's lifecycle satisfies [test].
+  /// ライフサイクルが [test] を満たすまで待機する.
   ///
-  /// If the lifecycle reaches [RouteLifecycle.destroyed] before reaching the specified lifecycle,
-  /// an exception will be thrown.
+  /// 既に [test] を満たしていれば即時にその状態を返す.
+  /// 満たす前に [RouteLifecycle.destroyed] へ到達しStreamが閉じた場合は [BadLifecycleException] を投げる.
+  ///
+  /// Example:
+  /// ```dart
+  /// final active = await context.waitLifecycleWith(
+  ///   (lifecycle) => lifecycle is RouteLifecycleActive,
+  /// );
+  /// ```
   Future<RouteLifecycle> waitLifecycleWith(
     bool Function(RouteLifecycle lifecycle) test,
   ) async {

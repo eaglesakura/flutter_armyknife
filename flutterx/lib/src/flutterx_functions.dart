@@ -11,6 +11,14 @@ bool get isFlutterTesting =>
     !kIsWeb && io.Platform.environment.containsKey('FLUTTER_TEST');
 
 /// 次の描画フレームタイミングまで待機する.
+///
+/// [WidgetsBinding]のフレームコールバックで次フレームを待ち、
+/// UI更新後の検証や座標取得前の同期に使う.
+///
+/// Example:
+/// ```dart
+/// await vsync();
+/// ```
 Future vsync() async {
   final done = Completer();
   WidgetsBinding.instance.scheduleFrameCallback((_) {

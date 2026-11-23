@@ -5,14 +5,31 @@ import 'package:rxdart/rxdart.dart';
 
 part 'streams.stream_emitter.dart';
 
-/// Stream操作関数の糖衣構文
+/// Stream操作関数の糖衣構文.
 ///
 /// port:
 /// https://github.com/vivitainc/flutter_armyknife_stdlib/blob/main/lib/src/streams.dart
 final class Streams {
+  /// インスタンス化を禁止する.
+  ///
+  /// Example:
+  /// ```dart
+  /// // 静的メソッドのみを利用する.
+  /// final combined = Streams.combineLatest2(a, b);
+  /// ```
   Streams._();
 
-  /// tupleへの型指定を省略してStreamのcombineを行う
+  /// tupleへの型指定を省略してStreamのcombineを行う.
+  ///
+  /// [a] と [b] の最新値を `(T1, T2)` として結合する.
+  ///
+  /// Example:
+  /// ```dart
+  /// final combined = Streams.combineLatest2(
+  ///   Stream.value(1),
+  ///   Stream.value('a'),
+  /// );
+  /// ```
   static CombineLatestStream<dynamic, (T1, T2)> combineLatest2<T1, T2>(
     Stream<T1> a,
     Stream<T2> b,
@@ -24,7 +41,18 @@ final class Streams {
     );
   }
 
-  /// tupleへの型指定を省略してStreamのcombineを行う
+  /// tupleへの型指定を省略してStreamのcombineを行う.
+  ///
+  /// [a] / [b] / [c] の最新値を `(T1, T2, T3)` として結合する.
+  ///
+  /// Example:
+  /// ```dart
+  /// final combined = Streams.combineLatest3(
+  ///   Stream.value(1),
+  ///   Stream.value('a'),
+  ///   Stream.value(true),
+  /// );
+  /// ```
   static CombineLatestStream<dynamic, (T1, T2, T3)> combineLatest3<T1, T2, T3>(
     Stream<T1> a,
     Stream<T2> b,
@@ -38,7 +66,19 @@ final class Streams {
     );
   }
 
-  /// tupleへの型指定を省略してStreamのcombineを行う
+  /// tupleへの型指定を省略してStreamのcombineを行う.
+  ///
+  /// [a] / [b] / [c] / [d] の最新値を `(T1, T2, T3, T4)` として結合する.
+  ///
+  /// Example:
+  /// ```dart
+  /// final combined = Streams.combineLatest4(
+  ///   Stream.value(1),
+  ///   Stream.value('a'),
+  ///   Stream.value(true),
+  ///   Stream.value(0.5),
+  /// );
+  /// ```
   static CombineLatestStream<dynamic, (T1, T2, T3, T4)>
   combineLatest4<T1, T2, T3, T4>(
     Stream<T1> a,
@@ -60,6 +100,14 @@ final class Streams {
   /// 生成された [Subject] に対してメッセージを投げることで、別なメソッドからstreamを発生させることができる.
   /// [block] 内部で発生した例外は呼び出し側に例外として再送される.
   /// [block] が完了したら自動的にStreamは閉じられる.
+  ///
+  /// Example:
+  /// ```dart
+  /// final stream = Streams.generate<int>((emitter) async {
+  ///   await emitter.emit(1);
+  ///   await emitter.emit(2);
+  /// });
+  /// ```
   static Stream<T> generate<T>(
     Future Function(StreamEmitter<T> emitter) block,
   ) {
@@ -88,6 +136,11 @@ final class Streams {
   ///
   /// 最初にnullを通知し、その後に[Future]の結果を通知する.
   /// 内部では [Stream.distinct] を使用して、同一の通知を抑制する.
+  ///
+  /// Example:
+  /// ```dart
+  /// final stream = Streams.fromFutureNullable(Future.value(42));
+  /// ```
   static Stream<T?> fromFutureNullable<T>(Future<T> future) {
     return ConcatStream([
       Stream.value(null),

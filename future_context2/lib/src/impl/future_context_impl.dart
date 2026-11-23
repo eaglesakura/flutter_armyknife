@@ -9,13 +9,14 @@ import 'package:rxdart/rxdart.dart';
 
 /// port from https://github.com/vivitainc/flutter_future_context
 /// 非同期（Async）状態を管理する.
-/// FutureContextの目標はキャンセル可能な非同期処理のサポートである.
+///
+/// 目標はキャンセル可能な非同期処理のサポートである.
 ///
 /// 処理終了後、必ずしも [close] をコールする必要はない（メモリリークはしない）が、
 /// 設計上は [close] をコールすることを推奨する.
 ///
-/// 開発者はFutureContext.suspend()に関数を渡し、実行を行う.
-/// suspend()は実行前後にFutureContextの状態を確認し、必要であればキャンセル等の処理や中断を行う.
+/// 開発者は [FutureContext.suspend] に関数を渡し、実行を行う.
+/// [suspend] 実行前後に状態を確認し、必要であればキャンセル等の処理や中断を行う.
 ///
 /// NOTE. 2021-05
 /// Flutter 2.2(Dart 2.12)現在、言語仕様としてKotlinのSuspend関数のような状態管理を行えない.
@@ -28,20 +29,31 @@ import 'package:rxdart/rxdart.dart';
 /// 使用箇所については慎重に検討が必要.
 @internal
 class FutureContextImpl implements FutureContext {
-  /// 全体制御用コントローラ
+  /// 全体制御用コントローラ.
   final FutureContextController _controller = FutureContextController.instance;
 
   /// 親Context.
+  ///
+  /// 空集合ならトップレベルContextとして振る舞う.
   final Set<FutureContext> _group;
 
-  /// 現在の状態
+  /// 現在の状態.
   var _state = _ContextState.active;
 
-  /// キャンセル識別用タグ
+  /// キャンセル識別用タグ.
   @override
   final String tag;
 
-  /// 空のFutureContextを作成する.
+  /// 空の [FutureContext] を作成する.
+  ///
+  /// [tag] 省略時はデバッグビルドで呼び出し元のファイル・行から自動生成する.
+  /// [debugCallStackLevel] は自動タグ生成時のStackTrace取得位置をずらす.
+  ///
+  /// Example:
+  /// ```dart
+  /// final context = FutureContextImpl(tag: 'root');
+  /// await context.close();
+  /// ```
   FutureContextImpl({
     String? tag,
     int debugCallStackLevel = 0,
@@ -51,7 +63,16 @@ class FutureContextImpl implements FutureContext {
        ),
        _group = const {};
 
-  /// 指定した親Contextを持つFutureContextを作成する.
+  /// 指定した親Contextを持つ [FutureContext] を作成する.
+  ///
+  /// [parent] がキャンセルされると、このContextもキャンセル扱いになる.
+  /// [tag] と [debugCallStackLevel] の扱いは [FutureContextImpl.new] と同様.
+  ///
+  /// Example:
+  /// ```dart
+  /// final parent = FutureContextImpl();
+  /// final child = FutureContextImpl.child(parent, tag: 'child');
+  /// ```
   FutureContextImpl.child(
     FutureContext parent, {
     String? tag,
@@ -62,7 +83,17 @@ class FutureContextImpl implements FutureContext {
        ),
        _group = {parent};
 
-  /// 指定した複数の親Contextを持つFutureContextを作成する.
+  /// 指定した複数の親Contextを持つ [FutureContext] を作成する.
+  ///
+  /// [group] のいずれかがキャンセルされると、このContextもキャンセル扱いになる.
+  /// [tag] と [debugCallStackLevel] の扱いは [FutureContextImpl.new] と同様.
+  ///
+  /// Example:
+  /// ```dart
+  /// final a = FutureContextImpl();
+  /// final b = FutureContextImpl();
+  /// final grouped = FutureContextImpl.group([a, b], tag: 'group');
+  /// ```
   FutureContextImpl.group(
     Iterable<FutureContext> group, {
     String? tag,
@@ -73,7 +104,9 @@ class FutureContextImpl implements FutureContext {
        ),
        _group = {...group};
 
-  /// 処理が継続中の場合trueを返却する.
+  /// 処理が継続中かどうか.
+  ///
+  /// 一つでも非アクティブなものがあれば、このContextも非アクティブ.
   @override
   bool get isActive {
     // 一つでも非アクティブなものがあれば、このContextも非アクティブ.
@@ -85,7 +118,9 @@ class FutureContextImpl implements FutureContext {
     return _state == _ContextState.active;
   }
 
-  /// 処理がキャンセル済みの場合true.
+  /// 処理がキャンセル済みかどうか.
+  ///
+  /// 自身または親・グループ内のいずれかがキャンセルされていれば `true`.
   @override
   bool get isCanceled {
     // 軽量処理を先行して呼び出す
@@ -102,21 +137,34 @@ class FutureContextImpl implements FutureContext {
     return false;
   }
 
-  /// キャンセル状態をハンドリングするStreamを返却する.
+  /// キャンセル状態をハンドリングするStream.
+  ///
+  /// 内部状態を [_stateStream] 経由で購読し、キャンセル可否へ写像する.
   @override
   Stream<bool> get isCanceledStream =>
       _stateStream().map((e) => e == _ContextState.canceled);
 
   /// Futureをキャンセルする.
+  ///
   /// すでにキャンセル済みの場合は何もしない.
+  ///
+  /// Example:
+  /// ```dart
+  /// final context = FutureContextImpl();
+  /// await context.close();
+  /// ```
   @override
   Future close() => _closeWith(next: _ContextState.canceled);
 
   /// 指定時間Contextを停止させる.
-  /// delayed()の最中にキャンセルが発生した場合、速やかにContext処理は停止する.
   ///
-  /// e.g.
-  /// context.delayed(Duration(seconds: 1));
+  /// [duration] 待機中にキャンセルが発生した場合、速やかに処理は停止する.
+  ///
+  /// Example:
+  /// ```dart
+  /// final context = FutureContextImpl();
+  /// await context.delayed(const Duration(seconds: 1));
+  /// ```
   @override
   Future delayed(final Duration duration) async {
     if (isCanceled) {
@@ -145,7 +193,15 @@ class FutureContextImpl implements FutureContext {
     }
   }
 
-  /// 関連するContextすべてのresumeを実行する.
+  /// 関連するContextすべての [resume] を実行する.
+  ///
+  /// 自身がキャンセル済みなら [CancellationException] を投げる.
+  ///
+  /// Example:
+  /// ```dart
+  /// final context = FutureContextImpl();
+  /// await context.resume();
+  /// ```
   @override
   Future<void> resume() async {
     if (_state == _ContextState.canceled) {
@@ -158,15 +214,24 @@ class FutureContextImpl implements FutureContext {
   }
 
   /// 非同期処理の特定1ブロックを実行する.
-  /// これはFutureContext(T)の実行最小単位として機能する.
-  /// suspend内部では実行開始時・終了時にそれぞれAsyncContextのステートチェックを行い、
+  ///
+  /// [FutureContext] の実行最小単位として機能する.
+  /// [suspend] 内部では実行開始時・終了時にそれぞれ状態チェックを行い、
   /// 必要であれば例外を投げる等の中断処理を行う.
   ///
-  /// 開発者は可能な限り細切れに suspend() に処理を分割することで、
+  /// 開発者は可能な限り細切れに [suspend] に処理を分割することで、
   /// 処理の速やかな中断のサポートを受けることができる.
   ///
-  /// suspend()関数は1コールのオーバーヘッドが大きいため、
+  /// [block] はキャンセル不可能な1ブロックとして実行される.
+  ///
+  /// 1コールのオーバーヘッドが大きいため、
   /// 内部でキャンセル処理が必要なほど長い場合に利用する.
+  ///
+  /// Example:
+  /// ```dart
+  /// final context = FutureContextImpl();
+  /// final value = await context.suspend((c) async => 1);
+  /// ```
   @override
   Future<T2> suspend<T2>(FutureSuspendBlock<T2> block) async {
     if (isCanceled) {
@@ -223,13 +288,28 @@ class FutureContextImpl implements FutureContext {
     throw CancellationException('${toString()} is canceled.');
   }
 
+  /// デバッグ表示用の文字列表現.
+  ///
+  /// Example:
+  /// ```dart
+  /// print(FutureContextImpl(tag: 'a')); // FutureContext(a)
+  /// ```
   @override
   String toString() => 'FutureContext($tag)';
 
   /// タイムアウト付きの非同期処理を開始する.
   ///
-  /// タイムアウトが発生した場合、
-  /// block()は [TimeoutException] が発生して終了する.
+  /// [timeout] 経過後、[block] は [TimeoutException] が発生して終了する.
+  /// [request] は子Context生成時のデバッグ用オプション.
+  ///
+  /// Example:
+  /// ```dart
+  /// final context = FutureContextImpl();
+  /// await context.withTimeout(
+  ///   const Duration(seconds: 1),
+  ///   (c) async => 'ok',
+  /// );
+  /// ```
   @override
   Future<T2> withTimeout<T2>(
     Duration timeout,
@@ -249,6 +329,15 @@ class FutureContextImpl implements FutureContext {
     }
   }
 
+  /// 状態を [next] へ進め、購読側へ通知する.
+  ///
+  /// すでに非アクティブなら状態は変えず、通知のみ行う.
+  ///
+  /// Example:
+  /// ```dart
+  /// // close() 経由で呼び出される.
+  /// await context.close();
+  /// ```
   Future _closeWith({
     required _ContextState next,
   }) async {
@@ -258,10 +347,26 @@ class FutureContextImpl implements FutureContext {
     _notify();
   }
 
+  /// コントローラ経由でログを出力する.
+  ///
+  /// [message] の先頭に自身の文字列表現を付与する.
+  ///
+  /// Example:
+  /// ```dart
+  /// // 内部の状態ストリーム購読時に呼び出される.
+  /// ```
   void _log(String message) {
     _controller.log('[$this] $message');
   }
 
+  /// コントローラへ自身の更新を通知する.
+  ///
+  /// [delayed] や [suspend] の待機ループを再開させる副作用がある.
+  ///
+  /// Example:
+  /// ```dart
+  /// // Timer完了時やブロック終了時に呼び出される.
+  /// ```
   void _notify() {
     _controller.notify(this);
   }
@@ -270,6 +375,14 @@ class FutureContextImpl implements FutureContext {
   ///
   /// キャンセルが発生していない場合でも、FutureContext全体通知が発生したタイミングで
   /// キャンセル状態を通知する.
+  ///
+  /// Example:
+  /// ```dart
+  /// // isCanceledStream の実装から呼び出される.
+  /// await for (final canceled in context.isCanceledStream) {
+  ///   if (canceled) break;
+  /// }
+  /// ```
   Stream<_ContextState> _stateStream() {
     return ConcatStream([
           Stream.value(_state),
@@ -301,6 +414,15 @@ class FutureContextImpl implements FutureContext {
         );
   }
 
+  /// 親グループ情報を加味したログ用タグを組み立てる.
+  ///
+  /// [group] が空でなければ親タグ一覧を接頭辞に付ける.
+  /// [tag] が `null` のときは `NoName` を使う.
+  ///
+  /// Example:
+  /// ```dart
+  /// // コンストラクタの初期化リストから呼び出される.
+  /// ```
   static String _getOptimizedTag({
     required Set<FutureContext> group,
     required String? tag,
@@ -324,6 +446,15 @@ class FutureContextImpl implements FutureContext {
     }
   }
 
+  /// デバッグ用の既定タグをStackTraceから生成する.
+  ///
+  /// [debugCallStackLevel] で取得するスタック行をずらす.
+  /// リリースモードでは `null` を返す.
+  ///
+  /// Example:
+  /// ```dart
+  /// // コンストラクタで tag 省略時に呼び出される.
+  /// ```
   static String? _newDefaultTag(int debugCallStackLevel) {
     if (kReleaseMode) {
       return null;
@@ -345,7 +476,11 @@ class FutureContextImpl implements FutureContext {
   }
 }
 
+/// FutureContextImplの内部状態.
 enum _ContextState {
+  /// 実行継続中.
   active,
+
+  /// キャンセル済み.
   canceled,
 }

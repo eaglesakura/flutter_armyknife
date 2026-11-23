@@ -1,11 +1,25 @@
 import 'package:armyknife_dartx/src/dartxx_functions.dart';
 
+/// スタックトレースから呼び出し元情報を取り出すユーティリティ.
 class StackTraceX {
+  /// インスタンス化を禁止する.
+  ///
+  /// Example:
+  /// ```dart
+  /// // StackTraceX は静的メソッドのみ利用する
+  /// ```
   const StackTraceX._();
 
-  /// この関数を呼び出しているファイル名を取得する.
+  /// 呼び出し元のファイル名を取得する.
   ///
-  /// [popLevel] はスタックトレースの深さを指定することができる.
+  /// [popLevel]はスタックトレースの深さを指定することができる.
+  /// Webとそれ以外でスタック形式が異なるため、内部でオフセットを補正する.
+  ///
+  /// Example:
+  /// ```dart
+  /// final name = StackTraceX.currentFileName();
+  /// final caller = StackTraceX.currentFileName(popLevel: 1);
+  /// ```
   static String currentFileName({int popLevel = 0}) {
     final popLevel_ =
         () {

@@ -4,25 +4,33 @@ import 'package:meta/meta.dart';
 import 'package:route_lifecycle_detector/src/route_lifecycle_notify.dart';
 import 'package:rxdart/rxdart.dart';
 
-/// Detects the lifecycle of a Route (such as Scaffold, Dialog, etc.).
+/// Route(Scaffold・Dialog等)のライフサイクル変化を検知する入口.
 ///
-/// e.g.
+/// [navigatorObserver] を `MaterialApp.navigatorObservers` へ登録し、
+/// 前景/背景とナビゲーションイベントを [notify] へ流す.
+///
+/// Example:
 /// ```dart
 /// MaterialApp(
-///   observers: [
-///     RouteLifecycleDetector.observer,
+///   navigatorObservers: [
+///     RouteLifecycleDetector.navigatorObserver,
 ///   ],
 /// )
 /// ```
 class RouteLifecycleDetector {
-  /// Notify for RouteLifecycleNotify.
+  /// ライフサイクル変化の内部通知用Subject.
+  ///
+  /// `RouteLifecycle.streamOf` 等が購読する.
+  /// 利用側から直接addしない想定.
   @internal
   // ignore: close_sinks
   static final notify = BehaviorSubject<RouteLifecycleNotify>();
 
-  /// Observer to add to the observers of MaterialApp.
+  /// `MaterialApp.navigatorObservers` へ登録するObserver.
   ///
-  /// e.g.
+  /// 未登録のまま `RouteLifecycle.streamOf` を使うと、初期値以外の変化が届かない.
+  ///
+  /// Example:
   /// ```dart
   /// MaterialApp(
   ///   navigatorObservers: [
@@ -34,12 +42,24 @@ class RouteLifecycleDetector {
     notify,
   );
 
+  /// インスタンス化を禁止する.
   RouteLifecycleDetector._();
 }
 
+/// ナビゲーションと前景/背景変化を [RouteLifecycleNotify] へ橋渡しするObserver.
 class _NavigationObserver extends NavigatorObserver {
+  /// 通知先Subject.
   final Subject<RouteLifecycleNotify> notifySubject;
 
+  /// [notifySubject] へイベントを流すObserverを生成する.
+  ///
+  /// 生成時に [FGBGEvents] の購読も開始する.
+  ///
+  /// Example:
+  /// ```dart
+  /// // RouteLifecycleDetector.navigatorObserver 経由で利用する
+  /// final observer = RouteLifecycleDetector.navigatorObserver;
+  /// ```
   _NavigationObserver(this.notifySubject) {
     FGBGEvents.instance.stream.listen((data) {
       notifySubject.add(switch (data) {
@@ -49,6 +69,12 @@ class _NavigationObserver extends NavigatorObserver {
     });
   }
 
+  /// 最前面Routeの入れ替えを通知する.
+  ///
+  /// Example:
+  /// ```dart
+  /// // Navigatorの遷移に応じて自動で呼ばれる
+  /// ```
   @override
   void didChangeTop(
     Route<dynamic> topRoute,
@@ -62,6 +88,12 @@ class _NavigationObserver extends NavigatorObserver {
     );
   }
 
+  /// Routeのpopを通知する.
+  ///
+  /// Example:
+  /// ```dart
+  /// // Navigator.pop 等に応じて自動で呼ばれる
+  /// ```
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     notifySubject.add(
@@ -72,6 +104,12 @@ class _NavigationObserver extends NavigatorObserver {
     );
   }
 
+  /// Routeのpushを通知する.
+  ///
+  /// Example:
+  /// ```dart
+  /// // Navigator.push 等に応じて自動で呼ばれる
+  /// ```
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     notifySubject.add(
@@ -82,6 +120,12 @@ class _NavigationObserver extends NavigatorObserver {
     );
   }
 
+  /// Routeのremoveを通知する.
+  ///
+  /// Example:
+  /// ```dart
+  /// // Navigator.removeRoute 等に応じて自動で呼ばれる
+  /// ```
   @override
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     notifySubject.add(
@@ -92,6 +136,12 @@ class _NavigationObserver extends NavigatorObserver {
     );
   }
 
+  /// Routeのreplaceを通知する.
+  ///
+  /// Example:
+  /// ```dart
+  /// // Navigator.replace 等に応じて自動で呼ばれる
+  /// ```
   @override
   void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     notifySubject.add(
@@ -102,6 +152,12 @@ class _NavigationObserver extends NavigatorObserver {
     );
   }
 
+  /// ユーザージェスチャ開始を通知する.
+  ///
+  /// Example:
+  /// ```dart
+  /// // iOSの戻るスワイプ開始等に応じて自動で呼ばれる
+  /// ```
   @override
   void didStartUserGesture(
     Route<dynamic> route,
@@ -115,6 +171,12 @@ class _NavigationObserver extends NavigatorObserver {
     );
   }
 
+  /// ユーザージェスチャ終了を通知する.
+  ///
+  /// Example:
+  /// ```dart
+  /// // 戻るスワイプ完了/キャンセル等に応じて自動で呼ばれる
+  /// ```
   @override
   void didStopUserGesture() {
     notifySubject.add(

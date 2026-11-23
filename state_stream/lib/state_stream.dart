@@ -1,3 +1,6 @@
+/// 現在値付きの状態Streamと、ロック付き更新APIを提供する.
+///
+/// StateStream / MutableStateStream / Dispatcher などを公開する.
 library;
 
 export 'src/dispatcher.dart';

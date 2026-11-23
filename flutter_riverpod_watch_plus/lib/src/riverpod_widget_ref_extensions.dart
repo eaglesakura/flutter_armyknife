@@ -2,21 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_watch_plus/src/watch_value.dart';
 import 'package:riverpod/misc.dart';
 
-/// Extension function for [WidgetRef] to watch a value.
+/// [WidgetRef] 向けに値監視を拡張する.
 extension WidgetRefWatchBy on WidgetRef {
-  /// Watches the specified value.
-  /// This extension function supports watching Collections.
-  ///
-  /// NOTE.
-  /// Due to Riverpod's specification, when watching Collections, reference comparison is performed,
-  /// causing re-rendering even when the content is the same.
-  /// To avoid this specification, an intermediate object is used to manage Collection references.
-  ///
-  /// It can also be used for non-Collections, but note that intermediate object creation overhead occurs in that case.
-  ///
-  /// == 日本語 ==
   /// 指定の値を監視する.
-  /// この拡張関数は、Collectionの監視をサポートする.
+  ///
+  /// Collectionの監視をサポートする.
   ///
   /// NOTE.
   /// Riverpodの仕様として、Collectionを監視すると、Collectionの参照比較が行われるため、
@@ -24,6 +14,17 @@ extension WidgetRefWatchBy on WidgetRef {
   /// この仕様を回避するために、中間オブジェクトを使用してCollectionの参照を管理する.
   ///
   /// Collection以外にも利用できるが、その場合は中間オブジェクトの生成負荷が発生することに留意する.
+  ///
+  /// [provider] 監視対象のProvider.
+  /// [selector] [provider] の値から監視したい部分を取り出す関数.
+  ///
+  /// Example:
+  /// ```dart
+  /// final items = ref.watchBy(
+  ///   stateProvider,
+  ///   (state) => state.items,
+  /// );
+  /// ```
   T watchBy<P, T>(
     ProviderListenable<P> provider,
     T Function(P) selector,

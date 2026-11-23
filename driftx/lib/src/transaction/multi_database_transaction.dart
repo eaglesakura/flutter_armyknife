@@ -10,12 +10,34 @@ part 'multi_database_transaction.state.dart';
 /// Driftの挙動として、DBトランザクションの内部で別DBのトランザクション（入れ子）が行えない.
 /// この特性を回避するため、複数のデータベースに対して同時にトランザクションを行うためのクラス.
 class MultiDatabaseTransactions {
-  /// 対象トランザクション一覧
+  /// 対象トランザクション一覧.
   final List<_State> _transactions;
 
+  /// [_transactions] を束ねた同時トランザクションハンドルを生成する.
+  ///
+  /// [transaction] からのみ生成する想定.
   MultiDatabaseTransactions._(this._transactions);
 
   /// 指定DBの操作を行う.
+  ///
+  /// [db] は [transaction] に渡した一覧に含まれる必要がある.
+  /// [action] は対象DBのトランザクション内で直列実行され、完了または失敗まで待つ.
+  /// 未登録の [db] を渡すと [StateError] 相当の検索失敗になる.
+  ///
+  /// Example:
+  /// ```dart
+  /// await MultiDatabaseTransactions.transaction(
+  ///   [dbA, dbB],
+  ///   (tx) async {
+  ///     await tx.execute(dbA, (db) async {
+  ///       // dbA への書き込み
+  ///     });
+  ///     await tx.execute(dbB, (db) async {
+  ///       // dbB への書き込み
+  ///     });
+  ///   },
+  /// );
+  /// ```
   Future<T> execute<DB extends GeneratedDatabase, T>(
     DB db,
     Future<T> Function(DB db) action,
@@ -35,8 +57,22 @@ class MultiDatabaseTransactions {
   }
 
   /// 複数データベースの同時トランザクションを開始する.
-  /// action 完了後、すべてのトランザクションが成功した場合、成功した結果を返す.
+  ///
+  /// [databases] それぞれでトランザクションを開き、準備完了後に [action] を実行する.
+  /// [action] 完了後、すべてのトランザクションが成功した場合、成功した結果を返す.
   /// 1つでもDB操作が失敗した場合、すべてのDBのトランザクションがロールバックされる.
+  ///
+  /// Example:
+  /// ```dart
+  /// final value = await MultiDatabaseTransactions.transaction(
+  ///   [dbA, dbB],
+  ///   (tx) async {
+  ///     await tx.execute(dbA, (db) async => null);
+  ///     await tx.execute(dbB, (db) async => null);
+  ///     return 42;
+  ///   },
+  /// );
+  /// ```
   static Future<T> transaction<T>(
     List<GeneratedDatabase> databases,
     Future<T> Function(MultiDatabaseTransactions tx) action,

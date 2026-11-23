@@ -8,49 +8,78 @@ import 'package:rxdart/rxdart.dart';
 
 part 'route_lifecycle.freezed.dart';
 
-/// The current lifecycle state of a Route (such as Scaffold, Dialog, etc.).
-/// It is simpler than Android's Lifecycle because it is determined only by the current information.
+/// Route(Scaffold・Dialog等)の現在ライフサイクル状態.
+///
+/// AndroidのLifecycleより単純で、取得時点の情報だけで判定する.
+/// アプリ前景/背景は [isForeground] で表し、Routeのスタック位置はバリアントで表す.
 @freezed
 sealed class RouteLifecycle with _$RouteLifecycle {
-  /// The app is in the foreground and the Route is at the top of the stack.
+  /// アプリが前景で、Routeがスタック最前面にある状態.
   ///
-  /// State:
-  ///   - Route: Top of stack.
+  /// ユーザー操作を受け付ける想定の状態.
+  ///
+  /// Example:
+  /// ```dart
+  /// final lifecycle = RouteLifecycle.active(isForeground: true);
+  /// ```
   const factory RouteLifecycle.active({
-    /// App is in the foreground.
+    /// アプリが前景かどうか.
     required bool isForeground,
   }) = RouteLifecycleActive;
 
-  /// The widget is being built and the Route has not yet been created.
+  /// Widget構築中で、まだModalRouteが取得できない状態.
+  ///
+  /// [BuildContext] はmountedだが、[ModalRoute.of] が失敗する段階を表す.
+  ///
+  /// Example:
+  /// ```dart
+  /// final lifecycle = RouteLifecycle.building(isForeground: true);
+  /// ```
   const factory RouteLifecycle.building({
-    /// App is in the foreground.
+    /// アプリが前景かどうか.
     required bool isForeground,
   }) = RouteLifecycleBuilding;
 
-  /// One of Widget, ModalRoute, or BuildContext has been disposed.
+  /// Widget・ModalRoute・BuildContextのいずれかが破棄された状態.
   ///
-  /// State:
-  ///   - App: any.
-  ///   - Route: destroyed.
+  /// ストリーム監視ではこの状態の通知後に購読が終了する.
+  ///
+  /// Example:
+  /// ```dart
+  /// final lifecycle = RouteLifecycle.destroyed(isForeground: false);
+  /// ```
   const factory RouteLifecycle.destroyed({
-    /// App is in the foreground.
+    /// アプリが前景かどうか.
     required bool isForeground,
   }) = RouteLifecycleDestroyed;
 
-  /// The app is in the foreground, but the Route is not at the top of the stack.
-  /// It is assumed that the user cannot interact with this Route because another page is in the foreground.
+  /// Routeがスタック最前面ではなく、別画面が前面にある状態.
   ///
-  /// State:
-  ///   - Route: Not top of stack.
+  /// Route自体は生存しているが、ユーザー操作は想定しない.
+  ///
+  /// Example:
+  /// ```dart
+  /// final lifecycle = RouteLifecycle.inactive(isForeground: true);
+  /// ```
   const factory RouteLifecycle.inactive({
-    /// App is in the foreground.
+    /// アプリが前景かどうか.
     required bool isForeground,
   }) = RouteLifecycleInactive;
 
-  /// Gets the current lifecycle state.
+  /// [context] 時点のライフサイクル状態を取得する.
   ///
   /// NOTE:
-  /// [BuildContext.mounted] is checked internally, so callers do not need to consider it.
+  /// [BuildContext.mounted] は内部で確認するため、呼び出し側での事前判定は不要.
+  /// mountedでない、またはRouteが非activeの場合は [RouteLifecycle.destroyed] を返す.
+  /// ModalRoute未取得時は [RouteLifecycle.building] を返す.
+  ///
+  /// Example:
+  /// ```dart
+  /// final lifecycle = RouteLifecycle.of(context);
+  /// if (lifecycle is RouteLifecycleActive) {
+  ///   // 最前面かつ操作可能
+  /// }
+  /// ```
   static RouteLifecycle of(BuildContext context) {
     final isForeground = FGBGEvents.last == FGBGType.foreground;
     if (!context.mounted) {
@@ -93,12 +122,17 @@ sealed class RouteLifecycle with _$RouteLifecycle {
     );
   }
 
-  /// Detects the lifecycle of a Route (such as Scaffold, Dialog, etc.).
-  /// The stream will be closed when [RouteLifecycle.destroyed] is reached.
+  /// [context] に紐づくRouteライフサイクル変化を監視するStreamを返す.
   ///
-  /// e.g.
+  /// 初回値を即時通知したあと、[RouteLifecycleDetector.notify] 経由の変化を購読する.
+  /// [RouteLifecycle.destroyed] 到達時は値を流したうえでStreamを閉じる.
+  /// 連続同一状態は [Stream.distinct] で間引く.
+  ///
+  /// 前提として `MaterialApp.navigatorObservers` 等へ [RouteLifecycleDetector.navigatorObserver] の登録が必要.
+  ///
+  /// Example:
   /// ```dart
-  /// RouteLifecycleDetector.streamOf(context).listen((lifecycle) {
+  /// RouteLifecycle.streamOf(context).listen((lifecycle) {
   ///   print(lifecycle);
   /// });
   /// ```

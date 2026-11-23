@@ -4,39 +4,52 @@ import 'package:rxdart/rxdart.dart';
 
 part 'future_context_controller.impl.dart';
 
-/// English: Overall control controller for FutureContext.
-/// 日本語: FutureContextの全体制御用コントローラ.
+/// FutureContextの全体制御用コントローラ.
+///
+/// シングルトン経由で通知ストリームとログ出力を共有する.
 abstract interface class FutureContextController {
+  /// シングルトンの保持先.
+  ///
+  /// 初回 [instance] アクセス時に実装が生成される.
   static FutureContextController? _instance;
 
-  /// English: Returns the singleton instance.
-  /// 日本語: シングルトンインスタンスを返却する.
+  /// シングルトンインスタンス.
+  ///
+  /// 未生成なら内部実装を生成して保持する.
   static FutureContextController get instance {
     _instance ??= _FutureContextControllerImpl();
     return _instance!;
   }
 
-  /// English: Logger setter.
-  /// 日本語: Loggerの設定.
+  /// Loggerの設定.
+  ///
+  /// [value] に渡した関数が以降の [log] 呼び出しで使われる.
   set logger(Function(String) value);
 
-  /// English: Notification stream for FutureContext.
-  /// Used when issuing any update notifications.
+  /// FutureContextの通知ストリーム.
   ///
-  /// FutureContext that receives notifications checks all Contexts including Groups
-  /// and performs controls such as cancellation.
-  ///
-  /// 日本語: FutureContextの通知ストリーム.
   /// 何かしらの更新通知を発行する場合に利用する.
   ///
-  /// 通知を受けたFutureContextは、Groupを含めたすべてのContextをチェックし、キャンセルなどの制御を行う.
+  /// 通知受信後、Groupを含めたすべてのContextをチェックし、キャンセルなどの制御を行う.
   Stream<FutureContext> get notifyStream;
 
-  /// English: Logger method.
-  /// 日本語: ログ出力メソッド.
+  /// ログを出力する.
+  ///
+  /// [message] は [logger] に渡される本文.
+  ///
+  /// Example:
+  /// ```dart
+  /// FutureContextController.instance.log('suspended');
+  /// ```
   void log(String message);
 
-  /// English: Issues a notification for FutureContext.
-  /// 日本語: FutureContextの通知を発行する.
+  /// FutureContextの通知を発行する.
+  ///
+  /// [context] の状態変化を購読側へ伝える副作用がある.
+  ///
+  /// Example:
+  /// ```dart
+  /// FutureContextController.instance.notify(context);
+  /// ```
   void notify(FutureContext context);
 }

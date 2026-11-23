@@ -2,15 +2,23 @@ import 'package:armyknife_streams/armyknife_streams.dart';
 import 'package:future_context2/src/future_context.dart';
 import 'package:future_context2/src/future_context_request.dart';
 
-/// English:
-/// Automatically generates a Context or inherits from parent, and executes the specified processing.
-///
-/// Regardless of external Context input, a Context is always issued to [block].
-///
-/// 日本語:
 /// Contextを自動生成もしくは親からの継承を行い、指定の処理を実行する.
 ///
 /// 外部からのContext入力にかかわらず、[block] には必ずContextが発行される.
+///
+/// [contexts] には [FutureContext]・[FutureContextRequest]・[WithContextTag]・[WithContextTimeout] を混在できる.
+/// `Iterable` をネストしたまま渡すと [ArgumentError] になる.
+///
+/// 新規生成やグループ化で作ったContextは、処理終了後に自動で [FutureContext.close] される.
+/// 単一の既存Contextを渡した場合は閉じない.
+///
+/// Example:
+/// ```dart
+/// final result = await withContext(
+///   [const WithContextTag('load')],
+///   (context) async => 1,
+/// );
+/// ```
 Future<T> withContext<T>(
   List contexts,
   Future<T> Function(FutureContext context) block,
@@ -73,17 +81,23 @@ Future<T> withContext<T>(
   }
 }
 
-/// English:
-/// Automatically generates a Context or inherits from parent, and executes the specified processing.
-/// Results are processed as a Stream.
-///
-/// When receiving exceptions, yield* is not recommended.
-///
-/// 日本語:
 /// Contextを自動生成もしくは親からの継承を行い、指定の処理を実行する.
+///
 /// 結果はStreamで処理される.
 ///
 /// 例外を受け取る場合、 yield* は推奨されない.
+///
+/// [contexts] と [block] の扱いは [withContext] と同様.
+///
+/// Example:
+/// ```dart
+/// final stream = withContextStream(
+///   [],
+///   (context) async* {
+///     yield 1;
+///   },
+/// );
+/// ```
 @Deprecated('use withContext instead')
 Stream<T> withContextStream<T>(
   List contexts,
@@ -101,18 +115,38 @@ Stream<T> withContextStream<T>(
   });
 }
 
-/// English: Specifies FutureContext.tag.
-/// 日本語: FutureContext.tagを指定する.
+/// [FutureContext.tag] を指定する.
+///
+/// [withContext] の引数リストに混ぜて渡す.
 class WithContextTag {
-  /// English: Tag to specify.
-  /// 日本語: 明示するタグ.
+  /// 明示するタグ.
+  ///
+  /// `null` の場合はデフォルトタグ生成に任せる.
   final String? tag;
 
+  /// [tag] 付きの指定オブジェクトを生成する.
+  ///
+  /// Example:
+  /// ```dart
+  /// await withContext(
+  ///   [const WithContextTag('job')],
+  ///   (context) async {},
+  /// );
+  /// ```
   const WithContextTag(this.tag);
 
+  /// [tag] に基づくハッシュ値.
   @override
   int get hashCode => tag.hashCode;
 
+  /// 同一 [tag] なら等価とみなす.
+  ///
+  /// [other] が同じ [tag] を持つときのみ `true`.
+  ///
+  /// Example:
+  /// ```dart
+  /// assert(const WithContextTag('a') == const WithContextTag('a'));
+  /// ```
   @override
   bool operator ==(covariant WithContextTag other) {
     if (identical(this, other)) {
@@ -122,21 +156,49 @@ class WithContextTag {
     return other.tag == tag;
   }
 
+  /// デバッグ表示用の文字列表現.
+  ///
+  /// Example:
+  /// ```dart
+  /// print(const WithContextTag('a')); // WithContextTag(tag: a)
+  /// ```
   @override
   String toString() => 'WithContextTag(tag: $tag)';
 }
 
-/// English: Specifies FutureContext.timeout.
-/// 日本語: FutureContext.timeoutを指定する.
+/// [FutureContext.withTimeout] 相当のタイムアウトを指定する.
+///
+/// [withContext] の引数リストに混ぜて渡す.
 class WithContextTimeout {
-  /// English: Timeout duration.
-  /// 日本語: タイムアウト時間.
+  /// タイムアウト時間.
   final Duration duration;
+
+  /// [duration] 付きの指定オブジェクトを生成する.
+  ///
+  /// Example:
+  /// ```dart
+  /// await withContext(
+  ///   [const WithContextTimeout(Duration(seconds: 1))],
+  ///   (context) async => 'ok',
+  /// );
+  /// ```
   const WithContextTimeout(this.duration);
 
+  /// [duration] に基づくハッシュ値.
   @override
   int get hashCode => duration.hashCode;
 
+  /// 同一 [duration] なら等価とみなす.
+  ///
+  /// [other] が同じ [duration] を持つときのみ `true`.
+  ///
+  /// Example:
+  /// ```dart
+  /// assert(
+  ///   const WithContextTimeout(Duration(seconds: 1)) ==
+  ///       const WithContextTimeout(Duration(seconds: 1)),
+  /// );
+  /// ```
   @override
   bool operator ==(covariant WithContextTimeout other) {
     if (identical(this, other)) {
@@ -146,6 +208,12 @@ class WithContextTimeout {
     return other.duration == duration;
   }
 
+  /// デバッグ表示用の文字列表現.
+  ///
+  /// Example:
+  /// ```dart
+  /// print(const WithContextTimeout(Duration(seconds: 1)));
+  /// ```
   @override
   String toString() => 'WithContextTimeout(duration: $duration)';
 }
