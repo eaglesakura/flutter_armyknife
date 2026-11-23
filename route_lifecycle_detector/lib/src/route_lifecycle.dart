@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:route_lifecycle_detector/src/route_lifecycle_detector.dart';

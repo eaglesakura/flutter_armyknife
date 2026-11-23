@@ -42,6 +42,18 @@
 | 🛤️ ルートライフサイクル | **[route_lifecycle_detector](./route_lifecycle_detector/)** | Navigator ライフサイクル管理 | ダイアログ多重表示防止、Route 状態検出、非同期処理制御 |
 | 🛠️ コード生成 | **[openapi-template](./openapi-template/)** | OpenAPI コード生成テンプレート | Dart/Flutter 向け OpenAPI クライアント生成、カスタムテンプレート |
 
+## 🛠 開発環境（mise）
+
+Flutter は `.mise.toml` 経由の **mise** で管理する。
+
+```bash
+# 先に mise を入れる: https://mise.jdx.dev/
+mise install
+mise exec -- flutter --version   # Flutter 3.50.0.x を期待
+mise exec -- dart pub get
+mise exec -- flutter test
+```
+
 ## 🚀 使用開始
 
 各ライブラリは独立して使用できる。必要なライブラリを `pubspec.yaml` に追加して使用する：

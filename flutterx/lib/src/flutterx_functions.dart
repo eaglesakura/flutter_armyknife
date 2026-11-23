@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io' as io;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// FlutterのUnitTest($ flutter test)として実行中であればtrueを返却する.
 ///

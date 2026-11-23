@@ -42,6 +42,18 @@ To solve various challenges encountered in daily development work, it provides n
 | 🛤️ Route Lifecycle | **[route_lifecycle_detector](./route_lifecycle_detector/)** | Navigator lifecycle management | Dialog multiple display prevention, Route state detection, async processing control |
 | 🛠️ Code Generation | **[openapi-template](./openapi-template/)** | OpenAPI code generation template | Dart/Flutter OpenAPI client generation, custom templates |
 
+## 🛠 Development Environment (mise)
+
+Flutter is managed with **mise** via `.mise.toml`.
+
+```bash
+# Install mise first: https://mise.jdx.dev/
+mise install
+mise exec -- flutter --version   # expect Flutter 3.50.0.x
+mise exec -- dart pub get
+mise exec -- flutter test
+```
+
 ## 🚀 Getting Started
 
 Each library can be used independently. Add the necessary libraries to your `pubspec.yaml`:

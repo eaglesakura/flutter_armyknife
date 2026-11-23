@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:async_notify2/async_notify2.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:future_context2/future_context2.dart';
 

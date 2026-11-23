@@ -1,10 +1,4 @@
 {
-  "search.exclude": {
-    "**/.fvm": true
-  },
-  "files.watcherExclude": {
-    "**/.fvm": true
-  },
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -13,18 +7,11 @@
     "**/Thumbs.db": true,
     "**/*.freezed.dart": true,
     "**/*.g.dart": true,
-    "**/.dart_tool": true,
-    "**/.fvm": true
+    "**/.dart_tool": true
   },
   "editor.formatOnSave": true,
   "explorer.fileNesting.enabled": true,
-  "dart.flutterSdkPath": ".fvm/versions/3.41.1",
   "[markdown]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-  },
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "always",
-    "source.organizeImports": "always",
-    "source.sortMembers": "always"
   }
 }

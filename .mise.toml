@@ -1,5 +1,5 @@
 [tools]
-flutter = "3.44.0"
+flutter = "3.50.0"
 
 [tasks.setup]
 description = "Setup Repository"

@@ -1,18 +1,15 @@
 name: Flutter Test
 
-# プルリクエストとmainブランチへのプッシュ時にテストを実行する
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
+      - develop
+      - feature/id/*/*
 
 jobs:
   test:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
 
     strategy:
       matrix:
@@ -46,15 +43,17 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v7
 
-      # mise を使った開発環境のセットアップ
-      - name: Setup development environment with mise
-        uses: jdx/mise-action@v4
-        with:
-          version: 2026.6.14
+      # mise で .mise.toml のツール（Flutter 3.50.0）を入れる
+      - name: install tools (mise)
+        uses: jdx/mise-action@v5
 
-      # Flutterをインストールして依存関係を取得する
-      - name: install flutter
-        uses: ./.github/actions/install-flutter
+      # 導入された Flutter 版をログに残す（ローカルと CI の突合用）
+      - name: show flutter version
+        run: |
+          echo "flutter version: $(flutter --version)"
+          echo "flutter path: $(which flutter)"
+          echo "dart version: $(dart --version)"
+          echo "dart path: $(which dart)"
 
       # テスト
       - name: flutter test - ${{ matrix.package }}
