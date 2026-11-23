@@ -1,3 +1,7 @@
+## 1.1.0
+
+- 依存ライブラリ更新に伴うメンテナンスリリース
+
 ## 1.0.0
 
 - Port from <https://github.com/vivitainc/flutter_async_notify>

@@ -1,3 +1,7 @@
+## 1.1.0
+
+- 依存ライブラリ更新に伴うメンテナンスリリース
+
 ## 1.0.2
 
 - Added `StateStreamClosedException` for clearer error handling when a stream is already closed.

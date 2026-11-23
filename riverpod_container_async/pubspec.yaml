@@ -1,6 +1,6 @@
 name: riverpod_container_async
 description: A library that supports asynchronous disposal of Riverpod's ProviderContainer.
-version: 2.0.0
+version: 2.1.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 

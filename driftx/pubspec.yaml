@@ -1,6 +1,6 @@
 name: armyknife_driftx
 description: Utilities for Drift library.
-version: 1.0.0
+version: 1.1.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
@@ -12,8 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   meta: ^1.16.0
-  drift: ^2.27.0
-  drift_flutter: ^0.2.4
+  drift: ^2.35.4
+  drift_flutter: ^0.3.1
   rxdart: ^0.28.0
 
 dev_dependencies:

@@ -1,6 +1,6 @@
 name: armyknife_flutter_testx
 description: "Flutter Test Utilities."
-version: 1.0.0
+version: 1.1.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
