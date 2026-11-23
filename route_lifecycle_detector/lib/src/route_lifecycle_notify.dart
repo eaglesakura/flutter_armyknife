@@ -34,6 +34,7 @@ sealed class RouteLifecycleNotify with _$RouteLifecycleNotify {
   const factory RouteLifecycleNotify.didChangeTop({
     /// 新しい最前面Route.
     required Route<dynamic> topRoute,
+
     /// 直前の最前面Route. 無い場合は `null`.
     required Route<dynamic>? previousTopRoute,
   }) = RouteLifecycleNotifyDidChangeTop;
@@ -61,6 +62,7 @@ sealed class RouteLifecycleNotify with _$RouteLifecycleNotify {
   const factory RouteLifecycleNotify.didPop({
     /// popされたRoute.
     required Route<dynamic> route,
+
     /// 露出するRoute. 無い場合は `null`.
     required Route<dynamic>? previousRoute,
   }) = RouteLifecycleNotifyDidPop;
@@ -79,6 +81,7 @@ sealed class RouteLifecycleNotify with _$RouteLifecycleNotify {
   const factory RouteLifecycleNotify.didPush({
     /// pushされたRoute.
     required Route<dynamic> route,
+
     /// 下に残るRoute. 無い場合は `null`.
     required Route<dynamic>? previousRoute,
   }) = RouteLifecycleNotifyDidPush;
@@ -97,6 +100,7 @@ sealed class RouteLifecycleNotify with _$RouteLifecycleNotify {
   const factory RouteLifecycleNotify.didRemove({
     /// 除去されたRoute.
     required Route<dynamic> route,
+
     /// 直前のRoute. 無い場合は `null`.
     required Route<dynamic>? previousRoute,
   }) = RouteLifecycleNotifyDidRemove;
@@ -115,6 +119,7 @@ sealed class RouteLifecycleNotify with _$RouteLifecycleNotify {
   const factory RouteLifecycleNotify.didReplace({
     /// 置き換え後のRoute. 無い場合は `null`.
     required Route<dynamic>? newRoute,
+
     /// 置き換え前のRoute. 無い場合は `null`.
     required Route<dynamic>? oldRoute,
   }) = RouteLifecycleNotifyDidReplace;
@@ -133,6 +138,7 @@ sealed class RouteLifecycleNotify with _$RouteLifecycleNotify {
   const factory RouteLifecycleNotify.didStartUserGesture({
     /// ジェスチャ対象のRoute.
     required Route<dynamic> route,
+
     /// 下のRoute. 無い場合は `null`.
     required Route<dynamic>? previousRoute,
   }) = RouteLifecycleNotifyDidStartUserGesture;
