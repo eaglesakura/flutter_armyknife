@@ -16,7 +16,7 @@ To solve various challenges encountered in daily development work, it provides n
 ## 📚 Library List
 
 | Category | Library | Overview | Main Features |
-|----------|---------|----------|---------------|
+| ---------- | --------- | ---------- | --------------- |
 | 🔄 Async Processing・Concurrency | **[async_notify2](./async_notify2/)** | Reproduces Java/Kotlin notify/wait | Async processing synchronization, type-safe value transmission |
 | 🔄 Async Processing・Concurrency | **[future_context2](./future_context2/)** | Cancellable async processing | Async processing cancellation, timeout, hierarchical management |
 | 🔄 Async Processing・Concurrency | **[future_context2_hooks](./future_context2_hooks/)** | FutureContext Hooks integration | FutureContext Flutter Hooks integration, Widget lifecycle coordination |
@@ -41,6 +41,18 @@ To solve various challenges encountered in daily development work, it provides n
 | ⏰ Time Processing | **[time](./time/)** | Lightweight time processing | time_machine wrapper, Clock delegate, Unix epoch |
 | 🛤️ Route Lifecycle | **[route_lifecycle_detector](./route_lifecycle_detector/)** | Navigator lifecycle management | Dialog multiple display prevention, Route state detection, async processing control |
 | 🛠️ Code Generation | **[openapi-template](./openapi-template/)** | OpenAPI code generation template | Dart/Flutter OpenAPI client generation, custom templates |
+
+## 🛠 Development Environment (mise)
+
+Flutter is managed with **mise** via `.mise.toml`.
+
+```bash
+# Install mise first: https://mise.jdx.dev/
+mise install
+mise exec -- flutter --version   # expect Flutter 3.50.0.x
+mise exec -- dart pub get
+mise exec -- flutter test
+```
 
 ## 🚀 Getting Started
 

@@ -80,14 +80,15 @@ In version 1.1.0, the library structure was reorganized and functionality was se
 
 ### Major Changes
 
-* Export of `riverpod` libraries has been discontinued
-* `useFutureContext` functionality has been moved to [`future_context2_hooks`](../future_context2_hooks/) package
-* Asynchronous processing functionality has been moved to [`riverpod_container_async`](../riverpod_container_async/) package
-* Individual dependency library imports need to be added as necessary
+- Export of `riverpod` libraries has been discontinued
+- `useFutureContext` functionality has been moved to [`future_context2_hooks`](../future_context2_hooks/) package
+- Asynchronous processing functionality has been moved to [`riverpod_container_async`](../riverpod_container_async/) package
+- Individual dependency library imports need to be added as necessary
 
 ### Import Changes
 
 **Writing in 1.0.0:**
+
 ```dart
 // All riverpod features available with one import
 import 'package:armyknife_riverpodx/armyknife_riverpodx.dart';
@@ -103,6 +104,7 @@ class MyWidget extends HookConsumerWidget {
 ```
 
 **Writing in 1.1.0:**
+
 ```dart
 // Import required libraries individually
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -123,6 +125,7 @@ class MyWidget extends HookConsumerWidget {
 ### Asynchronous Processing Migration
 
 **Writing in 1.0.0:**
+
 ```dart
 import 'package:armyknife_riverpodx/armyknife_riverpodx.dart';
 
@@ -138,6 +141,7 @@ await container.disposeAsync();
 ```
 
 **Writing in 1.1.0:**
+
 ```dart
 // Asynchronous processing functionality moved to separate package
 import 'package:riverpod_container_async/riverpod_container_async.dart';
@@ -161,6 +165,7 @@ In version 1.1.1, `ListSelectProperty` has been deprecated and migrated to the m
 ### ListSelectProperty Migration
 
 **Writing in 1.1.0 (deprecated):**
+
 ```dart
 import 'package:armyknife_riverpodx/armyknife_riverpodx.dart';
 
@@ -184,6 +189,7 @@ class ListWidget extends ConsumerWidget {
 ```
 
 **Writing in 1.1.1 (recommended):**
+
 ```dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_watch_plus/flutter_riverpod_watch_plus.dart';
@@ -210,6 +216,7 @@ class ListWidget extends ConsumerWidget {
 ### Required Dependencies
 
 Add the following to `pubspec.yaml`:
+
 ```yaml
 dependencies:
   flutter_riverpod_watch_plus: ^1.0.0
@@ -226,7 +233,8 @@ dependencies:
 
 This package was created to streamline state management in Flutter development.
 
-> **Note:** 
+> **Note:**
+>
 > - Asynchronous initialization and disposal processing for ProviderContainer has been moved to the separate package [`riverpod_container_async`](../riverpod_container_async/).
 > - FutureContext and Hooks integration functionality has been moved to the separate package [`future_context2_hooks`](../future_context2_hooks/).
 

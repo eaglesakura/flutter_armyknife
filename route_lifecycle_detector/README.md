@@ -1,3 +1,5 @@
+# route_lifecycle_detector
+
 A lightweight library for detecting Navigator/ModalRoute/BuildContext lifecycles.
 It solves **dialog multiple display issues caused by multiple asynchronous processes** and enables UI display at appropriate timing.
 
@@ -268,7 +270,7 @@ class _MyPageState extends State<MyPage> {
 ## Lifecycle States
 
 | State | Description | Dialog Display Recommendation |
-|-------|-------------|----------------|
+| ------- | ------------- | ---------------- |
 | `RouteLifecycleActive(isForeground: true)` | App is in foreground and Route is at top of stack | 🟢 Safe to display |
 | `RouteLifecycleActive(isForeground: false)` | Route is at top of stack but app is in background | 🔴 Should delay display |
 | `RouteLifecycleInactive` | Route is not at top of stack | 🔴 Should delay display |

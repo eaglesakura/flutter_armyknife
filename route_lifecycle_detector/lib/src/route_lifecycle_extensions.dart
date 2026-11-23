@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:route_lifecycle_detector/src/route_lifecycle.dart';
 import 'package:route_lifecycle_detector/src/route_lifecycle_exceptions.dart';
 

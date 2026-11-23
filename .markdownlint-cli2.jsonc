@@ -1,0 +1,10 @@
+{
+  "config": {
+    "MD013": false,
+    "MD024": false
+  },
+  // pub.dev の CHANGELOG は `## {version}` 始まりが正（先頭 H1 を付けない）
+  "ignores": [
+    "**/CHANGELOG.md"
+  ]
+}

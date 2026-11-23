@@ -1,3 +1,5 @@
+# streams
+
 `armyknife_streams`は、RxDart を基盤とした Stream 操作を簡単にするための軽量なユーティリティライブラリです。
 複数の Stream の結合、生成型 Stream、Future から Stream への変換など、日常的な Stream 処理の糖衣構文を提供します。
 

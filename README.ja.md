@@ -16,7 +16,7 @@
 ## 📚 ライブラリ一覧
 
 | カテゴリ | ライブラリ | 概要 | 主な機能 |
-|---------|-----------|------|----------|
+| --------- | ----------- | ------ | ---------- |
 | 🔄 非同期処理・並行処理 | **[async_notify2](./async_notify2/)** | Java/Kotlin の notify/wait を再現 | 非同期処理の待ち合わせ、型安全な値の送受信 |
 | 🔄 非同期処理・並行処理 | **[future_context2](./future_context2/)** | キャンセル可能な非同期処理 | 非同期処理のキャンセル、タイムアウト、階層管理 |
 | 🔄 非同期処理・並行処理 | **[future_context2_hooks](./future_context2_hooks/)** | FutureContext Hooks 統合 | FutureContext の Flutter Hooks 統合、Widget ライフサイクル連携 |
@@ -41,6 +41,18 @@
 | ⏰ 時刻処理 | **[time](./time/)** | 軽量時刻処理 | time_machine ラッパー、Clock デリゲート、Unix エポック |
 | 🛤️ ルートライフサイクル | **[route_lifecycle_detector](./route_lifecycle_detector/)** | Navigator ライフサイクル管理 | ダイアログ多重表示防止、Route 状態検出、非同期処理制御 |
 | 🛠️ コード生成 | **[openapi-template](./openapi-template/)** | OpenAPI コード生成テンプレート | Dart/Flutter 向け OpenAPI クライアント生成、カスタムテンプレート |
+
+## 🛠 開発環境（mise）
+
+Flutter は `.mise.toml` 経由の **mise** で管理する。
+
+```bash
+# 先に mise を入れる: https://mise.jdx.dev/
+mise install
+mise exec -- flutter --version   # Flutter 3.50.0.x を期待
+mise exec -- dart pub get
+mise exec -- flutter test
+```
 
 ## 🚀 使用開始
 

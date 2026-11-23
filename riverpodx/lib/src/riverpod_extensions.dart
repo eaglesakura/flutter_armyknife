@@ -15,7 +15,7 @@ void useEventStream<T>(
   useEffect(() {
     final subscribe = newStream().listen((data) async {
       await vsync();
-      onData(data);
+      await onData(data);
     });
     return subscribe.cancel;
   }, keys);

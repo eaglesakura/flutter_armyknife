@@ -1,3 +1,5 @@
+# riverpod_container_async
+
 Riverpod の ProviderContainer の非同期初期化・削除処理をサポートするライブラリである。
 Provider 内での非同期初期化タスクの管理や、ProviderContainer 削除時の非同期処理を安全に実行できる。
 

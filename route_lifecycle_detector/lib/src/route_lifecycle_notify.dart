@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart' show FGBGEvents, FGBGType;
 import 'package:freezed_annotation/freezed_annotation.dart';
 

@@ -1,6 +1,6 @@
 ## 1.0.0
 
-- Port from https://github.com/vivitainc/flutter_async_notify
+- Port from <https://github.com/vivitainc/flutter_async_notify>
 - Support rxdart 0.28.x
 
 ## 0.0.2
