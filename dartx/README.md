@@ -1,3 +1,5 @@
+# dartx
+
 Dart のランタイムに便利な関数と拡張機能を提供するライブラリです。非同期処理、コレクション操作、型判定、プラットフォーム判定などの機能を提供し、Dart コードの記述を簡潔にします。
 
 ## Features
@@ -94,6 +96,6 @@ final set = buildSet<int>((set) {
 
 このライブラリは Flutter Armyknife プロジェクトの一部です。
 
-- **GitHub**: https://github.com/eaglesakura/flutter_armyknife
+- **GitHub**: <https://github.com/eaglesakura/flutter_armyknife>
 - **Issues**: バグ報告や機能要求は GitHub の Issues をご利用ください
 - **ライセンス**: MIT License

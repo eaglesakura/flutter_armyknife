@@ -16,7 +16,7 @@
 ## 📚 ライブラリ一覧
 
 | カテゴリ | ライブラリ | 概要 | 主な機能 |
-|---------|-----------|------|----------|
+| --------- | ----------- | ------ | ---------- |
 | 🔄 非同期処理・並行処理 | **[async_notify2](./async_notify2/)** | Java/Kotlin の notify/wait を再現 | 非同期処理の待ち合わせ、型安全な値の送受信 |
 | 🔄 非同期処理・並行処理 | **[future_context2](./future_context2/)** | キャンセル可能な非同期処理 | 非同期処理のキャンセル、タイムアウト、階層管理 |
 | 🔄 非同期処理・並行処理 | **[future_context2_hooks](./future_context2_hooks/)** | FutureContext Hooks 統合 | FutureContext の Flutter Hooks 統合、Widget ライフサイクル連携 |

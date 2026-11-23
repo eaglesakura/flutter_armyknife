@@ -1,3 +1,5 @@
+# exceptions
+
 Golang の`errors`パッケージのような例外トレース Util を提供する Dart ライブラリです。例外の内部にある例外を取り出したり、例外チェーンをトレースすることができます。
 
 ## Features

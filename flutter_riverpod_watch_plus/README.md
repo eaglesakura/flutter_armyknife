@@ -1,3 +1,5 @@
+# flutter_riverpod_watch_plus
+
 A library that solves the problem of Riverpod's `Ref.watch()` not supporting deep-equals for Iterables and Maps.
 It prevents unnecessary re-renders caused by reference comparison when watching collections (List, Map, Set) and enables efficient state management.
 

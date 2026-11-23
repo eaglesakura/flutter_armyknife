@@ -1,3 +1,5 @@
+# route_lifecycle_detector
+
 Navigator/ModalRoute/BuildContext のライフサイクルを検出する軽量なライブラリです。
 **複数の非同期処理により発生するダイアログの多重表示問題**を解決し、適切なタイミングでUIを表示できるようにします。
 
@@ -268,7 +270,7 @@ class _MyPageState extends State<MyPage> {
 ## ライフサイクル状態
 
 | 状態 | 説明 | ダイアログ表示の推奨 |
-|------|------|-------------|
+| ------ | ------ | ------------- |
 | `RouteLifecycleActive(isForeground: true)` | アプリが前面にあり、Route がスタックの最上位にある | 🟢 安全に表示可能 |
 | `RouteLifecycleActive(isForeground: false)` | Route はスタックの最上位だが、アプリがバックグラウンドにある | 🔴 表示を遅延有無を検討すべき |
 | `RouteLifecycleInactive` | Route がスタックの最上位ではない | 🔴 表示を遅延すべき |
