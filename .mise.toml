@@ -8,3 +8,219 @@ run = """
 chmod +x scripts/setup.sh
 scripts/setup.sh
 """
+
+[tasks."armyknife:async_notify2:publish"]
+description = "Publish async_notify2 to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C async_notify2 publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:dartx:publish"]
+description = "Publish dartx to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C dartx publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:driftx:publish"]
+description = "Publish driftx to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C driftx publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:exceptions:publish"]
+description = "Publish exceptions to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C exceptions publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:flutter_riverpod_watch_plus:publish"]
+description = "Publish flutter_riverpod_watch_plus to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C flutter_riverpod_watch_plus publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:flutter_testx:publish"]
+description = "Publish flutter_testx to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C flutter_testx publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:flutterx:publish"]
+description = "Publish flutterx to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C flutterx publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:future_context2:publish"]
+description = "Publish future_context2 to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C future_context2 publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:future_context2_hooks:publish"]
+description = "Publish future_context2_hooks to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C future_context2_hooks publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:logger:publish"]
+description = "Publish logger to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C logger publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:logger_flutter:publish"]
+description = "Publish logger_flutter to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C logger_flutter publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:logger_grinder:publish"]
+description = "Publish logger_grinder to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C logger_grinder publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:riverpod_container_async:publish"]
+description = "Publish riverpod_container_async to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C riverpod_container_async publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:riverpod_container_async_test:publish"]
+description = "Publish riverpod_container_async_test to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C riverpod_container_async_test publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:riverpod_container_builder:publish"]
+description = "Publish riverpod_container_builder to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C riverpod_container_builder publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:riverpodx:publish"]
+description = "Publish riverpodx to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C riverpodx publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:route_lifecycle_detector:publish"]
+description = "Publish route_lifecycle_detector to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C route_lifecycle_detector publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:state_stream:publish"]
+description = "Publish state_stream to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C state_stream publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:state_stream_riverpod:publish"]
+description = "Publish state_stream_riverpod to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C state_stream_riverpod publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:streams:publish"]
+description = "Publish streams to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C streams publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:task_queue:publish"]
+description = "Publish task_queue to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C task_queue publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:test_context:publish"]
+description = "Publish test_context to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C test_context publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:time:publish"]
+description = "Publish time to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C time publish ${usage_dry_run:+--dry-run}
+"""
+
+[tasks."armyknife:yamlx:publish"]
+description = "Publish yamlx to pub.dev"
+usage = '''
+flag "--dry-run" help="Validate package without uploading to pub.dev"
+'''
+run = """
+dart pub -C yamlx publish ${usage_dry_run:+--dry-run}
+"""

@@ -1,4 +1,111 @@
 {
     "version": "2.0.0",
-    "tasks": []
+    "inputs": [
+        {
+            "id": "package",
+            "description": "公開するパッケージを選択してください",
+            "type": "pickString",
+            "options": [
+                {
+                    "value": "async_notify2"
+                },
+                {
+                    "value": "dartx"
+                },
+                {
+                    "value": "driftx"
+                },
+                {
+                    "value": "exceptions"
+                },
+                {
+                    "value": "flutter_riverpod_watch_plus"
+                },
+                {
+                    "value": "flutter_testx"
+                },
+                {
+                    "value": "flutterx"
+                },
+                {
+                    "value": "future_context2"
+                },
+                {
+                    "value": "future_context2_hooks"
+                },
+                {
+                    "value": "logger"
+                },
+                {
+                    "value": "logger_flutter"
+                },
+                {
+                    "value": "logger_grinder"
+                },
+                {
+                    "value": "riverpod_container_async"
+                },
+                {
+                    "value": "riverpod_container_async_test"
+                },
+                {
+                    "value": "riverpod_container_builder"
+                },
+                {
+                    "value": "riverpodx"
+                },
+                {
+                    "value": "route_lifecycle_detector"
+                },
+                {
+                    "value": "state_stream"
+                },
+                {
+                    "value": "state_stream_riverpod"
+                },
+                {
+                    "value": "streams"
+                },
+                {
+                    "value": "task_queue"
+                },
+                {
+                    "value": "test_context"
+                },
+                {
+                    "value": "time"
+                },
+                {
+                    "value": "yamlx"
+                }
+            ]
+        },
+        {
+            "id": "dryRun",
+            "description": "dry-run の有無を選択してください",
+            "type": "pickString",
+            "default": "--dry-run",
+            "options": [
+                {
+                    "label": "dry-run（検証のみ）",
+                    "value": "--dry-run"
+                },
+                {
+                    "label": "本番公開",
+                    "value": ""
+                }
+            ]
+        }
+    ],
+    "tasks": [
+        {
+            "label": "[armyknife] mise run armyknife:{package}:publish",
+            "type": "shell",
+            "command": "mise run armyknife:${input:package}:publish ${input:dryRun}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        }
+    ]
 }
