@@ -1,0 +1,14 @@
+name: flutter-armyknife
+version: 0.1.0
+description: |
+  pub.dev flutter_armyknife 系パッケージの利用方法 SKILL 集。
+  async / Riverpod / FutureContext / logger / StateStream / テスト補助などをカバーする。
+author: "@eaglesakura"
+license: MIT
+type: skill
+includes: auto
+targets:
+  - cursor
+  - claude
+  - copilot
+  - codex

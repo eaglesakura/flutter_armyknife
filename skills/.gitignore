@@ -1,0 +1,11 @@
+# APM generated (do not commit producer deploy output)
+apm_modules/
+apm.lock.yaml
+.agents/
+.cursor/
+.claude/
+.codex/
+.github/instructions/
+.github/agents/
+.github/prompts/
+.github/skills/
