@@ -1,3 +1,7 @@
+## 2.1.0
+
+- 依存ライブラリ更新に伴うメンテナンスリリース
+
 ## 1.1.1
 
 - Separated Ref.watch() collection processing into flutter_riverpod_watch_plus

@@ -1,7 +1,7 @@
 name: armyknife_time
 description: |
   Light-Weight Time libraries wrapper.
-version: 1.0.0
+version: 1.1.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 

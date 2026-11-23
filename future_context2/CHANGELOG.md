@@ -1,3 +1,7 @@
+## 1.2.0
+
+- 依存ライブラリ更新に伴うメンテナンスリリース
+
 ## 1.1.1+1
 
 - Fix Analyzer warnings for `suspend()` error handling.

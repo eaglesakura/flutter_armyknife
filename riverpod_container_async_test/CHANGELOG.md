@@ -1,3 +1,7 @@
+## 2.1.0
+
+- 依存ライブラリ更新に伴うメンテナンスリリース
+
 ## 2.0.1
 
 - Fixed an issue where the provider could be disposed when calling testGet()

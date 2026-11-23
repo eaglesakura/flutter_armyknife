@@ -1,6 +1,6 @@
 name: armyknife_yamlx
 description: YamlX is a library for parsing and manipulating YAML files in Dart.
-version: 1.0.0
+version: 1.1.0
 resolution: workspace
 repository: https://github.com/eaglesakura/flutter_armyknife/
 
