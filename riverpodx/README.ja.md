@@ -6,9 +6,9 @@ ProviderContainer の構築支援や、Stream の安全な監視、リスト型�
 
 ## Features
 
-- **ProviderContainer ビルダー**: 依存関係を効率的に構築するビルダーパターン
 - **Stream フック**: UI の安全な Stream 監視機能
-- **リスト型プロパティ**: Riverpod での論理一致判定をサポート
+- **リスト型プロパティ**: Riverpod での論理一致判定をサポート（非推奨、`flutter_riverpod_watch_plus` を推奨）
+- **ProviderContainer ビルダー**: Deprecated。[`riverpod_container_builder`](../riverpod_container_builder/) を使う
 
 ## Getting started
 
@@ -34,11 +34,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_riverpod_watch_plus/flutter_riverpod_watch_plus.dart';
 import 'package:armyknife_riverpodx/armyknife_riverpodx.dart';
-
-// ProviderContainerの構築
-final container = ProviderContainerBuilder()
-  .inject(stubProvider, implementationProvider)
-  .build();
 
 // Streamの監視
 class MyWidget extends HookConsumerWidget {
@@ -73,6 +68,37 @@ class ListWidget extends ConsumerWidget {
     );
   }
 }
+```
+
+## Migration 2.1.0 to 2.2.0
+
+`ProviderContainerBuilder` は [`riverpod_container_builder`](../riverpod_container_builder/) へ移行した。
+`armyknife_riverpodx` 経由の export は Deprecated である。
+
+**2.1.0 での書き方（非推奨）:**
+
+```dart
+import 'package:armyknife_riverpodx/armyknife_riverpodx.dart';
+
+final container = ProviderContainerBuilder()
+    .inject(stubProvider, implementationProvider)
+    .build();
+```
+
+**2.2.0 での書き方:**
+
+```dart
+import 'package:riverpod_container_builder/riverpod_container_builder.dart';
+
+final container = ProviderContainerBuilder()
+    .inject(stubProvider, implementationProvider)
+    .injectValue(valueProvider, 42)
+    .build();
+```
+
+```yaml
+dependencies:
+  riverpod_container_builder: ^1.0.0
 ```
 
 ## Migration 1.0.0 to 1.1.0
@@ -236,6 +262,7 @@ dependencies:
 
 > **注記：**
 >
+> - ProviderContainer のビルダーについては、別パッケージ [`riverpod_container_builder`](../riverpod_container_builder/) に移行されました。
 > - ProviderContainer の非同期初期化・解放処理については、別パッケージ [`riverpod_container_async`](../riverpod_container_async/) に移行されました。
 > - FutureContext と Hooks の統合機能については、別パッケージ [`future_context2_hooks`](../future_context2_hooks/) に移行されました。
 

@@ -28,6 +28,7 @@ jobs:
           - logger_grinder
           - riverpod_container_async
           - riverpod_container_async_test
+          - riverpod_container_builder
           - riverpodx
           - route_lifecycle_detector
           - state_stream

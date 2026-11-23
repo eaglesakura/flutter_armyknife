@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:armyknife_flutterx/armyknife_flutterx.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 /// Hooksを使用してStreamを監視する.
@@ -14,7 +13,7 @@ void useEventStream<T>(
 ]) {
   useEffect(() {
     final subscribe = newStream().listen((data) async {
-      await vsync();
+      await Future.delayed(Duration.zero);
       await onData(data);
     });
     return subscribe.cancel;

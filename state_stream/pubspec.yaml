@@ -14,7 +14,7 @@ dependencies:
   async_notify2: ^1.0.0
   armyknife_dartx: ^1.0.0
   freezed_annotation: ^3.1.0
-  future_context2: ^1.1.0
+  future_context2: ^1.1.1+1
   meta: ^1.16.0
   runtime_assert: ^0.0.1+2
   rxdart: ^0.28.0
@@ -24,5 +24,5 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  freezed: ^4.0.0
-  build_runner: ^2.5.2
+  freezed: ^4.0.3
+  build_runner: ^2.17.1

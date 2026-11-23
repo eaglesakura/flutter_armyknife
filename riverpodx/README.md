@@ -5,9 +5,9 @@ It provides convenient utility functions including ProviderContainer constructio
 
 ## Features
 
-- **ProviderContainer Builder**: Builder pattern for efficiently constructing dependencies
 - **Stream Hooks**: Safe Stream monitoring functionality for UI
-- **List-type Properties**: Support for logical equality checking in Riverpod
+- **List-type Properties**: Support for logical equality checking in Riverpod (deprecated; prefer `flutter_riverpod_watch_plus`)
+- **ProviderContainer Builder**: Deprecated. Use [`riverpod_container_builder`](../riverpod_container_builder/)
 
 ## Getting started
 
@@ -33,11 +33,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_riverpod_watch_plus/flutter_riverpod_watch_plus.dart';
 import 'package:armyknife_riverpodx/armyknife_riverpodx.dart';
-
-// ProviderContainer construction
-final container = ProviderContainerBuilder()
-  .inject(stubProvider, implementationProvider)
-  .build();
 
 // Stream monitoring
 class MyWidget extends HookConsumerWidget {
@@ -72,6 +67,37 @@ class ListWidget extends ConsumerWidget {
     );
   }
 }
+```
+
+## Migration 2.1.0 to 2.2.0
+
+`ProviderContainerBuilder` has moved to [`riverpod_container_builder`](../riverpod_container_builder/).
+Exporting it via `armyknife_riverpodx` is deprecated.
+
+**Writing in 2.1.0 (deprecated):**
+
+```dart
+import 'package:armyknife_riverpodx/armyknife_riverpodx.dart';
+
+final container = ProviderContainerBuilder()
+    .inject(stubProvider, implementationProvider)
+    .build();
+```
+
+**Writing in 2.2.0:**
+
+```dart
+import 'package:riverpod_container_builder/riverpod_container_builder.dart';
+
+final container = ProviderContainerBuilder()
+    .inject(stubProvider, implementationProvider)
+    .injectValue(valueProvider, 42)
+    .build();
+```
+
+```yaml
+dependencies:
+  riverpod_container_builder: ^1.0.0
 ```
 
 ## Migration 1.0.0 to 1.1.0
@@ -235,6 +261,7 @@ This package was created to streamline state management in Flutter development.
 
 > **Note:**
 >
+> - The ProviderContainer builder has been moved to the separate package [`riverpod_container_builder`](../riverpod_container_builder/).
 > - Asynchronous initialization and disposal processing for ProviderContainer has been moved to the separate package [`riverpod_container_async`](../riverpod_container_async/).
 > - FutureContext and Hooks integration functionality has been moved to the separate package [`future_context2_hooks`](../future_context2_hooks/).
 

@@ -1,0 +1,20 @@
+name: riverpod_container_builder
+description: Builder for constructing Riverpod ProviderContainer with overrides.
+version: 1.0.0
+resolution: workspace
+repository: https://github.com/eaglesakura/flutter_armyknife/
+
+environment:
+  sdk: ">=3.8.0 <4.0.0"
+  flutter: ">=3.50.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^3.5.0
+  riverpod: ^3.5.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0

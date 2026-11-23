@@ -25,6 +25,7 @@ dependencies:
 | `pub-flutter-logger-grinder` | logger_grinder / **armyknife_logger_grinder** |
 | `pub-flutter-riverpod-container-async` | riverpod_container_async |
 | `pub-flutter-riverpod-container-async-test` | riverpod_container_async_test |
+| `pub-flutter-riverpod-container-builder` | riverpod_container_builder |
 | `pub-flutter-route-lifecycle-detector` | route_lifecycle_detector |
 | `pub-flutter-state-stream` | state_stream |
 | `pub-flutter-state-stream-riverpod` | state_stream_riverpod |

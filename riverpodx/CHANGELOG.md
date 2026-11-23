@@ -1,6 +1,11 @@
+## 2.2.0
+
+- Migrated `ProviderContainerBuilder` to [`riverpod_container_builder`](../riverpod_container_builder/)
+- Exporting via `armyknife_riverpodx` is deprecated; use the new package directly
+
 ## 2.1.0
 
-- 依存ライブラリ更新に伴うメンテナンスリリース
+- Maintenance release for dependency updates
 
 ## 1.1.1
 
