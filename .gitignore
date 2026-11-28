@@ -35,3 +35,20 @@ pubspec_overrides.yaml
 # FVM Version Cache
 .fvm/
 /**/coverage/
+
+# Skill-creator eval workspaces (local review artifacts)
+.apm/skills/*-workspace/
+devtools_options.yaml
+
+# APM install artifacts (apm.yml / .apm/ は正本としてコミットする)
+apm_modules/
+apm.lock.yaml
+.apm-local/
+.agents/
+.claude/
+.codex/
+.cursor/
+.github/instructions/
+.github/agents/
+.github/prompts/
+.github/skills/

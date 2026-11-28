@@ -54,6 +54,89 @@ mise exec -- dart pub get
 mise exec -- flutter test
 ```
 
+## APM SKILL の導入
+
+本リポジトリルートは [APM (Agent Package Manager)](https://microsoft.github.io/apm/) パッケージである（`apm.yml` / `.apm/skills/`）。
+[flutter_armyknife](https://github.com/eaglesakura/flutter_armyknife) ライブラリ群の利用方法をまとめた Agent 向け SKILL を、利用側プロジェクトへ入れる。
+
+前提として APM CLI が必要である。未導入なら [Installation](https://microsoft.github.io/apm/getting-started/installation/) を参照する。
+
+```bash
+apm --version
+```
+
+利用側リポジトリのルートで、未初期化なら一度だけ初期化する:
+
+```bash
+apm init
+```
+
+その後、次のいずれかで本パッケージを追加する。本番ではタグ固定を推奨する: `eaglesakura/flutter_armyknife#v0.1.0`。
+
+### `apm.yml` に記載してから install する
+
+利用側の `apm.yml` を編集し、`dependencies.apm` に本パッケージを列挙する:
+
+```yaml
+name: my-app
+version: 0.1.0
+dependencies:
+  apm:
+    - eaglesakura/flutter_armyknife#v0.1.0
+    # ローカル path（開発時）:
+    # - ./path/to/flutter_armyknife
+```
+
+インストール（または `git clone` 後の復元）:
+
+```bash
+apm install
+```
+
+### `apm install` でパッケージを直接指定する
+
+`apm install` にパッケージを渡す。APM が解決し、`apm.yml` / `apm.lock.yaml` を更新する:
+
+```bash
+# GitHub ショートハンド
+apm install eaglesakura/flutter_armyknife
+
+# タグで固定する場合（推奨）
+apm install eaglesakura/flutter_armyknife#v0.1.0
+
+# ローカル path（開発時）
+apm install ./path/to/flutter_armyknife
+```
+
+### コミット対象
+
+コミットするのは `apm.yml`・`apm.lock.yaml`・`.gitignore`（および自作の `.apm/`）までとする。`apm_modules/` はコミットしない。チームは `git clone` 後に `apm install` で復元する。
+
+### 収録 SKILL
+
+※ `.apm/skills/` 配下。各 SKILL は「いつ使うか / 主な使い方 / 組み合わせ / 解放」を示す。
+
+| SKILL | 対象（ディレクトリ / pub 名） |
+| --- | --- |
+| `pub-flutter-async-notify2` | async_notify2 |
+| `pub-flutter-flutter-riverpod-watch-plus` | flutter_riverpod_watch_plus |
+| `pub-flutter-future-context2` | future_context2 |
+| `pub-flutter-future-context2-hooks` | future_context2_hooks |
+| `pub-flutter-logger` | logger / **armyknife_logger** |
+| `pub-flutter-logger-flutter` | logger_flutter / **armyknife_logger_flutter** |
+| `pub-flutter-logger-grinder` | logger_grinder / **armyknife_logger_grinder** |
+| `pub-flutter-riverpod-container-async` | riverpod_container_async |
+| `pub-flutter-riverpod-container-async-test` | riverpod_container_async_test |
+| `pub-flutter-riverpod-container-builder` | riverpod_container_builder |
+| `pub-flutter-route-lifecycle-detector` | route_lifecycle_detector |
+| `pub-flutter-state-stream` | state_stream |
+| `pub-flutter-state-stream-riverpod` | state_stream_riverpod |
+| `pub-flutter-task-queue` | task_queue / **armyknife_task_queue** |
+| `pub-flutter-test-context` | test_context / **armyknife_test_context** |
+| `pub-flutter-time` | time / **armyknife_time** |
+
+例示は Example コードに一般化している。README と実装が食い違う点は SKILL 側で実装を正とする。
+
 ## 🚀 使用開始
 
 各ライブラリは独立して使用できる。必要なライブラリを `pubspec.yaml` に追加して使用する：

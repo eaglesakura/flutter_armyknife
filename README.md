@@ -54,6 +54,89 @@ mise exec -- dart pub get
 mise exec -- flutter test
 ```
 
+## Installing APM SKILLs
+
+This repository root is an [APM (Agent Package Manager)](https://microsoft.github.io/apm/) package (`apm.yml` / `.apm/skills/`).
+It ships agent-facing SKILLs that document how to use the [flutter_armyknife](https://github.com/eaglesakura/flutter_armyknife) packages in a consuming project.
+
+APM CLI is required. If it is not installed yet, see [Installation](https://microsoft.github.io/apm/getting-started/installation/).
+
+```bash
+apm --version
+```
+
+From the consuming repository root, initialize once if needed:
+
+```bash
+apm init
+```
+
+Then add this package with either approach below. Pin a tag in production (recommended): `eaglesakura/flutter_armyknife#v0.1.0`.
+
+### Declare in `apm.yml`, then install
+
+Edit the consuming project's `apm.yml` and list the package under `dependencies.apm`:
+
+```yaml
+name: my-app
+version: 0.1.0
+dependencies:
+  apm:
+    - eaglesakura/flutter_armyknife#v0.1.0
+    # Local path (development):
+    # - ./path/to/flutter_armyknife
+```
+
+Install (or restore after `git clone`):
+
+```bash
+apm install
+```
+
+### Install with a direct package argument
+
+Pass the package to `apm install`. APM resolves it and updates `apm.yml` / `apm.lock.yaml`:
+
+```bash
+# GitHub shorthand
+apm install eaglesakura/flutter_armyknife
+
+# Pin a tag (recommended)
+apm install eaglesakura/flutter_armyknife#v0.1.0
+
+# Local path (development)
+apm install ./path/to/flutter_armyknife
+```
+
+### What to commit
+
+Commit `apm.yml`, `apm.lock.yaml`, and `.gitignore` (plus any authored `.apm/`). Do not commit `apm_modules/`. Teammates restore dependencies with `apm install` after `git clone`.
+
+### Shipped SKILLs
+
+Located under `.apm/skills/`. Each SKILL covers when to use it, main usage, combinations, and cleanup.
+
+| SKILL | Target (directory / pub name) |
+| --- | --- |
+| `pub-flutter-async-notify2` | async_notify2 |
+| `pub-flutter-flutter-riverpod-watch-plus` | flutter_riverpod_watch_plus |
+| `pub-flutter-future-context2` | future_context2 |
+| `pub-flutter-future-context2-hooks` | future_context2_hooks |
+| `pub-flutter-logger` | logger / **armyknife_logger** |
+| `pub-flutter-logger-flutter` | logger_flutter / **armyknife_logger_flutter** |
+| `pub-flutter-logger-grinder` | logger_grinder / **armyknife_logger_grinder** |
+| `pub-flutter-riverpod-container-async` | riverpod_container_async |
+| `pub-flutter-riverpod-container-async-test` | riverpod_container_async_test |
+| `pub-flutter-riverpod-container-builder` | riverpod_container_builder |
+| `pub-flutter-route-lifecycle-detector` | route_lifecycle_detector |
+| `pub-flutter-state-stream` | state_stream |
+| `pub-flutter-state-stream-riverpod` | state_stream_riverpod |
+| `pub-flutter-task-queue` | task_queue / **armyknife_task_queue** |
+| `pub-flutter-test-context` | test_context / **armyknife_test_context** |
+| `pub-flutter-time` | time / **armyknife_time** |
+
+Examples are generalized from Example code. When README and implementation disagree, the SKILL treats the implementation as authoritative.
+
 ## 🚀 Getting Started
 
 Each library can be used independently. Add the necessary libraries to your `pubspec.yaml`:
