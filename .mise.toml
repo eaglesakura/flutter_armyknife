@@ -9,6 +9,10 @@ chmod +x scripts/setup.sh
 scripts/setup.sh
 """
 
+[tasks."armyknife:apm:install"]
+description = "Install APM skills for Cursor (--refresh --force)"
+run = "apm install --refresh --force --target cursor"
+
 [tasks."armyknife:async_notify2:publish"]
 description = "Publish async_notify2 to pub.dev"
 usage = '''

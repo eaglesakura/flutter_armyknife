@@ -99,6 +99,19 @@
     ],
     "tasks": [
         {
+            "type": "shell",
+            "label": "[armyknife] armyknife:apm:install",
+            "command": "mise",
+            "args": [
+                "run",
+                "armyknife:apm:install"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "[armyknife] mise run armyknife:{package}:publish",
             "type": "shell",
             "command": "mise run armyknife:${input:package}:publish ${input:dryRun}",
