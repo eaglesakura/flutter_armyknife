@@ -118,22 +118,22 @@ Located under `.apm/skills/`. Each SKILL covers when to use it, main usage, comb
 
 | SKILL | Target (directory / pub name) |
 | --- | --- |
-| `pub-flutter-async-notify2` | async_notify2 |
-| `pub-flutter-flutter-riverpod-watch-plus` | flutter_riverpod_watch_plus |
-| `pub-flutter-future-context2` | future_context2 |
-| `pub-flutter-future-context2-hooks` | future_context2_hooks |
-| `pub-flutter-logger` | logger / **armyknife_logger** |
-| `pub-flutter-logger-flutter` | logger_flutter / **armyknife_logger_flutter** |
-| `pub-flutter-logger-grinder` | logger_grinder / **armyknife_logger_grinder** |
-| `pub-flutter-riverpod-container-async` | riverpod_container_async |
-| `pub-flutter-riverpod-container-async-test` | riverpod_container_async_test |
-| `pub-flutter-riverpod-container-builder` | riverpod_container_builder |
-| `pub-flutter-route-lifecycle-detector` | route_lifecycle_detector |
-| `pub-flutter-state-stream` | state_stream |
-| `pub-flutter-state-stream-riverpod` | state_stream_riverpod |
-| `pub-flutter-task-queue` | task_queue / **armyknife_task_queue** |
-| `pub-flutter-test-context` | test_context / **armyknife_test_context** |
-| `pub-flutter-time` | time / **armyknife_time** |
+| `flutter-use-async-notify2` | async_notify2 |
+| `flutter-use-flutter-riverpod-watch-plus` | flutter_riverpod_watch_plus |
+| `flutter-use-future-context2` | future_context2 |
+| `flutter-use-future-context2-hooks` | future_context2_hooks |
+| `flutter-use-logger` | logger / **armyknife_logger** |
+| `flutter-use-logger-flutter` | logger_flutter / **armyknife_logger_flutter** |
+| `flutter-use-logger-grinder` | logger_grinder / **armyknife_logger_grinder** |
+| `flutter-use-riverpod-container-async` | riverpod_container_async |
+| `flutter-use-riverpod-container-async-test` | riverpod_container_async_test |
+| `flutter-use-riverpod-container-builder` | riverpod_container_builder |
+| `flutter-use-route-lifecycle-detector` | route_lifecycle_detector |
+| `flutter-use-state-stream` | state_stream |
+| `flutter-use-state-stream-riverpod` | state_stream_riverpod |
+| `flutter-use-task-queue` | task_queue / **armyknife_task_queue** |
+| `flutter-use-test-context` | test_context / **armyknife_test_context** |
+| `flutter-use-time` | time / **armyknife_time** |
 
 Examples are generalized from Example code. When README and implementation disagree, the SKILL treats the implementation as authoritative.
 
